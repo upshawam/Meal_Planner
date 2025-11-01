@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Meal Planner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Weekly Menu</h1>
+
+  <form method="POST">
+    <div class="grid">
+      {% for meal in meals %}
+      <div class="card">
+        {% if meal.image %}
+          <img src="{{ meal.image }}" alt="{{ meal.title }}">
+        {% endif %}
+        <h4>{{ meal.title }}</h4>
+        {% if meal.subtitle %}
+          <p class="subtitle">{{ meal.subtitle }}</p>
+        {% endif %}
+
+        <!-- Checkbox to select -->
+        <label class="row">
+          <input type="checkbox" name="meals" value="{{ meal.url }}">
+          Select
+        </label>
+
+        <!-- Portion size dropdown (2..10) -->
+        <label class="row">
+          Portions:
+          <select name="portion_{{ meal.url }}">
+            {% for n in range(2, 11) %}
+              <option value="{{ n }}">{{ n }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="actions">
+      <button type="submit">Build Ingredients</button>
+    </div>
+  </form>
+
+  {% if selected_meals %}
+  <h2>My Week</h2>
+  <div class="grid">
+    {% for meal in selected_meals %}
+    <div class="card">
+      {% if meal.image %}
+        <img src="{{ meal.image }}" alt="{{ meal.title }}">
+      {% endif %}
+      <h4>
+        <!-- Naive PDF link: replace path segment; adjust if needed per recipe -->
+        <a href="{{ meal.url.replace('/recipes/', '/recipecards/card/') }}.pdf" target="_blank" rel="noopener">
+          {{ meal.title }}
+        </a>
+      </h4>
+      {% if meal.subtitle %}
+        <p class="subtitle">{{ meal.subtitle }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if grocery_list %}
+  <h2>Grocery List</h2>
+  <ul class="grocery">
+    {% for item in grocery_list %}
+      <li>{{ item.quantity_display }} {{ item.unit }} {{ item.ingredient }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</body>
+</html>
+
