@@ -8,8 +8,12 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # ✅ allow pushing commits back to the repo
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # use the built-in token with write perms
 
       - name: Set up Python
         uses: actions/setup-python@v5
