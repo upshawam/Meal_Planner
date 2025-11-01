@@ -24,6 +24,8 @@ UNIT_NORMALIZATION = {
     "tablespoon": "tablespoon", "tablespoons": "tablespoon", "tbsp": "tablespoon",
     "clove": "clove", "cloves": "clove",
     "unit": "unit", "units": "unit",
+    "slice": "slice", "slices": "slice",
+    "thumb": "thumb", "thumbs": "thumb"
 }
 
 def normalize_amount_text(amount: str) -> str:
@@ -44,10 +46,11 @@ def parse_quantity_unit(amount: str):
 
     def frac_value(token):
         total = 0.0
-        m_int = re.match(r"^(\d+)", token)
-        if m_int:
-            total += float(m_int.group(1))
-            token = token[m_int.end():]
+        # Match integer or decimal at the start
+        m_num = re.match(r"^(\d+(?:\.\d+)?)", token)
+        if m_num:
+            total += float(m_num.group(1))
+            token = token[m_num.end():]
         for ch in token:
             if ch in UNICODE_FRAC_TO_FLOAT:
                 total += UNICODE_FRAC_TO_FLOAT[ch]
@@ -55,11 +58,14 @@ def parse_quantity_unit(amount: str):
 
     qty_float, qty_display, unit = None, None, None
 
-    if re.match(r"^\d+$", tokens[0]):
+    # Case 1: first token is a number (int or decimal)
+    if re.match(r"^\d+(?:\.\d+)?$", tokens[0]):
         qty_float = float(tokens[0])
         qty_display = tokens[0]
         unit_candidate = tokens[1] if len(tokens) > 1 else None
         unit = UNIT_NORMALIZATION.get((unit_candidate or "").lower(), unit_candidate)
+
+    # Case 2: first token is a fraction or mixed number
     elif any(ch in UNICODE_FRAC_TO_FLOAT for ch in tokens[0]):
         val = frac_value(tokens[0])
         if val is not None:
@@ -67,6 +73,8 @@ def parse_quantity_unit(amount: str):
             qty_display = tokens[0]
             unit_candidate = tokens[1] if len(tokens) > 1 else None
             unit = UNIT_NORMALIZATION.get((unit_candidate or "").lower(), unit_candidate)
+
+    # Case 3: second token is a fraction (e.g. "1 ½ cups")
     elif len(tokens) > 1 and any(ch in UNICODE_FRAC_TO_FLOAT for ch in tokens[1]):
         val = frac_value(tokens[1])
         if val is not None:
@@ -75,6 +83,7 @@ def parse_quantity_unit(amount: str):
             unit_candidate = tokens[2] if len(tokens) > 2 else None
             unit = UNIT_NORMALIZATION.get((unit_candidate or "").lower(), unit_candidate)
 
+    # Fallback: try to detect unit only
     if qty_float is None:
         for t in tokens:
             normalized = UNIT_NORMALIZATION.get(t.lower())
