@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weekly Meal Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Weekly Menu</h1>
+  <div id="menu" class="grid"></div>
+
+  <button id="build">Build Ingredients</button>
+
+  <h2>My Week</h2>
+  <div id="selected" class="grid"></div>
+
+  <h2>Grocery List</h2>
+  <ul id="grocery"></ul>
+
+<script>
+async function loadMenu() {
+  const res = await fetch("week.json");
+  const data = await res.json();
+  const menuDiv = document.getElementById("menu");
+  data.meals.forEach((meal, idx) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${meal.image}" alt="${meal.title}">
+      <h4>${meal.title}</h4>
+      <p>${meal.subtitle || ""}</p>
+      <label><input type="checkbox" data-idx="${idx}"> Select</label>
+      <label>Portions:
+        <select data-portion="${idx}">
+          ${Array.from({length:9},(_,i)=>i+2).map(n=>`<option>${n}</option>`).join("")}
+        </select>
+      </label>
+    `;
+    menuDiv.appendChild(card);
+  });
+  window.meals = data.meals;
+}
+
+function aggregate(ingredients) {
+  const grouped = {};
+  ingredients.forEach(ing => {
+    const key = (ing.ingredient + "|" + (ing.unit||"")).toLowerCase();
+    if (!grouped[key]) grouped[key] = {...ing, quantity:0};
+    if (ing.quantity) grouped[key].quantity += ing.quantity;
+  });
+  return Object.values(grouped).map(ing => {
+    return `${ing.quantity_display || ing.quantity || ""} ${ing.unit||""} ${ing.ingredient}`;
+  });
+}
+
+document.getElementById("build").onclick = () => {
+  const selected = [];
+  const grocery = [];
+  document.querySelectorAll("input[type=checkbox]:checked").forEach(cb => {
+    const idx = cb.dataset.idx;
+    const portion = parseInt(document.querySelector(`select[data-portion="${idx}"]`).value);
+    const meal = meals[idx];
+    selected.push(meal);
+    meal.ingredients.forEach(ing => {
+      const scaled = {...ing};
+      if (scaled.quantity) {
+        scaled.quantity = scaled.quantity * (portion/2);
+        scaled.quantity_display = scaled.quantity.toFixed(2);
+      }
+      grocery.push(scaled);
+    });
+  });
+  // render selected
+  const selDiv = document.getElementById("selected");
+  selDiv.innerHTML = "";
+  selected.forEach(m => {
+    const c = document.createElement("div");
+    c.className = "card";
+    c.innerHTML = `<img src="${m.image}"><h4>${m.title}</h4>`;
+    selDiv.appendChild(c);
+  });
+  // render grocery
+  const list = document.getElementById("grocery");
+  list.innerHTML = "";
+  aggregate(grocery).forEach(line => {
+    const li = document.createElement("li");
+    li.textContent = line;
+    list.appendChild(li);
+  });
+};
+
+loadMenu();
+</script>
+</body>
+</html>

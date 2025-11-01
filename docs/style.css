@@ -1,0 +1,4 @@
+body { font-family: sans-serif; margin: 20px; }
+.grid { display: flex; flex-wrap: wrap; gap: 16px; }
+.card { width: 200px; border: 1px solid #ccc; padding: 8px; border-radius: 6px; }
+.card img { width: 100%; border-radius: 4px; }
