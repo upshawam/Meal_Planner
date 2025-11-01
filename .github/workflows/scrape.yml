@@ -3,7 +3,7 @@ name: Scrape Weekly Menu
 on:
   schedule:
     - cron: "0 12 * * 1"   # every Monday at 12:00 UTC
-  workflow_dispatch:       # allow manual trigger
+  workflow_dispatch:       # allow manual trigger from Actions tab
 
 jobs:
   scrape:
@@ -16,27 +16,29 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           pip install -r requirements.txt
 
       - name: Install Google Chrome
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget gnupg
+          sudo apt-get install -y wget gnupg unzip
           wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
-            > /etc/apt/sources.list.d/google-chrome.list'
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
+            sudo tee /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Install ChromeDriver
+      - name: Install matching ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-          wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1)
+          echo "Detected Chrome major version: $CHROME_VERSION"
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
+          echo "Using ChromeDriver version: $DRIVER_VERSION"
+          wget -q "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"
           unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
+          sudo mv chromedriver /usr/local/bin/chromedriver
           rm chromedriver_linux64.zip
 
       - name: Run weekly scraper
@@ -47,5 +49,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add docs/week.json
-          git commit -m "Update weekly menu JSON" || echo "No changes"
+          git commit -m "Update weekly menu JSON" || echo "No changes to commit"
           git push
