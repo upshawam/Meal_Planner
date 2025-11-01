@@ -20,8 +20,9 @@ if __name__ == "__main__":
         "year": datetime.date.today().year,
         "meals": scrape_week()
     }
-    # Write where GitHub Pages can serve it
+
     out_path = "docs/week.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+
     print(f"✅ Saved {out_path} with {len(data['meals'])} meals")

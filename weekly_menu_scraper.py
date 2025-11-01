@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -19,14 +18,14 @@ def scrape_weekly_menu():
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    service = Service("/usr/local/bin/chromedriver")
-    driver = webdriver.Chrome(service=service, options=options)
+
+    driver = webdriver.Chrome(options=options)  # Selenium Manager handles driver
 
     url = current_week_url()
     print(f"[Weekly] Navigating to {url}")
     driver.get(url)
 
-    # Wait until recipe links show up (more robust than a fixed sleep)
+    # Wait until recipe links show up
     try:
         WebDriverWait(driver, 20).until(
             EC.presence_of_all_elements_located(

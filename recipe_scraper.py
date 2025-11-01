@@ -1,9 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
-import re, time
+import re, time, json
 
+# Fraction mappings
 UNICODE_FRAC_TO_FLOAT = {
     "½": 0.5, "¼": 0.25, "¾": 0.75,
     "⅓": 1/3, "⅔": 2/3,
@@ -92,11 +92,10 @@ def scrape_ingredients(url):
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
-    service = Service("/usr/local/bin/chromedriver")
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(options=options)  # Selenium Manager handles driver
 
     driver.get(url)
-    time.sleep(5)  # wait for JS
+    time.sleep(5)  # wait for JS to render
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
     driver.quit()
@@ -125,7 +124,7 @@ def scrape_ingredients(url):
     return result
 
 if __name__ == "__main__":
+    # Local test harness only
     test_url = "https://www.everyplate.com/recipes/beef-banh-mi-bowls-68d646cc681e58ed6e5b0a8a"
     data = scrape_ingredients(test_url)
-    import json
     print(json.dumps(data, indent=2, ensure_ascii=False))
