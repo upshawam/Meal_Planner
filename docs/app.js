@@ -4,7 +4,6 @@
 //   { id, title, description, link, thumbnail, ingredients: ["1 cup sugar", "2 eggs"] }
 // - Replace fetchRecipes() with your actual server/scraper endpoint or inject the scraped results.
 
-<<<<<<< HEAD
 (() => {
   // Mocked example data — replace this with fetched scraped data.
   async function fetchRecipes() {
@@ -14,51 +13,6 @@
       { id: 'r2', title: 'Vegetable Stir-fry', description: 'Quick veggie stir-fry', link: 'https://example.com/stir-fry', thumbnail:'', ingredients:['1 bell pepper','2 cups broccoli','2 tbsp soy sauce'] },
       { id: 'r3', title: 'Pasta Pomodoro', description: 'Classic tomato pasta', link: 'https://example.com/pasta', thumbnail:'', ingredients:['200g pasta','2 cups tomato sauce','salt'] },
     ];
-=======
-async function fetchWithFallbacks(paths) {
-  for (const p of paths) {
-    try {
-      const res = await fetch(p, { cache: "no-store" });
-      if (res.ok) {
-        console.info(`[data] Loaded week.json from: ${p}`);
-        return res.json();
-      } else {
-        console.debug(`[data] Attempted ${p} => ${res.status}`);
-      }
-    } catch (err) {
-      console.debug(`[data] Fetch error for ${p}:`, err);
-    }
-  }
-  throw new Error("Failed to load week.json from all known locations");
-}
-
-// Define logInfo as a reusable function (previously it was an immediately-invoked function expression
-// which executed once but did not create a callable identifier; that caused `logInfo is not defined`).
-function logInfo(msg, ...args) {
-  console.info(`[app] ${msg}`, ...args);
-}
-
-(async function init() {
-  // Build candidate paths to week.json.
-  // Order (attempts):
-  // 1) ./week.json (same folder as index.html)
-  // 2) script-relative (folder that contains app.js)/week.json
-  // 3) site-root relative (/week.json)
-  // 4) site-root under repo name (/REPO_NAME/week.json) -- important for GitHub Pages project sites
-  // 5) /docs/week.json (if served differently)
-  const candidatePaths = ["./week.json"];
-
-  // Add script-relative path if possible
-  try {
-    const scriptEl = document.currentScript;
-    if (scriptEl && scriptEl.src) {
-      const scriptUrl = new URL(scriptEl.src, window.location.href);
-      const scriptDir = scriptUrl.href.replace(/\/[^\/]*$/, "");
-      candidatePaths.push(scriptDir + "/week.json");
-    }
-  } catch (e) {
-    console.debug("[app] currentScript lookup failed", e);
->>>>>>> d3f66f12006ca88eb2d71d364fd2ac03c5077c9e
   }
 
   const menuGrid = document.getElementById('menu-grid');
@@ -257,4 +211,3 @@ function logInfo(msg, ...args) {
     renderCards();
   })();
 
-})();  
