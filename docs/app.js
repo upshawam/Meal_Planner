@@ -1,11 +1,15 @@
-// New app.js: selectable cards, details modal, Next behavior, grocery aggregation.
-// Improved week.json loader with multiple fallbacks so the UI finds docs/week.json
-// regardless of how the docs are served (GitHub Pages path differences, script path, etc).
+// docs/app.js
+// Selectable recipe cards + robust week.json loader that works on GitHub Pages and local servers.
+//
+// This version adds an extra fallback that constructs repo-aware absolute paths using the current
+// location (window.location) so it will find week.json when the site is served at:
+//   https://<user>.github.io/<repo>/
+// or at a custom domain. It also logs helpful console errors for debugging.
 
 async function fetchWithFallbacks(paths) {
   for (const p of paths) {
     try {
-      const res = await fetch(p, {cache: "no-store"});
+      const res = await fetch(p, { cache: "no-store" });
       if (res.ok) {
         console.info(`[data] Loaded week.json from: ${p}`);
         return res.json();
@@ -19,14 +23,16 @@ async function fetchWithFallbacks(paths) {
   throw new Error("Failed to load week.json from all known locations");
 }
 
-(function logInfo(msg, ...args){ console.info(`[app] ${msg}`, ...args); })();
+(function logInfo(msg, ...args) { console.info(`[app] ${msg}`, ...args); })();
 
-(async function init(){
-  // Build candidate paths to week.json
-  // 1) relative to page (./week.json)
-  // 2) relative to the current script (script folder /week.json)
-  // 3) /docs/week.json (common when serving from repo docs folder)
-  // 4) /week.json (root fallback)
+(async function init() {
+  // Build candidate paths to week.json.
+  // Order (attempts):
+  // 1) ./week.json (same folder as index.html)
+  // 2) script-relative (folder that contains app.js)/week.json
+  // 3) site-root relative (/week.json)
+  // 4) site-root under repo name (/REPO_NAME/week.json) -- important for GitHub Pages project sites
+  // 5) /docs/week.json (if served differently)
   const candidatePaths = ["./week.json"];
 
   // Add script-relative path if possible
@@ -34,25 +40,58 @@ async function fetchWithFallbacks(paths) {
     const scriptEl = document.currentScript;
     if (scriptEl && scriptEl.src) {
       const scriptUrl = new URL(scriptEl.src, window.location.href);
-      const scriptDir = scriptUrl.href.replace(/\/[^\/]*$/, '');
+      const scriptDir = scriptUrl.href.replace(/\/[^\/]*$/, "");
       candidatePaths.push(scriptDir + "/week.json");
     }
   } catch (e) {
     console.debug("[app] currentScript lookup failed", e);
   }
 
+  // Add location-rooted paths
+  try {
+    const loc = window.location;
+    // site root (e.g., https://user.github.io or https://example.com)
+    const originRoot = `${loc.origin}`;
+    candidatePaths.push(originRoot + "/week.json");
+    // include pathname base (trim filename if present)
+    const pathBase = loc.pathname.replace(/\/[^\/]*$/, "");
+    if (pathBase && pathBase !== "/") {
+      candidatePaths.push(originRoot + pathBase + "/week.json");
+    }
+    // If this is a GitHub project page like /<user>/<repo>/..., attempt that path explicitly
+    // Extract first two path segments if present
+    const parts = loc.pathname.split("/").filter(Boolean);
+    if (parts.length >= 2) {
+      // use first two segments as /user/repo
+      const repoBase = `/${parts[0]}/${parts[1]}`;
+      candidatePaths.push(originRoot + repoBase + "/week.json");
+    }
+  } catch (e) {
+    console.debug("[app] location based path building failed", e);
+  }
+
+  // Common fallback
   candidatePaths.push("/docs/week.json");
   candidatePaths.push("/week.json");
 
+  // Deduplicate while preserving order
+  const seen = new Set();
+  const deduped = candidatePaths.filter(p => {
+    if (seen.has(p)) return false;
+    seen.add(p);
+    return true;
+  });
+
+  logInfo("Attempting to load week.json from paths:", deduped);
+
   let data;
   try {
-    data = await fetchWithFallbacks(candidatePaths);
+    data = await fetchWithFallbacks(deduped);
   } catch (err) {
     console.error("[app] Could not load week.json — menu will be empty.", err);
-    // show a user-visible message
     const menuRoot = document.getElementById("menu");
     if (menuRoot) {
-      menuRoot.innerHTML = `<div style="grid-column: 1 / -1; padding:16px; color:#b91c1c;">Error: could not load week.json. Check console for details.</div>`;
+      menuRoot.innerHTML = `<div style="grid-column: 1 / -1; padding:16px; color:#b91c1c;">Error: could not load week.json. Open the browser console to see attempted paths.</div>`;
     }
     return;
   }
@@ -78,11 +117,25 @@ async function fetchWithFallbacks(paths) {
   let selectedIds = new Set();
   let locked = false; // becomes true after Next clicked
 
-  function isPdf(url){
+  function isPdf(url) {
     return typeof url === "string" && url.toLowerCase().endsWith(".pdf");
   }
 
-  function renderCard(meal, idx){
+  function escapeHtml(str) {
+    if (typeof str !== "string") return "";
+    return str.replace(/[&<>"']/g, (m) => {
+      switch (m) {
+        case "&": return "&amp;";
+        case "<": return "&lt;";
+        case ">": return "&gt;";
+        case '"': return "&quot;";
+        case "'": return "&#39;";
+        default: return m;
+      }
+    });
+  }
+
+  function renderCard(meal, idx) {
     const card = document.createElement("div");
     card.className = "card";
     card.tabIndex = 0;
@@ -100,7 +153,7 @@ async function fetchWithFallbacks(paths) {
       <p class="muted">${subtitle}</p>
       <label class="portion">Portions:
         <select data-portion="${idx}">
-          ${Array.from({length:9},(_,i)=>i+2).map(n=>`<option value="${n}">${n}</option>`).join("")}
+          ${Array.from({ length: 9 }, (_, i) => i + 2).map(n => `<option value="${n}">${n}</option>`).join("")}
         </select>
       </label>
     `;
@@ -118,7 +171,7 @@ async function fetchWithFallbacks(paths) {
       toggleSelect(idx, card);
     });
 
-    // double click / keyboard D opens details modal
+    // double click / keyboard D or Space opens details modal
     card.addEventListener("dblclick", () => openDetails(meal));
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
@@ -135,7 +188,7 @@ async function fetchWithFallbacks(paths) {
     return card;
   }
 
-  function toggleSelect(idx, cardEl){
+  function toggleSelect(idx, cardEl) {
     const id = `${idx}`;
     if (selectedIds.has(id)) {
       selectedIds.delete(id);
@@ -151,16 +204,16 @@ async function fetchWithFallbacks(paths) {
     updateNext();
   }
 
-  function updateNext(){
+  function updateNext() {
     nextBtn.disabled = selectedIds.size === 0;
   }
 
-  function openDetails(meal){
+  function openDetails(meal) {
     modalTitle.textContent = meal.title || "Recipe";
     modalSubtitle.textContent = meal.subtitle || "";
     modalDesc.textContent = meal.description || "";
     if ((meal.ingredients || []).length) {
-      modalIngredients.innerHTML = "<strong>Ingredients:</strong><br>" + (meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
+      modalIngredients.innerHTML = "<strong>Ingredients:</strong><br>" + (meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit || ""} ${i.ingredient}`).join("<br>"));
     } else modalIngredients.innerHTML = "";
     const link = meal.pdf || meal.url || "";
     modalLink.href = link || "#";
@@ -171,7 +224,7 @@ async function fetchWithFallbacks(paths) {
   modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
 
   // Build initial menu
-  function renderMenu(){
+  function renderMenu() {
     menu.innerHTML = "";
     if (!meals.length) {
       menu.innerHTML = `<div style="grid-column: 1 / -1; padding:16px; color:#374151;">No meals found in week.json</div>`;
@@ -195,12 +248,12 @@ async function fetchWithFallbacks(paths) {
     remaining.forEach((m) => {
       const c = document.createElement("div");
       c.className = "card";
-      c.innerHTML = `<img src="${escapeHtml(m.image||'')}" alt="${escapeHtml(m.title||'')}"><h4>${escapeHtml(m.title||'')}</h4>`;
+      c.innerHTML = `<img src="${escapeHtml(m.image || '')}" alt="${escapeHtml(m.title || '')}"><h4>${escapeHtml(m.title || '')}</h4>`;
       selectedDiv.appendChild(c);
     });
     // Remove unselected from menu view
     menu.innerHTML = "";
-    remaining.forEach((m,i) => {
+    remaining.forEach((m, i) => {
       const card = renderCard(m, i);
       // mark selected visually
       card.classList.add("selected");
@@ -249,7 +302,7 @@ async function fetchWithFallbacks(paths) {
 
   downloadBtn && downloadBtn.addEventListener("click", () => {
     const text = Array.from(groceryList.querySelectorAll("li")).map(li => `• ${li.textContent}`).join("\n");
-    const blob = new Blob([text], {type: "text/plain"});
+    const blob = new Blob([text], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -259,34 +312,20 @@ async function fetchWithFallbacks(paths) {
   });
 
   // Basic aggregation identical to your original aggregate() but simpler keying
-  function aggregate(items){
+  function aggregate(items) {
     const grouped = {};
     items.forEach(ing => {
       if (!ing || !ing.ingredient) return;
-      const key = (ing.ingredient + "|" + (ing.unit||"")).toLowerCase();
+      const key = (ing.ingredient + "|" + (ing.unit || "")).toLowerCase();
       if (!grouped[key]) grouped[key] = { ...ing, quantity: 0 };
       if (ing.quantity) grouped[key].quantity += Number(ing.quantity);
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
     return Object.values(grouped).map(ing => {
       const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
-      return `${qty} ${ing.unit||""} ${ing.ingredient}`.trim();
-    });
-  }
-
-  // Simple HTML escape for attributes/content injected into templates above
-  function escapeHtml(str){
-    if (typeof str !== "string") return "";
-    return str.replace(/[&<>"']/g, (m) => {
-      switch (m) {
-        case "&": return "&amp;";
-        case "<": return "&lt;";
-        case ">": return "&gt;";
-        case '"': return "&quot;";
-        case "'": return "&#39;";
-        default: return m;
-      }
+      return `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
     });
   }
 
   renderMenu();
+
