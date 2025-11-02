@@ -1,4 +1,161 @@
-body { font-family: sans-serif; margin: 20px; }
-.grid { display: flex; flex-wrap: wrap; gap: 16px; }
-.card { width: 200px; border: 1px solid #ccc; padding: 8px; border-radius: 6px; }
-.card img { width: 100%; border-radius: 4px; }
+/* Updated styles:
+   - layout uses CSS grid with 7 columns to ensure rows are exactly 7 cards wide
+   - card sizing adjusted to be responsive within the 7-column grid
+   - title (h4) slightly larger than subtitle / muted text
+*/
+:root{
+  --bg: #f7fafc;
+  --card: #fff;
+  --muted: #6b7280;
+  --accent: #16a34a;
+  --radius:10px;
+  --gap:16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body{
+  margin:20px;
+  background:var(--bg);
+  color:#0f172a;
+}
+
+header h1{margin:0 0 12px 0}
+
+/* Use CSS Grid so we can enforce 7 columns per row.
+   On narrow screens it will fall back to fewer columns via media queries. */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap:var(--gap);
+}
+
+/* Card: let the grid column control the width (no fixed width) */
+.card{
+  border-radius:8px;
+  background:var(--card);
+  box-shadow:0 6px 12px rgba(2,6,23,0.06);
+  padding:10px;
+  border:2px solid transparent;
+  cursor:pointer;
+  position:relative;
+  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  display:flex;
+  flex-direction:column;
+  min-height: 200px;
+}
+.card:hover{transform:translateY(-4px)}
+.card img{
+  width:100%;
+  border-radius:6px;
+  height:120px;
+  object-fit:cover;
+  flex: 0 0 auto;
+}
+.card h4{
+  margin:8px 0 4px 0;
+  font-size:1.02rem; /* slightly larger title */
+  line-height:1.15;
+}
+.card p{
+  margin:0;
+  color:var(--muted);
+  font-size:0.88rem; /* subtitle slightly smaller */
+}
+
+/* selection pill */
+.selector{
+  position:absolute;
+  top:10px;
+  right:10px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.04);
+  font-weight:600;
+  font-size:0.85rem;
+}
+.card.selected{
+  border-color:var(--accent);
+  box-shadow:0 12px 24px rgba(22,163,74,0.08);
+}
+.card.selected .selector{
+  background:var(--accent);
+  color:white;
+}
+
+/* portion control */
+.portion{
+  display:block;
+  margin-top:8px;
+  font-size:0.88rem;
+  color:var(--muted);
+  margin-top: auto; /* push portion selector to bottom of card */
+}
+
+/* controls */
+.controls{
+  margin:18px 0;
+  display:flex;
+  gap:12px;
+}
+button{
+  padding:10px 14px;
+  border-radius:8px;
+  border:0;
+  background:#111827;
+  color:white;
+  cursor:pointer;
+  font-weight:600;
+}
+button.secondary{background:#e5e7eb; color:#111827}
+button:disabled{opacity:0.45; cursor:not-allowed}
+
+.hidden{display:none}
+
+/* selected preview */
+#selected .card{
+  /* show smaller previews; allow multiple per row */
+  min-height: 120px;
+  padding:6px;
+}
+#selected .card img{height:80px}
+
+/* modal */
+.modal{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(2,6,23,0.45);
+  z-index:1000;
+}
+.modal-content{
+  background:var(--card);
+  border-radius:10px;
+  padding:18px;
+  width:min(780px,96%);
+  box-shadow:0 18px 48px rgba(2,6,23,0.28);
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  right:12px;
+  top:8px;
+  border:0;
+  background:transparent;
+  font-size:20px;
+  cursor:pointer;
+}
+.muted{color:var(--muted)}
+
+/* Responsiveness: reduce columns on smaller screens */
+@media (max-width:1600px){
+  .grid{ grid-template-columns: repeat(6, 1fr); }
+}
+@media (max-width:1400px){
+  .grid{ grid-template-columns: repeat(5, 1fr); }
+}
+@media (max-width:1100px){
+  .grid{ grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width:860px){
+  .grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width:480px){
+  .grid{ grid-template-columns: repeat(1, 1fr); }
