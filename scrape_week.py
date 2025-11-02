@@ -6,11 +6,11 @@ Option A workflow (verify each candidate by scraping its recipe page):
 
 - Collect candidate recipe cards via weekly_menu_scraper.scrape_weekly_menu()
 - For each candidate, verify by scraping recipe page with recipe_scraper.scrape_ingredients()
-- Keep only candidates that return a non-empty ingredients list
+- Keep only candidates that return at least 2 ingredients (to exclude single-ingredient add-ons)
 - Save docs/week.json (latest) and archive to docs/weeks/YYYY-Www.json
 - Maintain docs/weeks_index.json
 
-This version includes a small verification cache (docs/.verify_cache.json) to avoid re-checking
+This version includes a small verification cache (docs/.verify_cache.json) to avoid re-verifying
 the same recipe URLs across runs. Adjust REQUEST_DELAY_SECONDS to be polite.
 """
 import json
@@ -26,7 +26,8 @@ LATEST_PATH = "docs/week.json"
 INDEX_PATH = "docs/weeks_index.json"
 VERIFY_CACHE_PATH = "docs/.verify_cache.json"
 
-REQUEST_DELAY_SECONDS = 0.5  # delay between per-recipe requests to be polite
+# polite delay between per-recipe verification requests
+REQUEST_DELAY_SECONDS = 0.5
 
 def ensure_dir(path):
     if path and not os.path.exists(path):
@@ -73,6 +74,7 @@ def verify_and_enrich_meals(candidates, verbose=True):
     """
     Given candidate meals, verify by scraping their recipe pages. Returns verified list.
     Uses a small cache to skip re-verification of URLs that were already verified.
+    Requirement: at least 2 ingredients to be considered a valid recipe (excludes single-ingredient add-ons)
     """
     ensure_dir(os.path.dirname(VERIFY_CACHE_PATH) or ".")
     cache = load_json_safe(VERIFY_CACHE_PATH) or {}
@@ -88,6 +90,7 @@ def verify_and_enrich_meals(candidates, verbose=True):
         cached = cache.get(url)
         if cached is not None:
             if cached.get("verified"):
+                # cached verified includes ingredients (may be used downstream)
                 meal["ingredients"] = cached.get("ingredients", [])
                 verified.append(meal)
                 print(f"[Verify] ✅ Cached verified ({len(meal['ingredients'])} ingredients)")
@@ -105,14 +108,15 @@ def verify_and_enrich_meals(candidates, verbose=True):
         # Polite delay
         time.sleep(REQUEST_DELAY_SECONDS)
 
-        if ingredients and isinstance(ingredients, list) and len(ingredients) > 0:
+        # New rule: require at least 2 ingredients to be considered a recipe
+        if ingredients and isinstance(ingredients, list) and len(ingredients) >= 2:
             meal["ingredients"] = ingredients
             verified.append(meal)
             cache[url] = {"verified": True, "ingredients": ingredients, "checked_at": int(time.time())}
             print(f"[Verify] ✅ Verified recipe: {title} ({len(ingredients)} ingredients)")
         else:
-            cache[url] = {"verified": False, "ingredients": [], "checked_at": int(time.time())}
-            print(f"[Verify] ⛔ Skipping non-recipe / addon: {title} ({url})")
+            cache[url] = {"verified": False, "ingredients": ingredients if isinstance(ingredients, list) else [], "checked_at": int(time.time())}
+            print(f"[Verify] ⛔ Skipping non-recipe / addon: {title} ({url}) — ingredients found: {len(ingredients) if isinstance(ingredients, list) else 0}")
 
         # Save cache incrementally to survive long runs / CI
         try:
