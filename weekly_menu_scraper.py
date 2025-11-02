@@ -13,7 +13,7 @@ def current_week_url():
     return f"https://www.everyplate.com/weekly-menu/{year}-W{week:02d}"
 
 def scrape_weekly_menu():
-    # Headless Chrome setup (Selenium Manager will handle the driver)
+    # Headless Chrome setup
     options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
@@ -25,15 +25,15 @@ def scrape_weekly_menu():
     print(f"[Weekly] Navigating to {url}")
     driver.get(url)
 
-    # Wait until main recipe cards are present (exclude add-ons)
+    # Wait until at least one recipe card is present
     try:
-        WebDriverWait(driver, 25).until(
+        WebDriverWait(driver, 30).until(
             EC.presence_of_all_elements_located(
-                (By.CSS_SELECTOR, "div[data-test-id='recipe-card']")
+                (By.CSS_SELECTOR, "div[data-recipe-card]")
             )
         )
     except Exception as e:
-        print(f"[Weekly] Warning: explicit wait timed out: {e}")
+        print(f"[Weekly] Warning: wait timed out: {e}")
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
     driver.quit()
@@ -41,59 +41,54 @@ def scrape_weekly_menu():
     recipes = []
     seen = set()
 
-    # ✅ Only select main recipe cards; skip add-ons
-    cards = soup.select("div[data-test-id='recipe-card'] a[href*='/recipes/']")
+    # --- Scope to Meals section only ---
+    meals_header = soup.find("h3", string="Meals")
+    if not meals_header:
+        print("[Weekly] Could not find Meals section header, falling back to all cards")
+        cards = soup.select("div[data-recipe-card]")
+    else:
+        # The parent container that holds the recipe cards
+        meals_container = meals_header.find_parent("div", class_="sc-54d3413f-0")
+        if not meals_container:
+            print("[Weekly] Could not locate Meals container, falling back to all cards")
+            cards = soup.select("div[data-recipe-card]")
+        else:
+            cards = meals_container.select("div[data-recipe-card]")
+
     for card in cards:
-        href = card.get("href")
-        if not href:
+        link_tag = card.select_one("a[href*='/recipes/'][href*='week=']")
+        if not link_tag:
             continue
+        href = link_tag["href"]
         if not href.startswith("http"):
             href = "https://www.everyplate.com" + href
         if href in seen:
             continue
         seen.add(href)
 
-        # Title/subtitle: prefer data-test-id attributes, fallback to h3/p
-        title = ""
-        subtitle = ""
+        title_el = card.select_one("h2[data-recipe-card-title='true']")
+        subtitle_el = card.select_one("p[data-recipe-card-headline='true']")
+        img_tag = card.select_one("img[data-recipe-card-image='true']")
+        pdf_tag = card.select_one("a[title='Download Recipe Card'][href$='.pdf']")
 
-        title_el = card.select_one("[data-test-id='recipe-title']")
-        if title_el:
-            title = title_el.get_text(strip=True)
-        else:
-            h3 = card.find("h3")
-            if h3:
-                title = h3.get_text(strip=True)
-
-        subtitle_el = card.select_one("[data-test-id='recipe-subtitle']")
-        if subtitle_el:
-            subtitle = subtitle_el.get_text(strip=True)
-        else:
-            p = card.find("p")
-            if p:
-                subtitle = p.get_text(strip=True)
-
-        # Image: prefer data-src, fallback to src
-        image = ""
-        img_tag = card.find("img")
-        if img_tag:
-            if img_tag.has_attr("data-src"):
-                image = img_tag["data-src"]
-            elif img_tag.has_attr("src"):
-                image = img_tag["src"]
+        title = title_el.get_text(strip=True) if title_el else ""
+        subtitle = subtitle_el.get_text(strip=True) if subtitle_el else ""
+        image = img_tag["src"] if img_tag and img_tag.has_attr("src") else ""
+        pdf_url = pdf_tag["href"] if pdf_tag and pdf_tag.has_attr("href") else ""
 
         recipes.append({
             "url": href,
             "title": title,
             "subtitle": subtitle,
-            "image": image
+            "image": image,
+            "pdf": pdf_url
         })
 
-    print(f"[Weekly] Found {len(recipes)} recipes (excluding add-ons)")
+    print(f"[Weekly] Found {len(recipes)} recipes (Meals only)")
     return recipes
 
 if __name__ == "__main__":
     data = scrape_weekly_menu()
     for r in data[:10]:
-        print(f"- {r['title'] or '(no title)'} | {r['url']}")
+        print(f"- {r['title'] or '(no title)'} | {r['url']} | PDF: {r['pdf']}")
     print(f"... total: {len(data)}")
