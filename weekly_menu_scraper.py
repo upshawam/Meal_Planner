@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import datetime
 import time
+import re
 
 def current_week_url():
     """Build the URL for the current ISO week."""
@@ -15,8 +16,7 @@ def current_week_url():
 
 def _make_driver():
     options = Options()
-    # Use the older widely-compatible flag if the environment doesn't support the new flag.
-    # CI images sometimes need the classic --headless
+    # Try modern headless flag but ensure fallback to classic for older environments
     try:
         options.add_argument("--headless=new")
     except Exception:
@@ -24,11 +24,10 @@ def _make_driver():
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    # reduce bot detection surface
     options.add_argument("start-maximized")
     options.add_argument("disable-infobars")
     options.add_argument("--disable-extensions")
-    # set a common user-agent to avoid naive headless detection
+    # Set a common UA to reduce naive headless detection
     options.add_argument(
         "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
@@ -36,33 +35,67 @@ def _make_driver():
     driver = webdriver.Chrome(options=options)
     return driver
 
+def is_addon_candidate(href: str, visible_text: str, card_soup):
+    """
+    Heuristic function to decide whether a candidate card is an add-on (non-recipe).
+    Returns True if it looks like an add-on and should be excluded.
+    """
+    if not href and not visible_text:
+        return True
+
+    href_l = (href or "").lower()
+    text_l = (visible_text or "").lower()
+
+    # Common keyword patterns for add-ons / sides / extras
+    addon_patterns = [
+        r"addon", r"add-?on", r"add-?ons", r"\bside(s)?\b", r"\bextra(s)?\b",
+        r"/sides", r"/extras", r"/products/", r"/shop/", r"/store/"
+    ]
+    for p in addon_patterns:
+        if re.search(p, href_l) or re.search(p, text_l):
+            return True
+
+    # If the element contains only a price and no title, consider it an add-on/product.
+    # Price-like patterns: $4.99, 4.99, £, €
+    text_only = text_l.strip()
+    if text_only and re.fullmatch(r"[\$\£\€]?\s*\d+(\.\d{1,2})?", text_only):
+        return True
+
+    # If there is no recipe title and no PDF link, it's likely an add-on.
+    has_recipe_title = bool(card_soup.select_one("h2[data-recipe-card-title='true']") or card_soup.select_one("h2"))
+    has_pdf = bool(card_soup.select_one("a[title='Download Recipe Card'][href$='.pdf']"))
+    if not has_recipe_title and not has_pdf:
+        # Some add-ons will still have titles (e.g., "Premium Steak") so this is heuristic.
+        # We'll still treat absence of both as a strong signal of non-recipe.
+        return True
+
+    return False
+
 def scrape_weekly_menu():
     driver = _make_driver()
     url = current_week_url()
     print(f"[Weekly] Navigating to {url}")
     driver.get(url)
 
-    # Wait for a likely indicator that the page finished basic render.
-    # We can't rely on a single attribute name; wait for body to be non-empty then a short sleep.
+    # Wait for document.readyState or a recipe anchor to appear
     try:
         WebDriverWait(driver, 20).until(lambda d: d.execute_script("return document.readyState") == "complete")
     except Exception as e:
         print(f"[Weekly] Warning: document.readyState wait timed out: {e}")
 
-    # Give time for client-side rendering / lazy-load; also scroll to trigger lazy load
+    # Try to trigger lazy-loading
     try:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1.5)
     except Exception:
         pass
 
-    # Best-effort try to wait until at least one recipe link is in the DOM
     try:
         WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "a[href*='/recipes/']"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "a[href*='/recipes/'], div[data-recipe-card]"))
         )
     except Exception as e:
-        print(f"[Weekly] Warning: recipe link wait timed out: {e}")
+        print(f"[Weekly] Warning: recipe element wait timed out: {e}")
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
     driver.quit()
@@ -70,74 +103,84 @@ def scrape_weekly_menu():
     recipes = []
     seen = set()
 
-    # --- Find the Meals header flexibly (case-insensitive substring) ---
+    # --- Find flexible "Meals" header ---
     meals_header = None
     for h3 in soup.find_all("h3"):
         if h3.string and "meals" in h3.string.strip().lower():
             meals_header = h3
             break
 
-    # If we find header, walk up to find a parent that contains recipe cards.
     cards = []
     if meals_header:
+        # Walk up a few levels to find a parent that actually contains recipe candidates
         parent = meals_header
         for _ in range(6):
             parent = parent.find_parent()
             if not parent:
                 break
-            candidate_cards = parent.select("div[data-recipe-card], a[href*='/recipes/']")
+            candidate_cards = parent.select("div[data-recipe-card]") or parent.select("a[href*='/recipes/']")
             if candidate_cards:
-                # prefer div cards but accept anchors if that's how the page renders
-                cards = parent.select("div[data-recipe-card]") or parent.select("a[href*='/recipes/']")
+                cards = candidate_cards
                 break
 
     if not cards:
-        print("[Weekly] Could not find Meals container or it had no cards, falling back to whole page search")
-        # Look for divs with data-recipe-card OR anchors that look like recipe links
+        print("[Weekly] Could not locate Meals container or it had no cards, falling back to whole page search")
         cards = soup.select("div[data-recipe-card]") or soup.select("a[href*='/recipes/']")
 
-    # Normalize: if we found anchors as "cards", wrap them as soup elements to process similarly
-    for card in cards:
-        # card might be an <a> element or a container with children
+    # If cards are anchors (flat list), we process anchors; if container divs, we inspect children.
+    for idx, card in enumerate(cards):
+        # card may be a Tag for <a> or a container div
+        link_tag = None
+        href = ""
+        visible_text = ""
+
         if card.name == "a" and card.has_attr("href"):
-            href = card["href"]
-            if not href.startswith("http"):
-                href = "https://www.everyplate.com" + href
-            if href in seen:
-                continue
-            seen.add(href)
-            title = card.get_text(strip=True) or ""
-            recipes.append({"url": href, "title": title, "subtitle": "", "image": "", "pdf": ""})
+            link_tag = card
+            href = link_tag["href"]
+            visible_text = link_tag.get_text(" ", strip=True)
+            card_soup = card
+        else:
+            link_tag = card.select_one("a[href*='/recipes/']")
+            if link_tag and link_tag.has_attr("href"):
+                href = link_tag["href"]
+                visible_text = link_tag.get_text(" ", strip=True)
+            else:
+                # fallback: some containers embed the link in data attributes
+                if card.has_attr("data-url"):
+                    href = card["data-url"]
+                visible_text = card.get_text(" ", strip=True)
+            card_soup = card
+
+        if not href:
             continue
 
-        # Otherwise it's a container (div) with internal anchors/images
-        link_tag = card.select_one("a[href*='/recipes/']")
-        if not link_tag or not link_tag.has_attr("href"):
-            # fallback: maybe the parent container itself is clickable via data-url attribute
-            if card.has_attr("data-url"):
-                href = card["data-url"]
-            else:
-                continue
-        else:
-            href = link_tag["href"]
-
+        # Normalize relative hrefs
         if not href.startswith("http"):
             href = "https://www.everyplate.com" + href
+
+        # Skip duplicates
         if href in seen:
             continue
-        seen.add(href)
 
-        # Try a few title selectors so we don't break if data-* attrs are removed
-        title_el = card.select_one("h2[data-recipe-card-title='true']") or card.select_one("h2") or link_tag
-        subtitle_el = card.select_one("p[data-recipe-card-headline='true']") or card.select_one("p")
-        img_tag = card.select_one("img[data-recipe-card-image='true']") or card.select_one("img")
-        pdf_tag = card.select_one("a[title='Download Recipe Card'][href$='.pdf']")
+        # Run add-on heuristics
+        if is_addon_candidate(href, visible_text, card_soup):
+            # debug log for CI tuning (will show a few excluded examples)
+            if len(recipes) < 5:  # avoid spamming but show some excluded samples
+                print(f"[Weekly] Skipping addon-like item: href={href} text='{visible_text[:60]}'")
+            continue
+
+        # Extract fields with fallbacks
+        title_el = card_soup.select_one("h2[data-recipe-card-title='true']") or card_soup.select_one("h2") or link_tag
+        subtitle_el = card_soup.select_one("p[data-recipe-card-headline='true']") or card_soup.select_one("p")
+        img_tag = card_soup.select_one("img[data-recipe-card-image='true']") or card_soup.select_one("img")
+        pdf_tag = card_soup.select_one("a[title='Download Recipe Card'][href$='.pdf']")
 
         title = title_el.get_text(strip=True) if title_el else ""
         subtitle = subtitle_el.get_text(strip=True) if subtitle_el else ""
         image = img_tag["src"] if img_tag and img_tag.has_attr("src") else ""
         pdf_url = pdf_tag["href"] if pdf_tag and pdf_tag.has_attr("href") else ""
 
+        seen.add(href)
         recipes.append({
             "url": href,
             "title": title,
@@ -146,10 +189,10 @@ def scrape_weekly_menu():
             "pdf": pdf_url
         })
 
-    print(f"[Weekly] Found {len(recipes)} recipes (Meals only)")
+    print(f"[Weekly] Found {len(recipes)} recipes (filtered)")
     return recipes
 
 if __name__ == "__main__":
     data = scrape_weekly_menu()
-    for r in data[:10]:
+    for r in data[:50]:
         print(f"- {r['title'] or '(no title)'} | {r['url']} | PDF: {r['pdf']}")
