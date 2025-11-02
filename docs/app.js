@@ -23,7 +23,11 @@ async function fetchWithFallbacks(paths) {
   throw new Error("Failed to load week.json from all known locations");
 }
 
-(function logInfo(msg, ...args) { console.info(`[app] ${msg}`, ...args); })();
+// Define logInfo as a reusable function (previously it was an immediately-invoked function expression
+// which executed once but did not create a callable identifier; that caused `logInfo is not defined`).
+function logInfo(msg, ...args) {
+  console.info(`[app] ${msg}`, ...args);
+}
 
 (async function init() {
   // Build candidate paths to week.json.
