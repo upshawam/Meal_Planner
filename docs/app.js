@@ -290,4 +290,3 @@ async function fetchWithFallbacks(paths) {
   }
 
   renderMenu();
-
