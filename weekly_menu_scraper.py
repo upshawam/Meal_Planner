@@ -33,125 +33,61 @@ def _make_driver():
     driver = webdriver.Chrome(options=options)
     return driver
 
-def looks_like_addon_text(visible_text: str):
-    """Detect product/add-on style visible text patterns."""
-    if not visible_text:
+def extract_img_title(tag):
+    """Return img alt or aria-label if present."""
+    img = None
+    if getattr(tag, "name", "") == "a":
+        img = tag.find("img")
+    else:
+        img = tag.select_one("img")
+    if not img:
+        return ""
+    return (img.get("aria-label") or img.get("alt") or "").strip()
+
+def looks_like_product_path(href):
+    if not href:
         return False
-    t = visible_text.lower()
-    # common product card patterns: "all-purpose protein.", "all purpose protein", "premium steak", "sides", "extras"
-    if "all-purpose" in t or "all purpose" in t:
-        return True
-    if "serving" in t:  # "1-2 Servings"
-        return True
-    # short time badges like "10 Min" or "15 Min"
-    if re.search(r"\b\d+\s*min\b", t):
-        return True
-    # price-only or badge-only text (e.g., "$4.99")
-    if re.fullmatch(r"[\$\£\€]?\s*\d+(\.\d{1,2})?", t.strip()):
-        return True
-    # product-size patterns like "10 oz", "12 oz (2 Servings)"
-    if re.search(r"\b\d+\s*(oz|ounce|ounces|lb|lbs|g|kg)\b", t):
-        return True
+    href_l = href.lower()
+    for p in ("/products/", "/shop/", "/store/"):
+        if p in href_l:
+            return True
     return False
 
-def anchor_is_image_only(anchor_tag):
-    """
-    Return True if the <a> element appears to be image-only (no visible title/subtitle inside).
-    The EveryPlate add-on examples you provided are anchors that only contain an image element,
-    and the textual title is rendered elsewhere (or not at all). We treat such image-only anchors
-    as likely product/add-on unless there's other recipe metadata nearby.
-    """
-    # If anchor has any textual nodes besides whitespace, consider it not image-only.
-    texts = [s for s in anchor_tag.stripped_strings]
-    # If the only stripped string is the img's alt/aria-label (often short product name), that still counts as image-only.
-    # So we prefer to detect presence of explicit title elements (h2) or descriptive paragraphs (p) inside/nearby.
-    has_h2 = bool(anchor_tag.select_one("h2") or anchor_tag.find_parent().select_one("h2") if anchor_tag.find_parent() else False)
-    has_p = bool(anchor_tag.select_one("p") or anchor_tag.find_parent().select_one("p") if anchor_tag.find_parent() else False)
-    # Check if anchor contains an <img> and no other meaningful text nodes
-    img = anchor_tag.find("img")
-    # Count non-empty text pieces that are not the img alt/aria-label
-    non_img_texts = []
-    for s in anchor_tag.stripped_strings:
-        # if string equals image alt/aria we skip it from counting
-        if img and (s == (img.get("alt") or "") or s == (img.get("aria-label") or "")):
-            continue
-        non_img_texts.append(s)
-    if img and not non_img_texts and not has_h2 and not has_p:
+def looks_like_price_or_badge(text):
+    if not text:
+        return False
+    t = text.strip()
+    # price-only like "$4.99" or numeric-only badges
+    if re.fullmatch(r"[\$\£\€]?\s*\d+(\.\d{1,2})?", t):
         return True
-    return False
-
-def is_addon_candidate(href: str, visible_text: str, card_soup):
-    """
-    Heuristic: return True if the card looks like an add-on (non-recipe).
-    Aggressive exclusions based on href, visible text patterns, and structure (image-only anchors).
-    """
-    href_l = (href or "").lower()
-    text_l = (visible_text or "").lower()
-
-    # Exclude obvious product/shop/addon paths
-    shop_patterns = [r"addon", r"add-?on", r"add-?ons", r"/products/", r"/shop/", r"/store/", r"/sides", r"/extras"]
-    for p in shop_patterns:
-        if re.search(p, href_l) or re.search(p, text_l):
-            return True
-
-    # Visible-text patterns that indicate add-ons (e.g., "All purpose protein. | 1-2 Servings", "10 Min")
-    if looks_like_addon_text(visible_text):
-        return True
-
-    # If the anchor/card is image-only (no h2/p nearby), it's likely a product add-on
-    # Some EveryPlate recipe cards include titles; the add-on anchors you showed appear to be image-only anchors.
-    try:
-        # If card_soup is an <a> element, check it directly; otherwise try to find the anchor inside the card.
-        anchor_tag = None
-        if getattr(card_soup, "name", "") == "a":
-            anchor_tag = card_soup
-        else:
-            anchor_tag = card_soup.select_one("a") or None
-        if anchor_tag and anchor_is_image_only(anchor_tag):
-            return True
-    except Exception:
-        # don't fail here; proceed to other heuristics
-        pass
-
-    # If the card text is extremely short (1-3 words) and contains size/duration tokens, it's likely a product
-    if len(text_l.split()) <= 3 and re.search(r"\b(min|serving|servings|oz|ounce|lb|lbs|g|kg)\b", text_l):
-        return True
-
-    # If there is no recipe title element and no PDF and href doesn't include the week param, treat as likely addon
-    has_recipe_title = bool(card_soup.select_one("h2[data-recipe-card-title='true']") or card_soup.select_one("h2"))
-    has_pdf = bool(card_soup.select_one("a[title='Download Recipe Card'][href$='.pdf']"))
-    href_has_week = "?week=" in (href or "")
-
-    # If href lacks week and there is no PDF and title is missing, treat as addon
-    if not href_has_week and not has_pdf and not has_recipe_title:
-        return True
-
-    # Additional heuristic: if title exists but visible text contains addon markers, exclude
-    if has_recipe_title and looks_like_addon_text(visible_text):
-        return True
-
     return False
 
 def scrape_weekly_menu():
+    """
+    Return a list of candidate recipe cards from the weekly menu page.
+    Each item is a dict: {"url","title","subtitle","image","pdf"}
+    This function tries to be permissive on candidate collection (keeps hrefs with ?week=)
+    and uses image alt/aria as title fallback.
+    """
     driver = _make_driver()
     url = current_week_url()
     print(f"[Weekly] Navigating to {url}")
     driver.get(url)
 
-    # Wait for the page to become 'complete' and try to allow client-side rendering
+    # Wait for page ready; allow client-side rendering
     try:
         WebDriverWait(driver, 20).until(lambda d: d.execute_script("return document.readyState") == "complete")
     except Exception as e:
         print(f"[Weekly] Warning: document.readyState wait timed out: {e}")
 
-    # Trigger lazy-load by scrolling
+    # trigger lazy-load
     try:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1.5)
     except Exception:
         pass
 
-    # Wait for at least one recipe anchor or card to appear (best-effort)
+    # wait for at least one candidate
     try:
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "a[href*='/recipes/'], div[data-recipe-card]"))
@@ -165,14 +101,14 @@ def scrape_weekly_menu():
     recipes = []
     seen = set()
 
-    # Try to find the 'Meals' header flexibly
+    # Find meals header if present
     meals_header = None
     for h3 in soup.find_all("h3"):
         if h3.string and "meals" in h3.string.strip().lower():
             meals_header = h3
             break
 
-    # Locate candidate cards near the Meals header, otherwise scan the whole page
+    # Try to scope to the container near the header, otherwise whole page
     cards = []
     if meals_header:
         parent = meals_header
@@ -186,67 +122,59 @@ def scrape_weekly_menu():
                 break
 
     if not cards:
-        print("[Weekly] Could not locate Meals container or it had no cards, falling back to whole page search")
+        print("[Weekly] Could not locate Meals container, falling back to whole page")
         cards = soup.select("div[data-recipe-card]") or soup.select("a[href*='/recipes/']")
 
-    for idx, card in enumerate(cards):
-        # card may be <a> or a container div
-        link_tag = None
-        href = ""
-        visible_text = ""
+    if not cards:
+        try:
+            with open("debug_week_page_source.html", "w", encoding="utf-8") as f:
+                f.write(str(soup))
+            print("[Weekly] Saved debug_week_page_source.html for inspection")
+        except Exception:
+            pass
 
+    for card in cards:
+        # Normalize anchor and visible text
         if card.name == "a" and card.has_attr("href"):
-            link_tag = card
-            href = link_tag["href"]
-            visible_text = link_tag.get_text(" ", strip=True)
-            card_soup = card
+            anchor = card
+            href = anchor["href"]
+            visible_text = anchor.get_text(" ", strip=True) or ""
+            card_soup = anchor
         else:
-            link_tag = card.select_one("a[href*='/recipes/']")
-            if link_tag and link_tag.has_attr("href"):
-                href = link_tag["href"]
-                # Try to capture visible text from the link (title may be rendered elsewhere but usually linked)
-                visible_text = link_tag.get_text(" ", strip=True)
+            anchor = card.select_one("a[href*='/recipes/']") or None
+            if anchor and anchor.has_attr("href"):
+                href = anchor["href"]
+                visible_text = anchor.get_text(" ", strip=True) or card.get_text(" ", strip=True) or ""
             else:
-                # fallback: some containers embed the link in data attributes
-                if card.has_attr("data-url"):
-                    href = card["data-url"]
-                visible_text = card.get_text(" ", strip=True)
+                href = card.get("data-url") or ""
+                visible_text = card.get_text(" ", strip=True) or ""
             card_soup = card
 
         if not href:
             continue
 
-        # Normalize relative hrefs
         if not href.startswith("http"):
             href = "https://www.everyplate.com" + href
 
-        # Skip duplicates
         if href in seen:
             continue
 
-        # Strong recipe signals
-        href_has_week = "?week=" in href
-        pdf_tag = card_soup.select_one("a[title='Download Recipe Card'][href$='.pdf']")
-        has_pdf = bool(pdf_tag)
-        title_el = card_soup.select_one("h2[data-recipe-card-title='true']") or card_soup.select_one("h2")
-        has_recipe_title = bool(title_el)
-
-        # Run add-on heuristics (more aggressive)
-        if is_addon_candidate(href, visible_text, card_soup):
-            if len(recipes) < 12:  # print a few examples for tuning
-                print(f"[Weekly] Skipping addon-like item: href={href} text='{visible_text[:120]}'")
-            continue
-
-        # If none of the strong recipe signals exist, skip to reduce false positives
-        if not (href_has_week or has_pdf or has_recipe_title):
-            print(f"[Weekly] Skipping ambiguous item (no week/pdf/title): href={href} text='{visible_text[:120]}'")
+        # Early exclude clear product/shop pages
+        if looks_like_product_path(href):
+            # don't add
             continue
 
         # Extract fields with fallbacks
+        title_el = card_soup.select_one("h2[data-recipe-card-title='true']") or card_soup.select_one("h2")
         subtitle_el = card_soup.select_one("p[data-recipe-card-headline='true']") or card_soup.select_one("p")
         img_tag = card_soup.select_one("img[data-recipe-card-image='true']") or card_soup.select_one("img")
+        pdf_tag = card_soup.select_one("a[title='Download Recipe Card'][href$='.pdf']")
 
-        title = title_el.get_text(strip=True) if title_el else ""
+        if title_el:
+            title = title_el.get_text(strip=True)
+        else:
+            title = extract_img_title(card_soup) or visible_text or ""
+
         subtitle = subtitle_el.get_text(strip=True) if subtitle_el else ""
         image = img_tag["src"] if img_tag and img_tag.has_attr("src") else ""
         pdf_url = pdf_tag["href"] if pdf_tag and pdf_tag.has_attr("href") else ""
@@ -260,10 +188,10 @@ def scrape_weekly_menu():
             "pdf": pdf_url
         })
 
-    print(f"[Weekly] Found {len(recipes)} recipes (filtered)")
+    print(f"[Weekly] Found {len(recipes)} candidate cards (unverified)")
     return recipes
 
 if __name__ == "__main__":
     data = scrape_weekly_menu()
-    for r in data[:200]:
+    for r in data[:50]:
         print(f"- {r['title'] or '(no title)'} | {r['url']} | PDF: {r['pdf']}")
