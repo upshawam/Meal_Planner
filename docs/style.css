@@ -1,7 +1,7 @@
 /* Updated styles:
-   - layout uses CSS grid with 7 columns to ensure rows are exactly 7 cards wide
-   - card sizing adjusted to be responsive within the 7-column grid
-   - title (h4) slightly larger than subtitle / muted text
+   - grid layout with responsive fallbacks
+   - card styling
+   - modal styling and strong hidden rule so the modal never shows until explicitly opened
 */
 :root{
   --bg: #f7fafc;
@@ -21,7 +21,7 @@ body{
 
 header h1{margin:0 0 12px 0}
 
-/* Use CSS Grid so we can enforce 7 columns per row.
+/* Use CSS Grid so we can enforce columns per row.
    On narrow screens it will fall back to fewer columns via media queries. */
 .grid{
   display:grid;
@@ -29,7 +29,7 @@ header h1{margin:0 0 12px 0}
   gap:var(--gap);
 }
 
-/* Card: let the grid column control the width (no fixed width) */
+/* Card */
 .card{
   border-radius:8px;
   background:var(--card);
@@ -53,7 +53,7 @@ header h1{margin:0 0 12px 0}
 }
 .card h4{
   margin:8px 0 4px 0;
-  font-size:1.02rem; /* slightly larger title */
+  font-size:1.06rem; /* slightly larger title than subtitle */
   line-height:1.15;
 }
 .card p{
@@ -111,15 +111,15 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 
 .hidden{display:none}
 
-/* selected preview */
-#selected .card{
-  /* show smaller previews; allow multiple per row */
-  min-height: 120px;
-  padding:6px;
+/* Ensure hidden truly hides modal (override ordering/priority issues) */
+.modal.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
-#selected .card img{height:80px}
 
-/* modal */
+/* modal (visible state) */
 .modal{
   position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
   background:rgba(2,6,23,0.45);
@@ -143,6 +143,13 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   cursor:pointer;
 }
 .muted{color:var(--muted)}
+
+/* selected preview */
+#selected .card{
+  min-height: 120px;
+  padding:6px;
+}
+#selected .card img{height:80px}
 
 /* Responsiveness: reduce columns on smaller screens */
 @media (max-width:1600px){
