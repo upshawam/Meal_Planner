@@ -1,216 +1,293 @@
-// Minimal front-end logic for selectable recipe cards, details modal, Next behavior, and shopping list build.
-// Integration notes:
-// - The app expects an array of recipe objects. Example shape:
-//   { id, title, description, link, thumbnail, ingredients: ["1 cup sugar", "2 eggs"] }
-// - Replace fetchRecipes() with your actual server/scraper endpoint or inject the scraped results.
+// New app.js: selectable cards, details modal, Next behavior, grocery aggregation.
+// Improved week.json loader with multiple fallbacks so the UI finds docs/week.json
+// regardless of how the docs are served (GitHub Pages path differences, script path, etc).
 
-(() => {
-  // Mocked example data — replace this with fetched scraped data.
-  async function fetchRecipes() {
-    // Example: return fetch('/api/recipes').then(r => r.json());
-    return [
-      { id: 'r1', title: 'Roast Chicken', description: 'Crispy roast chicken with herbs', link: 'https://example.com/roast-chicken', thumbnail:'', ingredients:['1 chicken','2 tsp salt','1 tbsp 
-olive oil'] },
-      { id: 'r2', title: 'Vegetable Stir-fry', description: 'Quick veggie stir-fry', link: 'https://example.com/stir-fry', thumbnail:'', ingredients:['1 bell pepper','2 cups broccoli','2 tbsp soy 
-sauce'] },
-      { id: 'r3', title: 'Pasta Pomodoro', description: 'Classic tomato pasta', link: 'https://example.com/pasta', thumbnail:'', ingredients:['200g pasta','2 cups tomato sauce','salt'] },
-    ];
+async function fetchWithFallbacks(paths) {
+  for (const p of paths) {
+    try {
+      const res = await fetch(p, {cache: "no-store"});
+      if (res.ok) {
+        console.info(`[data] Loaded week.json from: ${p}`);
+        return res.json();
+      } else {
+        console.debug(`[data] Attempted ${p} => ${res.status}`);
+      }
+    } catch (err) {
+      console.debug(`[data] Fetch error for ${p}:`, err);
+    }
+  }
+  throw new Error("Failed to load week.json from all known locations");
+}
+
+(function logInfo(msg, ...args){ console.info(`[app] ${msg}`, ...args); })();
+
+(async function init(){
+  // Build candidate paths to week.json
+  // 1) relative to page (./week.json)
+  // 2) relative to the current script (script folder /week.json)
+  // 3) /docs/week.json (common when serving from repo docs folder)
+  // 4) /week.json (root fallback)
+  const candidatePaths = ["./week.json"];
+
+  // Add script-relative path if possible
+  try {
+    const scriptEl = document.currentScript;
+    if (scriptEl && scriptEl.src) {
+      const scriptUrl = new URL(scriptEl.src, window.location.href);
+      const scriptDir = scriptUrl.href.replace(/\/[^\/]*$/, '');
+      candidatePaths.push(scriptDir + "/week.json");
+    }
+  } catch (e) {
+    console.debug("[app] currentScript lookup failed", e);
   }
 
-  const menuGrid = document.getElementById('menu-grid');
-  const nextButton = document.getElementById('next-button');
-  const modal = document.getElementById('recipe-modal');
-  const modalClose = document.getElementById('modal-close');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDesc = document.getElementById('modal-description');
-  const modalLink = document.getElementById('modal-link');
-  const shoppingListEl = document.getElementById('shopping-list');
-  const shoppingItems = document.getElementById('shopping-items');
-  const downloadBtn = document.getElementById('download-list');
+  candidatePaths.push("/docs/week.json");
+  candidatePaths.push("/week.json");
 
-  let recipes = [];
-  const selected = new Set();
-  let afterNext = false;
-
-  // Build a card element
-  function buildCard(recipe) {
-    const card = document.createElement('article');
-    card.tabIndex = 0;
-    card.className = 'card';
-    card.dataset.id = recipe.id;
-
-    const thumb = document.createElement('div');
-    thumb.className = 'thumb';
-    if (recipe.thumbnail) {
-      const img = document.createElement('img');
-      img.src = recipe.thumbnail;
-      img.alt = recipe.title;
-      img.className = 'thumb';
-      thumb.replaceWith(img);
+  let data;
+  try {
+    data = await fetchWithFallbacks(candidatePaths);
+  } catch (err) {
+    console.error("[app] Could not load week.json — menu will be empty.", err);
+    // show a user-visible message
+    const menuRoot = document.getElementById("menu");
+    if (menuRoot) {
+      menuRoot.innerHTML = `<div style="grid-column: 1 / -1; padding:16px; color:#b91c1c;">Error: could not load week.json. Check console for details.</div>`;
     }
+    return;
+  }
 
-    const meta = document.createElement('div');
-    meta.className = 'meta';
+  const meals = data.meals || [];
 
-    const title = document.createElement('h3');
-    title.className = 'title';
-    title.textContent = recipe.title;
+  const menu = document.getElementById("menu");
+  const nextBtn = document.getElementById("next");
+  const resetBtn = document.getElementById("reset");
+  const selectedDiv = document.getElementById("selected");
+  const grocerySection = document.getElementById("grocery-section");
+  const groceryList = document.getElementById("grocery");
+  const downloadBtn = document.getElementById("download");
 
-    const desc = document.createElement('p');
-    desc.className = 'desc';
-    desc.textContent = recipe.description || '';
+  const modal = document.getElementById("modal");
+  const modalClose = document.getElementById("modal-close");
+  const modalTitle = document.getElementById("modal-title");
+  const modalSubtitle = document.getElementById("modal-subtitle");
+  const modalDesc = document.getElementById("modal-desc");
+  const modalIngredients = document.getElementById("modal-ingredients");
+  const modalLink = document.getElementById("modal-link");
 
-    const selector = document.createElement('div');
-    selector.className = 'selector';
-    selector.textContent = 'Select';
+  let selectedIds = new Set();
+  let locked = false; // becomes true after Next clicked
 
-    meta.appendChild(title);
-    meta.appendChild(desc);
+  function isPdf(url){
+    return typeof url === "string" && url.toLowerCase().endsWith(".pdf");
+  }
 
-    card.appendChild(thumb);
-    card.appendChild(meta);
-    card.appendChild(selector);
+  function renderCard(meal, idx){
+    const card = document.createElement("div");
+    card.className = "card";
+    card.tabIndex = 0;
+    card.dataset.idx = idx;
 
-    // Click behavior:
-    // - When Next not pressed: clicking toggles selection; double-click or 'details' open modal.
-    // - After Next pressed: cards are the final cooking view, clicking opens PDF/recipe.
-    card.addEventListener('click', (e) => {
-      // If afterNext, open the recipe link (prefer PDF)
-      if (afterNext) {
-        openRecipeForCooking(recipe);
+    // Ensure safe values for interpolation
+    const imgSrc = meal.image ? escapeHtml(meal.image) : "";
+    const title = meal.title ? escapeHtml(meal.title) : "";
+    const subtitle = meal.subtitle ? escapeHtml(meal.subtitle) : "";
+
+    card.innerHTML = `
+      <div class="selector">Select</div>
+      <img src="${imgSrc}" alt="${title}">
+      <h4>${title}</h4>
+      <p class="muted">${subtitle}</p>
+      <label class="portion">Portions:
+        <select data-portion="${idx}">
+          ${Array.from({length:9},(_,i)=>i+2).map(n=>`<option value="${n}">${n}</option>`).join("")}
+        </select>
+      </label>
+    `;
+
+    // click toggles selection (before Next), after Next clicking opens recipe (PDF if available)
+    card.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      if (locked) {
+        // final cooking view -> open pdf if available else open link
+        const link = meal.pdf || meal.url;
+        if (!link) { alert("No recipe link available."); return; }
+        window.open(link, "_blank", "noopener");
         return;
       }
-      // Toggle selected state
-      toggleSelect(recipe.id, card);
+      toggleSelect(idx, card);
     });
 
-    // Keyboard accessibility - Enter toggles selection; Space opens details
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        if (afterNext) openRecipeForCooking(recipe);
-        else toggleSelect(recipe.id, card);
-      } else if (e.key === ' ' || e.key === 'Spacebar') {
+    // double click / keyboard D opens details modal
+    card.addEventListener("dblclick", () => openDetails(meal));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        if (locked) {
+          const link = meal.pdf || meal.url;
+          if (link) window.open(link, "_blank", "noopener");
+        } else toggleSelect(idx, card);
+      } else if (e.key.toLowerCase() === "d" || e.key === " ") {
         e.preventDefault();
-        openDetailsModal(recipe);
-      } else if (e.key === 'd' || e.key === 'D') {
-        openDetailsModal(recipe);
+        openDetails(meal);
       }
     });
-
-    // Right-click or long-press can open details — for now doubleclick opens details
-    card.addEventListener('dblclick', () => openDetailsModal(recipe));
 
     return card;
   }
 
-  function toggleSelect(id, cardEl) {
-    if (selected.has(id)) {
-      selected.delete(id);
-      cardEl.classList.remove('selected');
-      cardEl.querySelector('.selector').textContent = 'Select';
+  function toggleSelect(idx, cardEl){
+    const id = `${idx}`;
+    if (selectedIds.has(id)) {
+      selectedIds.delete(id);
+      cardEl.classList.remove("selected");
+      const pill = cardEl.querySelector(".selector");
+      if (pill) pill.textContent = "Select";
     } else {
-      selected.add(id);
-      cardEl.classList.add('selected');
-      cardEl.querySelector('.selector').textContent = 'Selected';
+      selectedIds.add(id);
+      cardEl.classList.add("selected");
+      const pill = cardEl.querySelector(".selector");
+      if (pill) pill.textContent = "Selected";
     }
-    updateNextState();
+    updateNext();
   }
 
-  function updateNextState() {
-    nextButton.disabled = selected.size === 0;
+  function updateNext(){
+    nextBtn.disabled = selectedIds.size === 0;
   }
 
-  function openDetailsModal(recipe) {
-    modalTitle.textContent = recipe.title;
-    modalDesc.textContent = recipe.description || 'No description available.';
-    modalLink.href = recipe.link || '#';
-    modalLink.textContent = recipe.link ? (isPdfLink(recipe.link) ? 'Open PDF' : 'Open recipe page') : 'No link';
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    modalClose.focus();
+  function openDetails(meal){
+    modalTitle.textContent = meal.title || "Recipe";
+    modalSubtitle.textContent = meal.subtitle || "";
+    modalDesc.textContent = meal.description || "";
+    if ((meal.ingredients || []).length) {
+      modalIngredients.innerHTML = "<strong>Ingredients:</strong><br>" + (meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
+    } else modalIngredients.innerHTML = "";
+    const link = meal.pdf || meal.url || "";
+    modalLink.href = link || "#";
+    modalLink.textContent = link ? (isPdf(link) ? "Open PDF" : "Open recipe page") : "No link";
+    modal.classList.remove("hidden");
   }
+  modalClose && modalClose.addEventListener("click", () => modal.classList.add("hidden"));
+  modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
 
-  modalClose?.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-  function closeModal() {
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  function isPdfLink(url) {
-    return typeof url === 'string' && url.toLowerCase().endsWith('.pdf');
-  }
-
-  function openRecipeForCooking(recipe) {
-    if (!recipe.link) {
-      alert('No recipe link available.');
+  // Build initial menu
+  function renderMenu(){
+    menu.innerHTML = "";
+    if (!meals.length) {
+      menu.innerHTML = `<div style="grid-column: 1 / -1; padding:16px; color:#374151;">No meals found in week.json</div>`;
       return;
     }
-    // If link is a PDF, open in new tab. If not, also open but you might want to point to a generated PDF.
-    window.open(recipe.link, '_blank', 'noopener');
+    meals.forEach((m, i) => {
+      const c = renderCard(m, i);
+      menu.appendChild(c);
+    });
+    updateNext();
   }
 
-  // When Next is clicked, remove non-selected cards and show shopping list
-  nextButton.addEventListener('click', () => {
-    if (selected.size === 0) return;
-    afterNext = true;
-    // Filter recipes to only selected
-    recipes = recipes.filter(r => selected.has(r.id));
-    renderCards();
-    buildShoppingList();
-    nextButton.disabled = true;
-  });
+  // Next: keep only selected cards, build grocery list and enable cooking behavior
+  nextBtn.addEventListener("click", () => {
+    if (selectedIds.size === 0) return;
+    locked = true;
+    // filter meals to only selected
+    const remaining = Array.from(selectedIds).map(id => meals[parseInt(id)]);
+    // Render selected preview
+    selectedDiv.innerHTML = "";
+    remaining.forEach((m) => {
+      const c = document.createElement("div");
+      c.className = "card";
+      c.innerHTML = `<img src="${escapeHtml(m.image||'')}" alt="${escapeHtml(m.title||'')}"><h4>${escapeHtml(m.title||'')}</h4>`;
+      selectedDiv.appendChild(c);
+    });
+    // Remove unselected from menu view
+    menu.innerHTML = "";
+    remaining.forEach((m,i) => {
+      const card = renderCard(m, i);
+      // mark selected visually
+      card.classList.add("selected");
+      const pill = card.querySelector(".selector");
+      if (pill) pill.textContent = "Selected";
+      menu.appendChild(card);
+    });
 
-  function buildShoppingList() {
-    const items = {};
-    recipes.forEach(r => {
-      (r.ingredients || []).forEach(ing => {
-        // Basic normalization: collapse exact duplicates; for better results parse ingredients
-        const key = ing.trim().toLowerCase();
-        items[key] = items[key] ? items[key] + 1 : 1;
+    // build grocery
+    const groceryItems = [];
+    remaining.forEach((m, i) => {
+      const portionEl = document.querySelector(`select[data-portion="${i}"]`);
+      const portion = portionEl ? parseInt(portionEl.value) : 2;
+      (m.ingredients || []).forEach(ing => {
+        const scaled = Object.assign({}, ing);
+        if (scaled.quantity) {
+          scaled.quantity = scaled.quantity * (portion / 2);
+          scaled.quantity_display = scaled.quantity % 1 === 0 ? String(scaled.quantity) : scaled.quantity.toFixed(2);
+        }
+        groceryItems.push(scaled);
       });
     });
 
-    // Render shopping list
-    shoppingItems.innerHTML = '';
-    Object.keys(items).forEach(k => {
-      const li = document.createElement('li');
-      li.textContent = k;
-      shoppingItems.appendChild(li);
+    const lines = aggregate(groceryItems);
+    groceryList.innerHTML = "";
+    lines.forEach(l => {
+      const li = document.createElement("li");
+      li.textContent = l;
+      groceryList.appendChild(li);
     });
-    shoppingListEl.classList.remove('hidden');
-    shoppingListEl.setAttribute('aria-hidden', 'false');
-  }
+    grocerySection.classList.remove("hidden");
+    nextBtn.disabled = true;
+    resetBtn.classList.remove("hidden");
+  });
 
-  downloadBtn.addEventListener('click', () => {
-    const text = Array.from(shoppingItems.querySelectorAll('li')).map(li => '• ' + li.textContent).join('\n');
-    const blob = new Blob([text], { type: 'text/plain' });
+  resetBtn.addEventListener("click", () => {
+    // revert to initial menu
+    selectedIds = new Set();
+    locked = false;
+    selectedDiv.innerHTML = "";
+    groceryList.innerHTML = "";
+    grocerySection.classList.add("hidden");
+    resetBtn.classList.add("hidden");
+    renderMenu();
+  });
+
+  downloadBtn && downloadBtn.addEventListener("click", () => {
+    const text = Array.from(groceryList.querySelectorAll("li")).map(li => `• ${li.textContent}`).join("\n");
+    const blob = new Blob([text], {type: "text/plain"});
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'shopping-list.txt';
+    a.download = "grocery-list.txt";
     a.click();
     URL.revokeObjectURL(url);
   });
 
-  // Render all cards
-  function renderCards() {
-    menuGrid.innerHTML = '';
-    recipes.forEach(r => {
-      const card = buildCard(r);
-      if (selected.has(r.id)) card.classList.add('selected');
-      menuGrid.appendChild(card);
+  // Basic aggregation identical to your original aggregate() but simpler keying
+  function aggregate(items){
+    const grouped = {};
+    items.forEach(ing => {
+      if (!ing || !ing.ingredient) return;
+      const key = (ing.ingredient + "|" + (ing.unit||"")).toLowerCase();
+      if (!grouped[key]) grouped[key] = { ...ing, quantity: 0 };
+      if (ing.quantity) grouped[key].quantity += Number(ing.quantity);
+      else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
-    updateNextState();
+    return Object.values(grouped).map(ing => {
+      const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
+      return `${qty} ${ing.unit||""} ${ing.ingredient}`.trim();
+    });
   }
 
-  // Initialize
-  (async function init() {
-    recipes = await fetchRecipes();
-    // If your scraper already includes a "selected" property or an "isPdf" flag, use them here.
-    renderCards();
-  })();
+  // Simple HTML escape for attributes/content injected into templates above
+  function escapeHtml(str){
+    if (typeof str !== "string") return "";
+    return str.replace(/[&<>"']/g, (m) => {
+      switch (m) {
+        case "&": return "&amp;";
+        case "<": return "&lt;";
+        case ">": return "&gt;";
+        case '"': return "&quot;";
+        case "'": return "&#39;";
+        default: return m;
+      }
+    });
+  }
 
-})();
+  renderMenu();
+
