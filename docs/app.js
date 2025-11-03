@@ -247,3 +247,4 @@
 
   // Initial render
   renderMenu();
+})();
