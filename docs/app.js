@@ -1,4 +1,4 @@
-// docs/app.js — keep top sticky bar synced with selection and wire top-next/top-back to same handlers
+// Updated app.js to support: top sticky Next/Back bar, visible selector pill, only show selected cards in My Week
 (async function() {
   // Load week.json
   let data;
@@ -15,17 +15,12 @@
 
   const meals = data.meals || [];
   const menu = document.getElementById("menu");
-  const nextBtn = document.getElementById("next");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
   const topCount = document.getElementById("top-selected-count");
-  const resetBtn = document.getElementById("reset");
   const selectedDiv = document.getElementById("selected");
-  const grocerySection = document.getElementById("grocery-section");
-  const groceryList = document.getElementById("grocery");
-  const downloadBtn = document.getElementById("download");
 
-  // modal elements (unchanged)
+  // modal elements
   const modal = document.getElementById("modal");
   const modalClose = document.getElementById("modal-close");
   const modalTitle = document.getElementById("modal-title");
@@ -47,42 +42,27 @@
 
   safeHideModal();
 
+  // stable id helper
   function mealIdFor(meal, idx) {
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
+  // state
   let selected = new Set();
   let locked = false;
   let isMenuVisible = true;
-  const portions = {};
+  const portions = {}; // persisted portion choices while navigating
 
-  // floating action (keep if present) — still used for mobile UX
-  let floatAction = document.getElementById("float-action");
-  if (!floatAction) {
-    floatAction = document.createElement("div");
-    floatAction.id = "float-action";
-    floatAction.className = "float-action";
-    document.body.appendChild(floatAction);
-  }
-
+  // Update top controls (count + enable/disable Next)
   function updateTopControls() {
     const count = selected.size;
     if (topCount) topCount.textContent = `${count} selected`;
-    if (topNext) {
-      topNext.disabled = count === 0;
-      topNext.classList.toggle("disabled", count === 0);
-      topNext.style.opacity = count === 0 ? "0.6" : "1";
-    }
-    // keep static next in sync for non-JS fallback
-    if (nextBtn) nextBtn.disabled = count === 0;
-    // show/hide topBack depending on menu state
+    if (topNext) topNext.disabled = count === 0;
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
-    // if we have a floatNext (mobile), keep it in sync too
-    const floatNext = document.querySelector("#float-action .fab, #float-next");
-    if (floatNext) floatNext.disabled = count === 0;
   }
 
-  function createCard(meal, idx, options = {}) {
+  // create a card element for menu or preview
+  function createCard(meal, idx, opts = {}) {
     const id = mealIdFor(meal, idx);
     const card = document.createElement("div");
     card.className = "card";
@@ -101,10 +81,11 @@
     subtitle.className = "muted";
     subtitle.textContent = meal.subtitle || "";
 
-    if (options.showSelector) {
+    // selector pill shown on all menu cards
+    if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
-      selector.textContent = options.preSelected ? "Selected" : "Select";
+      selector.textContent = selected.has(id) ? "Selected" : "Select";
       card.appendChild(selector);
     }
 
@@ -112,23 +93,29 @@
     card.appendChild(title);
     card.appendChild(subtitle);
 
+    // click toggles selection (only when menu visible)
     card.addEventListener("click", () => {
       if (locked) return;
-      const sid = String(id);
-      const selector = card.querySelector(".selector");
+      const sid = id;
       if (selected.has(sid)) {
         selected.delete(sid);
         card.classList.remove("selected");
-        if (selector) selector.textContent = "Select";
+        const sel = card.querySelector(".selector");
+        if (sel) sel.textContent = "Select";
       } else {
         selected.add(sid);
         card.classList.add("selected");
-        if (selector) selector.textContent = "Selected";
+        const sel = card.querySelector(".selector");
+        if (sel) sel.textContent = "Selected";
       }
       updateTopControls();
     });
 
-    card.addEventListener("dblclick", () => showModalForMeal(meal));
+    // double-click opens modal
+    card.addEventListener("dblclick", () => {
+      showModalForMeal(meal);
+    });
+
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") card.click();
       if (e.key === " ") { e.preventDefault(); card.dispatchEvent(new Event("dblclick")); }
@@ -137,6 +124,7 @@
     return card;
   }
 
+  // render initial menu grid
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
@@ -144,34 +132,16 @@
       menu.innerHTML = '<div style="grid-column:1/-1;color:#374151;padding:12px">No meals in week.json</div>';
       return;
     }
-    meals.forEach((m,i) => menu.appendChild(createCard(m,i,{ showSelector:true, preSelected: selected.has(mealIdFor(m,i)) })));
-    isMenuVisible = true;
-    setFloatingToNext();
+    meals.forEach((m,i) => menu.appendChild(createCard(m,i)));
+    // ensure menu visible
     if (menu) menu.classList.remove("hidden");
     if (selectedDiv) selectedDiv.classList.add("hidden");
+    isMenuVisible = true;
     updateTopControls();
+    locked = false;
   }
 
-  // topNext/topBack wiring
-  if (topNext) topNext.addEventListener("click", () => nextHandler());
-  if (topBack) topBack.addEventListener("click", () => backToSelection());
-  // mirror of non-js fallback next button
-  if (nextBtn) nextBtn.addEventListener("click", () => nextHandler());
-
-  // simple floating action helpers (keeps previous mobile behavior)
-  function setFloatingToNext() {
-    floatAction.innerHTML = '<button id="float-next" class="fab">Next</button>';
-    const btn = document.getElementById("float-next");
-    if (btn) btn.addEventListener("click", () => nextHandler());
-  }
-  function setFloatingToBack() {
-    floatAction.innerHTML = '<button id="float-back" class="btn secondary">Back</button>';
-    const btn = document.getElementById("float-back");
-    if (btn) btn.addEventListener("click", () => backToSelection());
-  }
-  setFloatingToNext();
-
-  // Modal & PDF logic (unchanged)
+  // modal & PDF helpers (same as before)
   function isLocalPdf(url) {
     if (!url) return false;
     try {
@@ -193,6 +163,7 @@
       safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
         meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
     } else safeText(modalIngredients, "");
+    // reset pdf viewer
     if (modalPdfViewer) modalPdfViewer.style.display = "none";
     if (modalPdfIframe) modalPdfIframe.src = "";
     if (modalPdfMessage) modalPdfMessage.textContent = "";
@@ -237,40 +208,42 @@
     });
   }
 
-  // Build / My Week behavior (unchanged logic — kept from previous version)
+  // Next: hide full menu and show selected-only preview + notepad (two-column)
   function nextHandler() {
     if (!selected.size) return;
     locked = true;
+    isMenuVisible = false;
+
+    // gather chosen meals preserving order of selection array
     const chosen = Array.from(selected).map(id => {
       const m = meals.find((mm, idx) => mealIdFor(mm, idx) === id);
       return { id, meal: m };
     }).filter(x => x.meal);
 
+    // hide original menu entirely
     if (menu) menu.classList.add("hidden");
-    isMenuVisible = false;
-    setFloatingToBack();
 
+    // build two-column preview
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
       selectedDiv.innerHTML = "";
-
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
+      // left column: preview grid with up to 3 rows per column
       const left = document.createElement("div");
       left.className = "myweek-left";
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
 
-      const showCount = 3;
-      chosen.slice(0, showCount).forEach(({id, meal}) => {
+      chosen.forEach(({id, meal}) => {
         const c = document.createElement("div");
         c.className = "card myweek-card";
 
+        // anchor to recipe/pdf on card
         const linkHref = meal.pdf || meal.url || "";
-        const hasLink = !!linkHref;
-        const anchor = hasLink ? document.createElement("a") : document.createElement("div");
-        if (hasLink) {
+        const anchor = linkHref ? document.createElement("a") : document.createElement("div");
+        if (linkHref) {
           anchor.href = linkHref;
           if (isLocalPdf(linkHref)) { anchor.target = "_self"; anchor.rel = ""; } else { anchor.target = "_blank"; anchor.rel = "noopener"; }
           anchor.style.textDecoration = "none";
@@ -284,7 +257,7 @@
         const p = document.createElement("p");
         p.className = "muted";
         p.textContent = meal.subtitle || "";
-        if (hasLink) {
+        if (linkHref) {
           anchor.appendChild(imgEl);
           anchor.appendChild(h4);
           anchor.appendChild(p);
@@ -295,6 +268,7 @@
           c.appendChild(p);
         }
 
+        // portion selector
         const portionLabel = document.createElement("label");
         portionLabel.className = "portion";
         const select = document.createElement("select");
@@ -311,34 +285,42 @@
         portionLabel.appendChild(select);
         c.appendChild(portionLabel);
 
+        // recipe pill on bottom-right of card to indicate PDF
+        if (meal.pdf || meal.url) {
+          const recipe = document.createElement("a");
+          recipe.className = "recipe-pill";
+          recipe.textContent = "Recipe";
+          recipe.href = meal.pdf || meal.url || "#";
+          recipe.target = isLocalPdf(meal.pdf || meal.url) ? "_self" : "_blank";
+          recipe.rel = "noopener";
+          c.appendChild(recipe);
+        }
+
         previewWrap.appendChild(c);
       });
 
-      if (chosen.length > showCount) {
-        const more = document.createElement("div");
-        more.className = "card more-card";
-        more.innerHTML = `<div style="padding:18px;text-align:center"><strong>+${chosen.length - showCount} more</strong><div class="muted">selected</div></div>`;
-        previewWrap.appendChild(more);
-      }
-
       left.appendChild(previewWrap);
 
-      let controls = document.createElement("div");
+      // controls under preview
+      const controls = document.createElement("div");
       controls.className = "myweek-controls";
       const buildBtn = document.createElement("button");
       buildBtn.className = "btn primary";
       buildBtn.textContent = "Build Ingredients";
       buildBtn.addEventListener("click", () => buildIngredients(chosen));
       controls.appendChild(buildBtn);
-      const rebuildNote = document.createElement("div");
-      rebuildNote.className = "muted small";
-      rebuildNote.textContent = "Change portions and press Build Ingredients again to update the list.";
-      controls.appendChild(rebuildNote);
+
+      const note = document.createElement("div");
+      note.className = "muted small";
+      note.textContent = "Change portions and press Build Ingredients again to update the list.";
+      controls.appendChild(note);
       left.appendChild(controls);
 
+      // right column: grocery notepad
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
+
       const header = document.createElement("div");
       header.className = "note-header";
       const title = document.createElement("div");
@@ -350,12 +332,14 @@
       header.appendChild(title);
       header.appendChild(sub);
       right.appendChild(header);
+
       const body = document.createElement("div");
       body.className = "note-body";
       const ul = document.createElement("ul");
       ul.id = "grocery-notepad-list";
       body.appendChild(ul);
       right.appendChild(body);
+
       const noteControls = document.createElement("div");
       noteControls.className = "note-controls";
       const download = document.createElement("button");
@@ -380,19 +364,19 @@
       selectedDiv.appendChild(twoCol);
     }
 
-    nextBtn.disabled = true;
     updateTopControls();
   }
 
+  // Back: show menu again, preserve selected set and portion choices
   function backToSelection() {
     locked = false;
     isMenuVisible = true;
     renderMenu();
     if (selectedDiv) selectedDiv.innerHTML = "";
-    setFloatingToNext();
     updateTopControls();
   }
 
+  // Build ingredients: read portions, scale, aggregate, render to notepad
   function buildIngredients(chosen) {
     chosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
@@ -422,7 +406,7 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
-    // render grocery into notepad list (if present) and into grocerySection fallback
+    // render into notepad list
     const ul = document.getElementById("grocery-notepad-list");
     if (ul) {
       ul.innerHTML = "";
@@ -433,33 +417,13 @@
         ul.appendChild(li);
       });
     }
-
-    if (groceryList) {
-      groceryList.innerHTML = "";
-      Object.values(grouped).forEach(ing => {
-        const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
-        const li = document.createElement("li");
-        li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
-        groceryList.appendChild(li);
-      });
-    }
-
-    grocerySection && grocerySection.classList.remove("hidden");
   }
 
-  // reset handler
-  resetBtn && resetBtn.addEventListener("click", () => {
-    selected = new Set();
-    locked = false;
-    if (selectedDiv) selectedDiv.innerHTML = "";
-    if (groceryList) groceryList.innerHTML = "";
-    grocerySection && grocerySection.classList.add("hidden");
-    resetBtn.classList.add("hidden");
-    renderMenu();
-    updateTopControls();
-  });
+  // wire top controls
+  if (topNext) topNext.addEventListener("click", () => nextHandler());
+  if (topBack) topBack.addEventListener("click", () => backToSelection());
 
-  // modal close
+  // modal close handlers
   if (modalClose) modalClose.addEventListener("click", safeHideModal);
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
