@@ -1,6 +1,7 @@
-// Updated app.js to show tighter grid, visible selector pill, recipe pill on selected preview cards,
-// sticky top-action bar controls, sticky Build Ingredients in the left column, and grocery notepad on the right.
-// Drop this into docs/app.js to replace the current file.
+// Full updated docs/app.js — tight grid, visible selector pill, selected-state preserved,
+// preview packed into columns (3 rows per column), recipe pill top-right on preview cards,
+// sticky top-action and sticky Build Ingredients control.
+// Drop this file into docs/app.js (replace existing).
 (async function() {
   // Load week.json
   let data;
@@ -83,7 +84,7 @@
     subtitle.className = "muted";
     subtitle.textContent = meal.subtitle || "";
 
-    // selector pill shown on initial menu cards
+    // selector pill shown on initial menu cards (unless explicitly disabled)
     if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
@@ -95,7 +96,14 @@
     card.appendChild(title);
     card.appendChild(subtitle);
 
-    // click toggles selection (only when menu visible)
+    // If this meal is already selected, mark it visually on render
+    if (selected.has(id)) {
+      card.classList.add("selected");
+      const sel = card.querySelector(".selector");
+      if (sel) sel.textContent = "Selected";
+    }
+
+    // click toggles selection (only when menu visible / not locked)
     card.addEventListener("click", (e) => {
       if (locked) return;
       const sid = id;
@@ -113,7 +121,7 @@
       updateTopControls();
     });
 
-    // double-click opens modal (details)
+    // double-click opens modal details (ingredients + pdf controls)
     card.addEventListener("dblclick", (e) => {
       showModalForMeal(meal);
     });
@@ -291,10 +299,14 @@
         portionLabel.appendChild(select);
         c.appendChild(portionLabel);
 
-        // remove any selector pill (menu selector) and add a recipe pill top-right
+        // ensure this preview card is visually "selected"
+        c.classList.add("selected");
+
+        // remove any selector pill left on preview card (if present)
         const maybeSelector = c.querySelector(".selector");
         if (maybeSelector) maybeSelector.remove();
 
+        // add a recipe pill top-right
         if (linkHref) {
           const recipe = document.createElement("a");
           recipe.className = "recipe-pill";
@@ -302,6 +314,7 @@
           recipe.href = linkHref;
           recipe.target = isLocalPdf(linkHref) ? "_self" : "_blank";
           recipe.rel = "noopener";
+          // prevent recipe click from toggling selection
           recipe.addEventListener("click", (ev) => ev.stopPropagation());
           c.appendChild(recipe);
         }
@@ -316,6 +329,7 @@
       controls.className = "myweek-controls";
       controls.style.position = "sticky";
       controls.style.top = "72px"; // below top bar
+      controls.style.zIndex = "12";
       const buildBtn = document.createElement("button");
       buildBtn.className = "btn primary";
       buildBtn.textContent = "Build Ingredients";
