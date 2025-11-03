@@ -10,6 +10,18 @@
     <h1>Weekly Menu</h1>
   </header>
 
+  <!-- Sticky top action bar (visible while scrolling on desktop) -->
+  <div class="top-action" role="region" aria-label="Selection controls" id="top-action">
+    <div class="top-left">
+      <strong>Weekly Menu</strong>
+    </div>
+    <div class="top-right">
+      <span id="top-selected-count" class="count muted">0 selected</span>
+      <button id="top-next" class="btn primary" disabled>Next</button>
+      <button id="top-back" class="btn secondary hidden">Back</button>
+    </div>
+  </div>
+
   <main>
     <section id="menu" class="grid" aria-live="polite"></section>
 

@@ -1,7 +1,4 @@
-/* Merged stylesheet: full layout + card + modal + new UX additions
-   - Restores original grid, card, selector pill, modal, responsiveness
-   - Adds floating action, my-week preview, my-week controls, and small helpers
-*/
+/* Merged stylesheet: full layout + card + modal + top-action bar + notepad */
 
 /* Core variables & typography */
 :root{
@@ -21,6 +18,32 @@ body{
 }
 
 header h1{margin:0 0 12px 0}
+
+/* Sticky top action bar (desktop-first)
+   Uses position: sticky so it stays visible while scrolling.
+*/
+.top-action {
+  position: sticky;
+  top: 0;
+  z-index: 1400;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(2,6,23,0.04);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+}
+.top-action .top-left { font-weight:700; }
+.top-action .top-right { display:flex; align-items:center; gap:8px; }
+
+/* Count text */
+.count { font-weight:700; color:var(--accent); margin-right:6px; }
+.muted { color:var(--muted); }
 
 /* Grid layout */
 .grid{
@@ -62,7 +85,7 @@ header h1{margin:0 0 12px 0}
   font-size:0.88rem;
 }
 
-/* selection pill (original position: top-right) */
+/* selection pill (top-right) */
 .selector{
   position:absolute;
   top:10px;
@@ -109,17 +132,13 @@ button{
 button.secondary{background:#e5e7eb; color:#111827}
 button:disabled{opacity:0.45; cursor:not-allowed}
 
-.hidden{display:none}
-
-/* Ensure hidden truly hides modal (override ordering/priority issues) */
+/* modal */
 .modal.hidden {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
-
-/* modal (visible state) */
 .modal{
   position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
   background:rgba(2,6,23,0.45);
@@ -142,52 +161,13 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   font-size:20px;
   cursor:pointer;
 }
-.muted{color:var(--muted)}
 
-/* selected preview */
-#selected .card{
-  min-height: 120px;
-  padding:6px;
-}
-#selected .card img{height:80px}
-
-/* NEW: Floating action and button styles for My Week build controls */
-/* Floating action button (bottom-right) */
-.float-action {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 1200;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-/* Simple button styles used by float and build controls */
-.btn {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 0;
-  font-weight: 700;
-  cursor: pointer;
-  background: #111827;
-  color: white;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
-}
-.btn.secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-.btn.primary {
-  background: var(--accent);
-  color: white;
-}
-.btn.fullwidth {
-  width: 100%;
-}
-
-/* my week preview */
-#selected {
+/* myweek + notepad (kept from previous changes) */
+.my-week-two-col {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 18px;
+  align-items: start;
   margin-top: 12px;
 }
 .myweek-wrap {
@@ -211,8 +191,6 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   justify-content:center;
   text-align:center;
 }
-
-/* center controls under My Week */
 .myweek-controls {
   margin-top: 12px;
   display:flex;
@@ -221,14 +199,45 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   max-width: 720px;
 }
 
-/* small helper classes */
-.small { font-size: 0.85rem; }
+/* Notepad */
+.grocery-notepad {
+  background: #fffbea;
+  border-radius: 8px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+  border: 1px solid rgba(0,0,0,0.04);
+  position: relative;
+  min-height: 220px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+.grocery-notepad .note-body {
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 100% 28px;
+  padding: 8px;
+  border-radius:6px;
+  min-height: 160px;
+  overflow:auto;
+}
+.grocery-notepad ul { margin: 0; padding-left: 18px; list-style-type: disc; }
+.grocery-notepad li { margin: 6px 0; line-height: 1.2; }
+.grocery-notepad::after { content: ""; position: absolute; right: 8px; top: -6px; width: 36px; height: 36px; background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(255,255,255,0.6)); border-radius: 6px; transform: rotate(15deg); opacity: 0.7; }
+.grocery-notepad .note-controls { display:flex; gap:8px; margin-top:8px; align-items:center; }
 
-/* Reduce duplication: ensure selected preview cards look different */
-.card.myweek-card img { height: 80px; object-fit: cover; border-radius:6px; }
-.card.more-card { background: rgba(0,0,0,0.02); }
+/* Floating action fallback (keeps existing behavior on mobile if desired) */
+.float-action {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.btn { padding: 10px 14px; border-radius: 10px; border: 0; font-weight: 700; cursor: pointer; background: #111827; color: white; box-shadow: 0 6px 18px rgba(2,6,23,0.12); }
+.btn.secondary { background: #e5e7eb; color: #111827; }
+.btn.primary { background: var(--accent); color: white; }
 
-/* ensure floating action is unobtrusive on small screens */
+/* Responsive grid breakpoints */
 @media (max-width:1600px){
   .grid{ grid-template-columns: repeat(6, 1fr); }
 }
@@ -241,12 +250,11 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 @media (max-width:860px){
   .grid{ grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width:600px) {
-  .float-action { right: 10px; bottom: 10px; }
-  .myweek-wrap { gap: 8px; }
+@media (max-width:720px) {
+  .my-week-two-col { display: block; }
+  .grocery-notepad { margin-top: 12px; }
   .myweek-card { width: calc(50% - 8px); }
 }
 @media (max-width:480px){
   .grid{ grid-template-columns: repeat(1, 1fr); }
-}
-
+  .myweek-card { width: 100%; }
