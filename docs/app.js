@@ -1,6 +1,8 @@
-// Full updated docs/app.js — keeps selected-state on back, packs preview columns with small padding,
-// places recipe-pill top-right (solid), and preserves selector visuals.
-// Replace docs/app.js with this file.
+// Updated docs/app.js
+// - Top sticky button acts as Next on menu, becomes Build Ingredients in My Week view.
+// - Build action happens from top button; left-column Build button removed.
+// - Keeps selected-state on Back and adds currentChosen persistence.
+// - Adds small layout improvements for preview packing.
 (async function() {
   // Load week.json
   let data;
@@ -54,12 +56,20 @@
   let locked = false;
   let isMenuVisible = true;
   const portions = {}; // persisted portion choices
+  let currentChosen = []; // last chosen array (id, meal) used in My Week view
 
-  // update top controls (count + enable/disable Next)
+  // update top controls (count + Next text/behavior)
   function updateTopControls() {
     const count = selected.size;
     if (topCount) topCount.textContent = `${count} selected`;
-    if (topNext) topNext.disabled = count === 0;
+    if (!topNext) return;
+    if (isMenuVisible) {
+      topNext.disabled = count === 0;
+      topNext.textContent = "Next";
+    } else {
+      topNext.disabled = currentChosen.length === 0;
+      topNext.textContent = "Build Ingredients";
+    }
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
   }
 
@@ -148,6 +158,7 @@
     if (selectedDiv) selectedDiv.classList.add("hidden");
     isMenuVisible = true;
     locked = false;
+    currentChosen = [];
     updateTopControls();
   }
 
@@ -225,7 +236,7 @@
     isMenuVisible = false;
 
     // gather chosen meals preserving selection order
-    const chosen = Array.from(selected).map(id => {
+    currentChosen = Array.from(selected).map(id => {
       const m = meals.find((mm, idx) => mealIdFor(mm, idx) === id);
       return { id, meal: m };
     }).filter(x => x.meal);
@@ -240,19 +251,18 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // left column: compact preview + sticky controls
+      // left column: compact preview + small inner padding to avoid overlap
       const left = document.createElement("div");
       left.className = "myweek-left";
 
-      // small wrapper to give left column a bit of inner padding
       const leftInner = document.createElement("div");
-      leftInner.style.paddingRight = "8px";
+      leftInner.style.paddingRight = "6px";
 
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
 
       // create one preview card per chosen meal; recipe-pill appears top-right
-      chosen.forEach(({id, meal}) => {
+      currentChosen.forEach(({id, meal}) => {
         const c = document.createElement("div");
         c.className = "card myweek-card";
 
@@ -309,10 +319,10 @@
         const maybeSelector = c.querySelector(".selector");
         if (maybeSelector) maybeSelector.remove();
 
-        // add a recipe pill top-right (solid; more visible)
+        // add a recipe pill top-right (solid & visible)
         if (linkHref) {
           const recipe = document.createElement("a");
-          recipe.className = "recipe-pill strong";
+          recipe.className = "recipe-pill";
           recipe.textContent = "Recipe";
           recipe.href = linkHref;
           recipe.target = isLocalPdf(linkHref) ? "_self" : "_blank";
@@ -328,31 +338,20 @@
       leftInner.appendChild(previewWrap);
       left.appendChild(leftInner);
 
-      // sticky build controls so the Build button is always visible
-      const controls = document.createElement("div");
-      controls.className = "myweek-controls";
-      controls.style.position = "sticky";
-      controls.style.top = "72px"; // below top bar
-      controls.style.zIndex = "12";
-      // normal-size build button slightly wider than text
-      const buildBtn = document.createElement("button");
-      buildBtn.className = "btn primary";
-      buildBtn.style.minWidth = "150px";
-      buildBtn.textContent = "Build Ingredients";
-      buildBtn.addEventListener("click", () => buildIngredients(chosen));
-      controls.appendChild(buildBtn);
-      const note = document.createElement("div");
-      note.className = "muted small";
-      note.textContent = "Change portions and press Build Ingredients again to update the list.";
-      controls.appendChild(note);
-      left.appendChild(controls);
+      // remove left-column build button (we call build from top button now),
+      // but keep a small note explaining where to build
+      const controlsNote = document.createElement("div");
+      controlsNote.className = "muted small";
+      controlsNote.style.marginTop = "8px";
+      controlsNote.textContent = "Use the 'Build Ingredients' button at the top to build the grocery list.";
+      left.appendChild(controlsNote);
 
       // right column: grocery notepad (closer to left now)
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
-      right.style.maxWidth = "320px";   // not full-page wide anymore
-      right.style.marginLeft = "12px";  // small gap next to cards
+      right.style.maxWidth = "320px";   // modest width
+      right.style.marginLeft = "10px";  // small gap next to cards
 
       const header = document.createElement("div");
       header.className = "note-header";
@@ -410,15 +409,18 @@
   }
 
   // Build ingredients: read portions, scale, aggregate, render to notepad
-  function buildIngredients(chosen) {
-    chosen.forEach(({id}) => {
+  function buildIngredients() {
+    // use currentChosen (must be set by nextHandler)
+    if (!currentChosen || !currentChosen.length) return;
+
+    currentChosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
       const val = sel ? parseInt(sel.value, 10) : 2;
       portions[id] = val;
     });
 
     const groceryItems = [];
-    chosen.forEach(({id, meal}) => {
+    currentChosen.forEach(({id, meal}) => {
       const portion = portions[id] || 2;
       (meal.ingredients || []).forEach(ing => {
         const copy = Object.assign({}, ing);
@@ -453,7 +455,10 @@
   }
 
   // wire top controls
-  if (topNext) topNext.addEventListener("click", () => nextHandler());
+  if (topNext) topNext.addEventListener("click", () => {
+    if (isMenuVisible) nextHandler();
+    else buildIngredients();
+  });
   if (topBack) topBack.addEventListener("click", () => backToSelection());
 
   // modal close handlers
