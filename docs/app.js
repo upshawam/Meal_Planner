@@ -1,4 +1,7 @@
-// Minimal docs/app.js (updated: move portion selection to My Week preview, selector pill bottom-right)
+// docs/app.js — updated to prefer inline viewing for local PDFs under ./pdfs/ or /docs/pdfs/
+// - treats local pdfs as embeddable and shows them inline in modal iframe
+// - keeps external pdf fallback (open in new tab / download)
+// - expects week JSON to contain recipe.pdf set to a local path like "./pdfs/<file>.pdf"
 (async function() {
   // Simple loader: ./week.json (same folder as index.html)
   let data;
@@ -30,6 +33,11 @@
   const modalDesc = document.getElementById("modal-desc");
   const modalIngredients = document.getElementById("modal-ingredients");
   const modalLink = document.getElementById("modal-link");
+  const modalViewPdfBtn = document.getElementById("modal-view-pdf");
+  const modalDownloadLink = document.getElementById("modal-download");
+  const modalPdfViewer = document.getElementById("modal-pdf-viewer");
+  const modalPdfIframe = document.getElementById("modal-pdf-iframe");
+  const modalPdfMessage = document.getElementById("modal-pdf-message");
 
   // Defensive helpers
   function safeText(el, text) { if (el) el.textContent = text || ""; }
@@ -39,7 +47,7 @@
 
   safeHideModal();
 
-  // Use stable string ids (use url when available) to avoid index-shift bugs
+  // Stable id helper (prefer URL or fallback index)
   function mealIdFor(meal, idx) {
     return (meal && meal.url) ? meal.url : String(idx);
   }
@@ -70,8 +78,7 @@
     selector.className = "selector";
     selector.textContent = "Select";
 
-    // NOTE: portion select removed from initial cards per request
-
+    // initial cards no longer include portion selects (selected later in My Week)
     card.appendChild(selector);
     card.appendChild(img);
     card.appendChild(title);
@@ -93,24 +100,9 @@
       nextBtn.disabled = selected.size === 0;
     });
 
-    // Double-click shows details
+    // Double-click shows details (and PDF controls)
     card.addEventListener("dblclick", () => {
-      safeText(modalTitle, meal.title || "");
-      safeText(modalSubtitle, meal.subtitle || "");
-      safeText(modalDesc, meal.description || "");
-      if (meal.ingredients && meal.ingredients.length) {
-        safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
-          meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
-      } else {
-        safeText(modalIngredients, "");
-      }
-      if (modalLink) {
-        modalLink.href = meal.pdf || meal.url || "#";
-        modalLink.textContent = (meal.pdf || meal.url) ? ( (meal.pdf && meal.pdf.endsWith(".pdf")) ? "Open PDF" : "Open recipe page") : "No link";
-        modalLink.target = "_blank";
-        modalLink.rel = "noopener";
-      }
-      safeShowModal();
+      showModalForMeal(meal);
     });
 
     // Keyboard: Enter toggles selection; Space opens details
@@ -136,6 +128,96 @@
     nextBtn.disabled = true;
   }
 
+  // Determine embeddable local PDFs
+  function isLocalPdf(url) {
+    if (!url) return false;
+    // normalized checks:
+    try {
+      // relative (./pdfs/...) or explicit path under /docs/pdfs or /pdfs or /static/pdfs
+      if (url.startsWith("./pdfs/") || url.startsWith("/docs/pdfs/") || url.startsWith("/pdfs/") || url.startsWith("/static/pdfs/")) return true;
+      const parsed = new URL(url, location.href);
+      // same origin + path under /docs/pdfs or /pdfs or /static/pdfs
+      if (parsed.origin === location.origin) {
+        const p = parsed.pathname || "";
+        if (p.startsWith("/docs/pdfs/") || p.startsWith("/pdfs/") || p.startsWith("/static/pdfs/")) return true;
+      }
+    } catch (e) {
+      // ignore parse errors
+    }
+    return false;
+  }
+
+  // Show modal and setup PDF controls
+  function showModalForMeal(meal) {
+    safeText(modalTitle, meal.title || "");
+    safeText(modalSubtitle, meal.subtitle || "");
+    safeText(modalDesc, meal.description || "");
+    if (meal.ingredients && meal.ingredients.length) {
+      safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
+        meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
+    } else {
+      safeText(modalIngredients, "");
+    }
+
+    // Reset PDF viewer state
+    if (modalPdfViewer) modalPdfViewer.style.display = "none";
+    if (modalPdfIframe) modalPdfIframe.src = "";
+    if (modalPdfMessage) modalPdfMessage.textContent = "";
+
+    const pdfUrl = meal.pdf || meal.url || "";
+    // Setup modal main link: external recipes open in new tab; local PDFs we will prefer inline viewing
+    if (modalLink) {
+      if (pdfUrl && isLocalPdf(pdfUrl) && pdfUrl.toLowerCase().endsWith(".pdf")) {
+        // local pdf: link will still allow download but we won't force _blank for inline view
+        modalLink.href = pdfUrl;
+        modalLink.textContent = "Open PDF (download/view)";
+        modalLink.target = "_self";
+        modalLink.rel = "";
+      } else {
+        // external: open in new tab
+        modalLink.href = pdfUrl || "#";
+        modalLink.textContent = pdfUrl ? ((meal.pdf && meal.pdf.endsWith(".pdf")) ? "Open PDF in new tab" : "Open recipe page") : "No link";
+        modalLink.target = "_blank";
+        modalLink.rel = "noopener";
+      }
+    }
+
+    // hide controls by default
+    if (modalViewPdfBtn) modalViewPdfBtn.style.display = "none";
+    if (modalDownloadLink) { modalDownloadLink.style.display = "none"; modalDownloadLink.href = ""; }
+
+    // If PDF exists and is a .pdf, surface controls. For local PDFs prefer inline viewer.
+    if (pdfUrl && pdfUrl.toLowerCase().endsWith(".pdf")) {
+      if (isLocalPdf(pdfUrl)) {
+        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "";
+        if (modalDownloadLink) { modalDownloadLink.style.display = ""; modalDownloadLink.textContent = "Download PDF"; modalDownloadLink.href = pdfUrl; modalDownloadLink.setAttribute('download',''); }
+      } else {
+        // non-local PDF: allow view attempt but warn if blocked
+        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "";
+        if (modalDownloadLink) { modalDownloadLink.style.display = ""; modalDownloadLink.textContent = "Download PDF"; modalDownloadLink.href = pdfUrl; }
+      }
+    }
+
+    safeShowModal();
+  }
+
+  // Modal View PDF button behavior (attempt to embed PDF in iframe)
+  if (modalViewPdfBtn) {
+    modalViewPdfBtn.addEventListener("click", () => {
+      const href = modalLink ? modalLink.href : "";
+      if (!href) return;
+      modalPdfMessage && (modalPdfMessage.textContent = "Loading PDF...");
+      modalPdfViewer && (modalPdfViewer.style.display = "");
+      // Set iframe to href (if same-origin and served with inline disposition, browser will render)
+      if (modalPdfIframe) modalPdfIframe.src = href;
+
+      // UX fallback note: if the server blocks framing or forces download this will not show.
+      setTimeout(() => {
+        if (modalPdfMessage) modalPdfMessage.textContent = "If the PDF does not appear it may be blocked from embedding. Use the Download or Open links.";
+      }, 700);
+    });
+  }
+
   // Next behavior: keep selected, show My Week with portion selectors, build grocery after portions chosen and Build Ingredients clicked
   nextBtn && nextBtn.addEventListener("click", () => {
     if (!selected.size) return;
@@ -144,32 +226,55 @@
     // Build chosenMeals preserving stable ids
     const chosen = [];
     Array.from(selected).forEach(id => {
-      // find meal by id (meal.url or index fallback)
       const meal = meals.find((m, idx) => mealIdFor(m, idx) === id);
       if (meal) chosen.push({ id, meal });
     });
 
-    // Render selected preview (My Week) — now include portion selects here
+    // Render selected preview (My Week) — include portion selects here
     if (selectedDiv) {
       selectedDiv.innerHTML = "";
       chosen.forEach(({id, meal}, i) => {
         const c = document.createElement("div");
         c.className = "card";
 
-        // image/title/subtitle with link to pdf/url (open in new tab)
+        // image/title/subtitle with link to pdf/url (open in new tab for external, inline-capable for local)
         const linkHref = meal.pdf || meal.url || "";
-        const linkText = (meal.pdf || meal.url) ? (meal.pdf && meal.pdf.endsWith(".pdf") ? "Open PDF" : "Open recipe") : "";
-        const anchorHtml = linkHref ? `<a href="${linkHref}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><img src="${meal.image||''}" alt="${meal.title||''}"><h4>${meal.title||''}</h4><p class="muted">${meal.subtitle||''}</p></a>` : `<img src="${meal.image||''}" alt="${meal.title||''}"><h4>${meal.title||''}</h4><p class="muted">${meal.subtitle||''}</p>`;
+        const hasLink = !!linkHref;
+        const anchor = hasLink ? document.createElement("a") : document.createElement("div");
+        if (hasLink) {
+          anchor.href = linkHref;
+          // external should open new tab; local PDFs are same-origin so don't force new tab
+          if (isLocalPdf(linkHref)) { anchor.target = "_self"; anchor.rel = ""; } else { anchor.target = "_blank"; anchor.rel = "noopener"; }
+          anchor.style.textDecoration = "none";
+          anchor.style.color = "inherit";
+        }
+        const imgEl = document.createElement("img");
+        imgEl.src = meal.image||'';
+        imgEl.alt = meal.title||'';
+        const h4 = document.createElement("h4");
+        h4.textContent = meal.title||'';
+        const p = document.createElement("p");
+        p.className = "muted";
+        p.textContent = meal.subtitle||'';
+        if (hasLink) {
+          anchor.appendChild(imgEl);
+          anchor.appendChild(h4);
+          anchor.appendChild(p);
+          c.appendChild(anchor);
+        } else {
+          c.appendChild(imgEl);
+          c.appendChild(h4);
+          c.appendChild(p);
+        }
 
         // portion selector (base 2 shown as default)
-        // use data-portion-id so it's keyed by stable id
-        const portionSelect = `<label class="portion">Portions: <select data-portion-id="${encodeURIComponent(id)}">` +
+        const label = document.createElement("label");
+        label.className = "portion";
+        label.innerHTML = `Portions: <select data-portion-id="${encodeURIComponent(id)}">` +
           Array.from({length:9},(_,n)=>n+2).map(n=>`<option value="${n}">${n}</option>`).join("") +
-          `</select></label>`;
+          `</select>`;
+        c.appendChild(label);
 
-        // also include a "Build Ingredients" button for convenience (builds grocery using selected portions)
-        // This keeps the UI explicit: user chooses portions in My Week, then clicks Build Ingredients (same as Next but for final)
-        c.innerHTML = anchorHtml + portionSelect;
         selectedDiv.appendChild(c);
       });
 
@@ -220,7 +325,6 @@
         resetBtn && resetBtn.classList.remove("hidden");
       });
 
-      // append the buildBtn once
       selectedDiv.appendChild(buildBtn);
     }
 
