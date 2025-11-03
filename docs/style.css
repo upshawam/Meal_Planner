@@ -1,6 +1,8 @@
-/* Final updated stylesheet — tighter grid, visible selector pill (outlined and stronger),
-   recipe pill top-right (solid), packed preview columns (3 rows), small padding to avoid overlap,
-   grocery notepad next to cards, normal-size Build button slightly wider than text.
+/* Updated stylesheet:
+   - Selector pill now solid orange with thin black outline (not transparent)
+   - Build Ingredients moved to the top sticky button (topNext triggers Build when in My Week)
+   - Preview columns tightly packed with slight padding (no overlap)
+   - Grocery notepad sits beside cards (modest width)
    Replace docs/style.css with this file.
 */
 
@@ -10,6 +12,8 @@
   --card: #fff;
   --muted: #6b7280;
   --accent: #16a34a;
+  --orange: #ff8c42;
+  --orange-dark: #e96f1a;
   --radius:10px;
   --gap:10px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -44,7 +48,9 @@ body{
 .top-title { font-size:1.28rem; }
 .top-action .top-right { display:flex; align-items:center; gap:8px; }
 .count { font-weight:700; color:var(--accent); margin-right:6px; }
-.muted { color:var(--muted); }
+
+/* make top-next slightly wider so it reads like a real CTA */
+#top-next { min-width: 140px; padding:10px 16px; font-weight:700; }
 
 /* Grid layout */
 .grid{
@@ -86,19 +92,22 @@ body{
   font-size:0.86rem;
 }
 
-/* Selector pill: visible outlined green by default; filled when selected */
+/* Selector pill: now solid orange with thin black outline by default.
+   When not selected it is orange fill with black outline (visible).
+   When selected it becomes slightly darker orange and white text.
+*/
 .selector{
   position:absolute;
   top:8px;
   right:8px;
   padding:6px 10px;
-  border-radius:999px;
-  background:transparent;
-  color:var(--accent);
+  border-radius:10px;
+  background: var(--orange);       /* solid orange */
+  color: #111;                     /* dark text */
   font-weight:700;
   font-size:0.85rem;
-  border:2px solid rgba(22,163,74,0.42); /* stronger outline */
-  box-shadow:none;
+  border: 1px solid #000;          /* thin black outline */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
   transition: background .12s ease, color .12s ease, transform .08s ease;
 }
 .card:hover .selector { transform: translateY(-2px); }
@@ -107,21 +116,21 @@ body{
   box-shadow:0 12px 24px rgba(22,163,74,0.08);
 }
 .card.selected .selector{
-  background:var(--accent);
-  color:white;
-  border-color: transparent;
-  box-shadow: 0 10px 22px rgba(22,163,74,0.12);
+  background: var(--orange-dark);  /* darker orange */
+  color: #fff;                     /* white text when selected */
+  border-color: #000;
+  box-shadow: 0 10px 22px rgba(233,111,26,0.12);
 }
 
-/* Recipe pill (used on preview cards, top-right) - make it solid & visible */
+/* Recipe pill (preview cards, top-right) - solid and visible */
 .recipe-pill{
   position:absolute;
   top:8px;
   right:8px;
   padding:6px 10px;
   border-radius:999px;
-  background:var(--accent);    /* solid green */
-  color:white;                 /* white text for contrast */
+  background:var(--accent);    /* green */
+  color:white;
   font-weight:700;
   font-size:0.84rem;
   text-decoration:none;
@@ -183,7 +192,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   cursor:pointer;
 }
 
-/* My Week multi-column layout: up to 3 rows per column; packed columns with a touch of padding */
+/* My Week multi-column layout: up to 3 rows per column; packed columns with small padding */
 .my-week-two-col {
   display: grid;
   grid-template-columns: 1fr 320px; /* left flexible, right notepad modest width */
@@ -195,10 +204,10 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(3, auto);
-  grid-auto-columns: 212px; /* fixed column width slightly wider than card */
-  gap: 10px;
+  grid-auto-columns: 216px; /* fixed column width slightly wider than card to add breathing room */
+  gap: 8px;
   align-items: start;
-  padding-bottom: 6px; /* avoids overlap */
+  padding-bottom: 8px; /* avoid overlap */
 }
 .myweek-card {
   width: 210px;
@@ -222,10 +231,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   flex-direction:column;
   gap:8px;
   max-width: 720px;
-  position: sticky;
-  top: 72px;
-  z-index: 12;
-  align-self: start;
+  /* left-column build button removed; top button used. keep small note styling */
 }
 
 /* Grocery notepad */
