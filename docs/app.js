@@ -1,9 +1,10 @@
-// docs/app.js — updated to prefer inline viewing for local PDFs under ./pdfs/ or /docs/pdfs/
-// - treats local pdfs as embeddable and shows them inline in modal iframe
-// - keeps external pdf fallback (open in new tab / download)
-// - expects week JSON to contain recipe.pdf set to a local path like "./pdfs/<file>.pdf"
+// docs/app.js — updated housekeeping and UX improvements:
+// - Hide original menu after Next; show a non-duplicated My Week preview (max 3 cards + "+N more")
+// - Floating Next/Back action so it's visible while scrolling
+// - Prettier Build Ingredients button below My Week; supports repeated rebuilds and changing portions
+// - Back restores menu and keeps selections and portions
 (async function() {
-  // Simple loader: ./week.json (same folder as index.html)
+  // Load week.json
   let data;
   try {
     const res = await fetch("./week.json", { cache: "no-store" });
@@ -25,7 +26,7 @@
   const groceryList = document.getElementById("grocery");
   const downloadBtn = document.getElementById("download");
 
-  // Modal elements (may not exist — check)
+  // modal elements
   const modal = document.getElementById("modal");
   const modalClose = document.getElementById("modal-close");
   const modalTitle = document.getElementById("modal-title");
@@ -39,7 +40,7 @@
   const modalPdfIframe = document.getElementById("modal-pdf-iframe");
   const modalPdfMessage = document.getElementById("modal-pdf-message");
 
-  // Defensive helpers
+  // helpers
   function safeText(el, text) { if (el) el.textContent = text || ""; }
   function safeHtml(el, html) { if (el) el.innerHTML = html || ""; }
   function safeShowModal() { if (modal) modal.classList.remove("hidden"); }
@@ -47,15 +48,45 @@
 
   safeHideModal();
 
-  // Stable id helper (prefer URL or fallback index)
+  // stable id helper
   function mealIdFor(meal, idx) {
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
-  let selected = new Set();
-  let locked = false;
+  // state
+  let selected = new Set();        // set of mealId strings
+  let locked = false;              // locked after pressing Next
+  let isMenuVisible = true;        // toggles menu vs my-week view
 
-  function createCard(meal, idx) {
+  // remember portion choices by meal id (persist while navigating)
+  const portions = {}; // { [mealId]: number }
+
+  // UI: floating action (created if not present)
+  let floatAction = document.getElementById("float-action");
+  if (!floatAction) {
+    floatAction = document.createElement("div");
+    floatAction.id = "float-action";
+    floatAction.className = "float-action";
+    document.body.appendChild(floatAction);
+  }
+
+  // ensure next button exists in DOM control too (for accessibility / non-JS)
+  // But the floating action will control Next/Back and mirror state.
+  function setFloatingToNext() {
+    floatAction.innerHTML = '<button id="float-next" class="btn primary">Next</button>';
+    const btn = document.getElementById("float-next");
+    if (btn) btn.addEventListener("click", () => nextHandler());
+  }
+  function setFloatingToBack() {
+    floatAction.innerHTML = '<button id="float-back" class="btn secondary">Back</button>';
+    const btn = document.getElementById("float-back");
+    if (btn) btn.addEventListener("click", () => backToSelection());
+  }
+  // start state
+  setFloatingToNext();
+
+  function createCard(meal, idx, options = {}) {
+    // options: { showSelector: true/false, preSelected: true/false }
     const id = mealIdFor(meal, idx);
     const card = document.createElement("div");
     card.className = "card";
@@ -74,43 +105,48 @@
     subtitle.className = "muted";
     subtitle.textContent = meal.subtitle || "";
 
-    const selector = document.createElement("div");
-    selector.className = "selector";
-    selector.textContent = "Select";
+    if (options.showSelector) {
+      const selector = document.createElement("div");
+      selector.className = "selector";
+      selector.textContent = options.preSelected ? "Selected" : "Select";
+      card.appendChild(selector);
+    }
 
-    // initial cards no longer include portion selects (selected later in My Week)
-    card.appendChild(selector);
     card.appendChild(img);
     card.appendChild(title);
     card.appendChild(subtitle);
 
-    // Toggle select on click (if not locked)
-    card.addEventListener("click", (e) => {
+    // Toggle select on click (only when not locked)
+    card.addEventListener("click", () => {
       if (locked) return;
       const sid = String(id);
+      const selector = card.querySelector(".selector");
       if (selected.has(sid)) {
         selected.delete(sid);
         card.classList.remove("selected");
-        selector.textContent = "Select";
+        if (selector) selector.textContent = "Select";
       } else {
         selected.add(sid);
         card.classList.add("selected");
-        selector.textContent = "Selected";
+        if (selector) selector.textContent = "Selected";
       }
+      // sync visible control
       nextBtn.disabled = selected.size === 0;
+      const floatNext = document.getElementById("float-next");
+      if (floatNext) floatNext.disabled = selected.size === 0;
     });
 
-    // Double-click shows details (and PDF controls)
+    // double click shows modal
     card.addEventListener("dblclick", () => {
       showModalForMeal(meal);
     });
 
-    // Keyboard: Enter toggles selection; Space opens details
+    // keyboard
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") card.click();
       if (e.key === " ") {
         e.preventDefault();
-        card.dispatchEvent(new Event('dblclick'));
+        card.dispatchEvent(new Event("dblclick"));
       }
     });
 
@@ -124,30 +160,33 @@
       menu.innerHTML = '<div style="grid-column:1/-1;color:#374151;padding:12px">No meals in week.json</div>';
       return;
     }
-    meals.forEach((m,i) => menu.appendChild(createCard(m,i)));
-    nextBtn.disabled = true;
+    meals.forEach((m,i) => menu.appendChild(createCard(m,i,{ showSelector:true, preSelected: selected.has(mealIdFor(m,i)) })));
+    nextBtn.disabled = selected.size === 0;
+    const floatNext = document.getElementById("float-next");
+    if (floatNext) floatNext.disabled = selected.size === 0;
+    isMenuVisible = true;
+    // floating should show Next
+    setFloatingToNext();
+    // ensure menu visible
+    if (menu) menu.classList.remove("hidden");
+    // hide My Week area if present
+    if (selectedDiv) selectedDiv.classList.add("hidden");
   }
 
-  // Determine embeddable local PDFs
+  // Modal & PDF logic re-used from previous version (no changes to behavior)
   function isLocalPdf(url) {
     if (!url) return false;
-    // normalized checks:
     try {
-      // relative (./pdfs/...) or explicit path under /docs/pdfs or /pdfs or /static/pdfs
       if (url.startsWith("./pdfs/") || url.startsWith("/docs/pdfs/") || url.startsWith("/pdfs/") || url.startsWith("/static/pdfs/")) return true;
       const parsed = new URL(url, location.href);
-      // same origin + path under /docs/pdfs or /pdfs or /static/pdfs
       if (parsed.origin === location.origin) {
         const p = parsed.pathname || "";
         if (p.startsWith("/docs/pdfs/") || p.startsWith("/pdfs/") || p.startsWith("/static/pdfs/")) return true;
       }
-    } catch (e) {
-      // ignore parse errors
-    }
+    } catch (e){}
     return false;
   }
 
-  // Show modal and setup PDF controls
   function showModalForMeal(meal) {
     safeText(modalTitle, meal.title || "");
     safeText(modalSubtitle, meal.subtitle || "");
@@ -155,107 +194,100 @@
     if (meal.ingredients && meal.ingredients.length) {
       safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
         meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
-    } else {
-      safeText(modalIngredients, "");
-    }
-
-    // Reset PDF viewer state
+    } else safeText(modalIngredients, "");
+    // reset pdf viewer
     if (modalPdfViewer) modalPdfViewer.style.display = "none";
     if (modalPdfIframe) modalPdfIframe.src = "";
     if (modalPdfMessage) modalPdfMessage.textContent = "";
-
     const pdfUrl = meal.pdf || meal.url || "";
-    // Setup modal main link: external recipes open in new tab; local PDFs we will prefer inline viewing
     if (modalLink) {
       if (pdfUrl && isLocalPdf(pdfUrl) && pdfUrl.toLowerCase().endsWith(".pdf")) {
-        // local pdf: link will still allow download but we won't force _blank for inline view
         modalLink.href = pdfUrl;
         modalLink.textContent = "Open PDF (download/view)";
         modalLink.target = "_self";
         modalLink.rel = "";
       } else {
-        // external: open in new tab
         modalLink.href = pdfUrl || "#";
         modalLink.textContent = pdfUrl ? ((meal.pdf && meal.pdf.endsWith(".pdf")) ? "Open PDF in new tab" : "Open recipe page") : "No link";
         modalLink.target = "_blank";
         modalLink.rel = "noopener";
       }
     }
-
-    // hide controls by default
-    if (modalViewPdfBtn) modalViewPdfBtn.style.display = "none";
-    if (modalDownloadLink) { modalDownloadLink.style.display = "none"; modalDownloadLink.href = ""; }
-
-    // If PDF exists and is a .pdf, surface controls. For local PDFs prefer inline viewer.
-    if (pdfUrl && pdfUrl.toLowerCase().endsWith(".pdf")) {
-      if (isLocalPdf(pdfUrl)) {
-        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "";
-        if (modalDownloadLink) { modalDownloadLink.style.display = ""; modalDownloadLink.textContent = "Download PDF"; modalDownloadLink.href = pdfUrl; modalDownloadLink.setAttribute('download',''); }
+    if (modalViewPdfBtn) modalViewPdfBtn.style.display = (pdfUrl && pdfUrl.toLowerCase().endsWith(".pdf")) ? "" : "none";
+    if (modalDownloadLink) {
+      if (pdfUrl && pdfUrl.toLowerCase().endsWith(".pdf")) {
+        modalDownloadLink.style.display = "";
+        modalDownloadLink.href = pdfUrl;
+        modalDownloadLink.textContent = "Download PDF";
+        if (isLocalPdf(pdfUrl)) modalDownloadLink.setAttribute("download", "");
       } else {
-        // non-local PDF: allow view attempt but warn if blocked
-        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "";
-        if (modalDownloadLink) { modalDownloadLink.style.display = ""; modalDownloadLink.textContent = "Download PDF"; modalDownloadLink.href = pdfUrl; }
+        modalDownloadLink.style.display = "none";
       }
     }
-
     safeShowModal();
   }
 
-  // Modal View PDF button behavior (attempt to embed PDF in iframe)
   if (modalViewPdfBtn) {
     modalViewPdfBtn.addEventListener("click", () => {
       const href = modalLink ? modalLink.href : "";
       if (!href) return;
       modalPdfMessage && (modalPdfMessage.textContent = "Loading PDF...");
       modalPdfViewer && (modalPdfViewer.style.display = "");
-      // Set iframe to href (if same-origin and served with inline disposition, browser will render)
       if (modalPdfIframe) modalPdfIframe.src = href;
-
-      // UX fallback note: if the server blocks framing or forces download this will not show.
       setTimeout(() => {
         if (modalPdfMessage) modalPdfMessage.textContent = "If the PDF does not appear it may be blocked from embedding. Use the Download or Open links.";
       }, 700);
     });
   }
 
-  // Next behavior: keep selected, show My Week with portion selectors, build grocery after portions chosen and Build Ingredients clicked
-  nextBtn && nextBtn.addEventListener("click", () => {
+  // Build / My Week behavior
+  function nextHandler() {
     if (!selected.size) return;
     locked = true;
+    // show My Week preview (only show up to 3 cards with +N indicator)
+    const chosen = Array.from(selected).map(id => {
+      // find by id
+      const m = meals.find((mm, idx) => mealIdFor(mm, idx) === id);
+      return { id, meal: m };
+    }).filter(x => x.meal);
 
-    // Build chosenMeals preserving stable ids
-    const chosen = [];
-    Array.from(selected).forEach(id => {
-      const meal = meals.find((m, idx) => mealIdFor(m, idx) === id);
-      if (meal) chosen.push({ id, meal });
-    });
+    // hide menu
+    if (menu) menu.classList.add("hidden");
+    isMenuVisible = false;
+    // update floating button to Back
+    setFloatingToBack();
 
-    // Render selected preview (My Week) — include portion selects here
+    // render preview
     if (selectedDiv) {
+      selectedDiv.classList.remove("hidden");
       selectedDiv.innerHTML = "";
-      chosen.forEach(({id, meal}, i) => {
-        const c = document.createElement("div");
-        c.className = "card";
+      const previewWrap = document.createElement("div");
+      previewWrap.className = "myweek-wrap";
 
-        // image/title/subtitle with link to pdf/url (open in new tab for external, inline-capable for local)
+      const showCount = 3;
+      chosen.slice(0, showCount).forEach(({id, meal}) => {
+        const c = document.createElement("div");
+        c.className = "card myweek-card";
+
+        // anchor wraps image/title/subtitle and links to pdf or recipe
         const linkHref = meal.pdf || meal.url || "";
         const hasLink = !!linkHref;
         const anchor = hasLink ? document.createElement("a") : document.createElement("div");
         if (hasLink) {
           anchor.href = linkHref;
-          // external should open new tab; local PDFs are same-origin so don't force new tab
+          // local pdfs shouldn't force new tab so users can view inline
           if (isLocalPdf(linkHref)) { anchor.target = "_self"; anchor.rel = ""; } else { anchor.target = "_blank"; anchor.rel = "noopener"; }
           anchor.style.textDecoration = "none";
           anchor.style.color = "inherit";
         }
         const imgEl = document.createElement("img");
-        imgEl.src = meal.image||'';
-        imgEl.alt = meal.title||'';
+        imgEl.src = meal.image || "";
+        imgEl.alt = meal.title || "";
         const h4 = document.createElement("h4");
-        h4.textContent = meal.title||'';
+        h4.textContent = meal.title || "";
         const p = document.createElement("p");
         p.className = "muted";
-        p.textContent = meal.subtitle||'';
+        p.textContent = meal.subtitle || "";
         if (hasLink) {
           anchor.appendChild(imgEl);
           anchor.appendChild(h4);
@@ -267,99 +299,144 @@
           c.appendChild(p);
         }
 
-        // portion selector (base 2 shown as default)
-        const label = document.createElement("label");
-        label.className = "portion";
-        label.innerHTML = `Portions: <select data-portion-id="${encodeURIComponent(id)}">` +
-          Array.from({length:9},(_,n)=>n+2).map(n=>`<option value="${n}">${n}</option>`).join("") +
-          `</select>`;
-        c.appendChild(label);
+        // portion control (persisting previous selection if present)
+        const portionLabel = document.createElement("label");
+        portionLabel.className = "portion";
+        const select = document.createElement("select");
+        select.setAttribute("data-portion-id", encodeURIComponent(id));
+        for (let n=2; n<=10; n++) {
+          const opt = document.createElement("option");
+          opt.value = n;
+          opt.textContent = n;
+          select.appendChild(opt);
+        }
+        // set preselected value if we have one
+        const prev = portions[id];
+        if (prev) select.value = String(prev);
+        portionLabel.innerHTML = "Portions: ";
+        portionLabel.appendChild(select);
+        c.appendChild(portionLabel);
 
-        selectedDiv.appendChild(c);
+        previewWrap.appendChild(c);
       });
 
-      // Add a Build Ingredients button below the selected preview to finalize portions -> grocery
+      // if more than showCount, add a small +N indicator card
+      if (chosen.length > 3) {
+        const more = document.createElement("div");
+        more.className = "card more-card";
+        more.innerHTML = `<div style="padding:18px;text-align:center"><strong>+${chosen.length - 3} more</strong><div class="muted">selected</div></div>`;
+        previewWrap.appendChild(more);
+      }
+
+      selectedDiv.appendChild(previewWrap);
+
+      // Build button (styled) and small "Rebuild" capability
+      let controls = document.getElementById("myweek-controls");
+      if (!controls) {
+        controls = document.createElement("div");
+        controls.id = "myweek-controls";
+        controls.className = "myweek-controls";
+        selectedDiv.appendChild(controls);
+      }
+      controls.innerHTML = '';
       const buildBtn = document.createElement("button");
+      buildBtn.className = "btn primary";
       buildBtn.textContent = "Build Ingredients";
-      buildBtn.style.marginTop = "12px";
-      buildBtn.addEventListener("click", () => {
-        // Read portion values from My Week preview selects keyed by data-portion-id
-        const portionsMap = {};
-        chosen.forEach(({id}) => {
-          const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
-          portionsMap[id] = sel ? parseInt(sel.value, 10) : 2;
-        });
+      buildBtn.addEventListener("click", () => buildIngredients(chosen));
+      controls.appendChild(buildBtn);
 
-        // build grocery list using these portions
-        const groceryItems = [];
-        chosen.forEach(({id, meal}) => {
-          const portion = portionsMap[id] || 2;
-          (meal.ingredients || []).forEach(ing => {
-            const copy = Object.assign({}, ing);
-            if (copy.quantity != null) {
-              copy.quantity = copy.quantity * (portion/2);
-              copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
-            }
-            groceryItems.push(copy);
-          });
-        });
-
-        // aggregate simple
-        const grouped = {};
-        groceryItems.forEach(ing => {
-          if (!ing || !ing.ingredient) return;
-          const key = (ing.ingredient + "|" + (ing.unit||"")).toLowerCase();
-          if (!grouped[key]) grouped[key] = { ...ing, quantity: 0 };
-          if (ing.quantity) grouped[key].quantity += Number(ing.quantity);
-          else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
-        });
-        groceryList && (groceryList.innerHTML = "");
-        Object.values(grouped).forEach(ing => {
-          const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
-          const li = document.createElement("li");
-          li.textContent = `${qty} ${ing.unit||""} ${ing.ingredient}`.trim();
-          groceryList && groceryList.appendChild(li);
-        });
-        grocerySection && grocerySection.classList.remove("hidden");
-        buildBtn.disabled = true;
-        resetBtn && resetBtn.classList.remove("hidden");
-      });
-
-      selectedDiv.appendChild(buildBtn);
+      const rebuildNote = document.createElement("div");
+      rebuildNote.className = "muted small";
+      rebuildNote.textContent = "Change portions and press Build Ingredients again to update the list.";
+      controls.appendChild(rebuildNote);
     }
 
-    // Re-render menu to only show chosen items (still selected)
-    if (menu) {
-      menu.innerHTML = "";
-      chosen.forEach(({meal}, i) => {
-        const card = createCard(meal,i);
-        card.classList.add("selected");
-        const pill = card.querySelector(".selector");
-        if (pill) pill.textContent = "Selected";
-        menu.appendChild(card);
-      });
-    }
-
+    // disable main next UI
     nextBtn.disabled = true;
-  });
+    const floatNextEl = document.getElementById("float-next");
+    if (floatNextEl) floatNextEl.disabled = true;
+  }
 
-  // Reset
+  function backToSelection() {
+    // show menu again, keep selection and portions
+    locked = false;
+    isMenuVisible = true;
+    renderMenu();
+    // clear my week preview but keep it in memory
+    if (selectedDiv) selectedDiv.innerHTML = "";
+    setFloatingToNext();
+    // enable next if selections exist
+    nextBtn.disabled = selected.size === 0;
+    const floatNext = document.getElementById("float-next");
+    if (floatNext) floatNext.disabled = selected.size === 0;
+  }
+
+  function buildIngredients(chosen) {
+    // read portions from selects and persist them
+    chosen.forEach(({id}) => {
+      const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
+      const val = sel ? parseInt(sel.value, 10) : 2;
+      portions[id] = val;
+    });
+
+    // construct grocery items using portions mapping
+    const groceryItems = [];
+    chosen.forEach(({id, meal}) => {
+      const portion = portions[id] || 2;
+      (meal.ingredients || []).forEach(ing => {
+        const copy = Object.assign({}, ing);
+        if (copy.quantity != null) {
+          copy.quantity = copy.quantity * (portion / 2);
+          copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
+        }
+        groceryItems.push(copy);
+      });
+    });
+
+    // aggregate simple
+    const grouped = {};
+    groceryItems.forEach(ing => {
+      if (!ing || !ing.ingredient) return;
+      const key = (ing.ingredient + "|" + (ing.unit || "")).toLowerCase();
+      if (!grouped[key]) grouped[key] = { ...ing, quantity: 0 };
+      if (ing.quantity) grouped[key].quantity += Number(ing.quantity);
+      else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
+    });
+
+    // render grocery
+    if (groceryList) groceryList.innerHTML = "";
+    Object.values(grouped).forEach(ing => {
+      const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
+      const li = document.createElement("li");
+      li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+      groceryList && groceryList.appendChild(li);
+    });
+    grocerySection && grocerySection.classList.remove("hidden");
+    // allow multiple rebuilds: do not disable the build button; it remains active for changes
+  }
+
+  // Reset handler resets everything
   resetBtn && resetBtn.addEventListener("click", () => {
     selected = new Set();
     locked = false;
+    portions = {}; // reset portions mapping
     selectedDiv && (selectedDiv.innerHTML = "");
     groceryList && (groceryList.innerHTML = "");
-    grocerySection && grocerySection.classList.add("hidden");
+    grocerySection && (grocerySection.classList.add("hidden"));
     resetBtn.classList.add("hidden");
     renderMenu();
   });
 
-  // modal close handlers (defensive)
+  // wire floating "Next" to mirror the static next button (in case of non-JS)
+  if (nextBtn) nextBtn.addEventListener("click", () => nextHandler());
+  // and ensure float button also responds to keyboard (already a button)
+
+  // modal close handlers
   if (modalClose) modalClose.addEventListener("click", safeHideModal);
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
 
-  // Download grocery
+  // download grocery
   downloadBtn && downloadBtn.addEventListener("click", () => {
     const text = Array.from((groceryList||{querySelectorAll:() => []}).querySelectorAll("li")).map(li => "• " + li.textContent).join("\n");
     const blob = new Blob([text], { type: "text/plain" });
@@ -371,6 +448,6 @@
     URL.revokeObjectURL(url);
   });
 
-  // Initial render
+  // initial render
   renderMenu();
 })();
