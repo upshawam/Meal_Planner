@@ -1,82 +1,57 @@
-/* Added styles for floating action, my-week preview, prettier build button and +N indicator */
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weekly Meal Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Weekly Menu</h1>
+  </header>
 
-/* Floating action button (bottom-right) */
-.float-action {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 1200;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
+  <main>
+    <section id="menu" class="grid" aria-live="polite"></section>
 
-/* Simple button styles used by float and build controls */
-.btn {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 0;
-  font-weight: 700;
-  cursor: pointer;
-  background: #111827;
-  color: white;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
-}
-.btn.secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-.btn.primary {
-  background: var(--accent);
-  color: white;
-}
-.btn.fullwidth {
-  width: 100%;
-}
+    <div class="controls">
+      <button id="next" disabled>Next</button>
+      <button id="reset" class="secondary hidden">Reset</button>
+    </div>
 
-/* my week preview */
-#selected {
-  margin-top: 12px;
-}
-.myweek-wrap {
-  display: flex;
-  gap: 12px;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
-.myweek-card {
-  width: 220px;
-  min-height: 140px;
-  padding: 8px;
-}
-.more-card {
-  width: 120px;
-  min-height: 120px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
+    <section aria-hidden="false">
+      <h2>My Week</h2>
+      <div id="selected" class="grid"></div>
+    </section>
 
-/* center controls under My Week */
-.myweek-controls {
-  margin-top: 12px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  max-width: 720px;
-}
+    <section id="grocery-section" class="hidden">
+      <h2>Grocery List</h2>
+      <ul id="grocery"></ul>
+      <button id="download">Download List</button>
+    </section>
+  </main>
 
-/* small helper classes */
-.small { font-size: 0.85rem; }
-.muted { color: var(--muted); }
+  <!-- Modal for details (start hidden) -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close" aria-label="Close">×</button>
+      <h2 id="modal-title"></h2>
+      <p id="modal-subtitle" class="muted"></p>
+      <p id="modal-desc"></p>
+      <p id="modal-ingredients"></p>
+      <div id="modal-actions" style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+        <a id="modal-link" target="_blank" rel="noopener">Open recipe</a>
+        <button id="modal-view-pdf" class="secondary" style="display:none;">View PDF</button>
+        <a id="modal-download" style="display:none;">Download PDF</a>
+      </div>
 
-/* Reduce duplication: ensure selected preview cards look different */
-.card.myweek-card img { height: 80px; object-fit: cover; border-radius:6px; }
-.card.more-card { background: rgba(0,0,0,0.02); }
+      <div id="modal-pdf-viewer" style="margin-top:12px;display:none;">
+        <div id="modal-pdf-message" class="muted" style="margin-bottom:8px;"></div>
+        <div style="width:100%;height:60vh;background:#fff;border-radius:6px;overflow:hidden;">
+          <iframe id="modal-pdf-iframe" src="" style="width:100%;height:100%;border:0;" title="PDF viewer"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 
-/* ensure floating action is unobtrusive on small screens */
-@media (max-width:600px) {
-  .float-action { right: 10px; bottom: 10px; }
-  .myweek-wrap { gap: 8px; }
-  .myweek-card { width: calc(50% - 8px); }
+  <script src="app.js"></script>
+</body>
