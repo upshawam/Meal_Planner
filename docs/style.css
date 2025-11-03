@@ -1,6 +1,6 @@
-/* Full stylesheet with tighter grid, visible selector pill, recipe pill placement,
-   sticky top-action, sticky Build button, and grocery notepad styling.
-   Replace docs/style.css with this file (it merges the earlier styles and improvements).
+/* Full updated stylesheet — tighter grid, visible selector pill (outlined green), recipe pill top-right,
+   packed preview columns (3 rows), sticky top-action and sticky Build button, grocery notepad.
+   Replace docs/style.css with this file.
 */
 
 /* Core variables & typography */
@@ -96,7 +96,7 @@ body{
   color:var(--accent);
   font-weight:700;
   font-size:0.85rem;
-  border:2px solid rgba(22,163,74,0.28);
+  border:2px solid rgba(22,163,74,0.34);
   box-shadow:none;
   transition: background .12s ease, color .12s ease, transform .08s ease;
 }
@@ -193,7 +193,8 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(3, auto);
-  gap: 10px;
+  grid-auto-columns: 210px; /* fixed column width equal to card width */
+  gap: 8px;
   align-items: start;
 }
 .myweek-card {
@@ -218,6 +219,10 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   flex-direction:column;
   gap:8px;
   max-width: 720px;
+  position: sticky;
+  top: 72px;
+  z-index: 12;
+  align-self: start;
 }
 
 /* Grocery notepad */
