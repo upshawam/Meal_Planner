@@ -39,8 +39,8 @@
         },
         {
           "ingredient": "Mozzarella Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -104,8 +104,8 @@
         },
         {
           "ingredient": "Pepper Jack Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -262,8 +262,8 @@
         },
         {
           "ingredient": "Jasmine Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
+          "amount": "\u00be cup",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "cup"
         },
@@ -320,8 +320,8 @@
         },
         {
           "ingredient": "Mozzarella Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -369,8 +369,8 @@
         },
         {
           "ingredient": "Cilantro",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         }
@@ -427,8 +427,8 @@
         },
         {
           "ingredient": "Parsley",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         },
@@ -450,8 +450,8 @@
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -578,8 +578,8 @@
         },
         {
           "ingredient": "Jasmine Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
+          "amount": "\u00be cup",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "cup"
         },
@@ -601,8 +601,8 @@
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
+          "amount": "\u00bc cup",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "cup"
         },
@@ -680,8 +680,8 @@
         },
         {
           "ingredient": "Monterey Jack Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -722,8 +722,8 @@
         },
         {
           "ingredient": "White Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
+          "amount": "\u00be cup",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "cup"
         }
@@ -787,8 +787,8 @@
         },
         {
           "ingredient": "White Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
+          "amount": "\u00be cup",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "cup"
         }
@@ -903,8 +903,8 @@
         },
         {
           "ingredient": "Sesame Oil",
-          "amount": "½ tablespoon",
-          "quantity_display": "½",
+          "amount": "\u00bd tablespoon",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "tablespoon"
         },
@@ -924,15 +924,15 @@
         },
         {
           "ingredient": "Cilantro",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         },
         {
           "ingredient": "Peanuts",
-          "amount": "½ ounce",
-          "quantity_display": "½",
+          "amount": "\u00bd ounce",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "ounce"
         }
@@ -1024,8 +1024,8 @@
         },
         {
           "ingredient": "White Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
+          "amount": "\u00be cup",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "cup"
         }
@@ -1088,7 +1088,7 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Jalapeño",
+          "ingredient": "Jalape\u00f1o",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
@@ -1119,7 +1119,7 @@
     },
     {
       "url": "https://www.everyplate.com/recipes/jack-o-lantern-mushroom-pot-pie-66f0bfb888e18f7212d3e640?week=2025-W44",
-      "title": "Jack-O’-Lantern Mushroom Pot Pie",
+      "title": "Jack-O\u2019-Lantern Mushroom Pot Pie",
       "subtitle": "with Biscuits, Peas & Thyme Gravy",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66f0bfb888e18f7212d3e640-c3642561-da6e0037.jpeg",
       "pdf": "./pdfs/66f0bfb888e18f7212d3e640-en-US.pdf",
@@ -1140,8 +1140,8 @@
         },
         {
           "ingredient": "Thyme",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         },
@@ -1333,8 +1333,8 @@
         },
         {
           "ingredient": "Cilantro",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         }
@@ -1349,8 +1349,8 @@
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -1393,8 +1393,8 @@
       "ingredients": [
         {
           "ingredient": "Chipotle Powder",
-          "amount": "¼ teaspoon",
-          "quantity_display": "¼",
+          "amount": "\u00bc teaspoon",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "teaspoon"
         },
@@ -1465,8 +1465,8 @@
         },
         {
           "ingredient": "Cheddar Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -1493,8 +1493,8 @@
         },
         {
           "ingredient": "Mozzarella Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -1558,8 +1558,8 @@
         },
         {
           "ingredient": "Sesame Oil",
-          "amount": "½ tablespoon",
-          "quantity_display": "½",
+          "amount": "\u00bd tablespoon",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "tablespoon"
         },
@@ -1795,8 +1795,8 @@
         },
         {
           "ingredient": "Parsley",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         }
@@ -1839,15 +1839,15 @@
         },
         {
           "ingredient": "Parsley",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
+          "amount": "\u00bc ounce",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "ounce"
         },
         {
           "ingredient": "Sliced Almonds",
-          "amount": "½ ounce",
-          "quantity_display": "½",
+          "amount": "\u00bd ounce",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "ounce"
         }
@@ -1876,15 +1876,15 @@
         },
         {
           "ingredient": "Mozzarella Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
         {
           "ingredient": "Italian Seasoning",
-          "amount": "⅔ tablespoon",
-          "quantity_display": "⅔",
+          "amount": "\u2154 tablespoon",
+          "quantity_display": "\u2154",
           "quantity": 0.6666666666666666,
           "unit": "tablespoon"
         },
@@ -1911,8 +1911,8 @@
         },
         {
           "ingredient": "Garlic Powder",
-          "amount": "¾ teaspoon",
-          "quantity_display": "¾",
+          "amount": "\u00be teaspoon",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "teaspoon"
         },
@@ -1948,15 +1948,15 @@
         },
         {
           "ingredient": "Cheddar Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
         {
           "ingredient": "Panko Breadcrumbs",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
+          "amount": "\u00bc cup",
+          "quantity_display": "\u00bc",
           "quantity": 0.25,
           "unit": "cup"
         },
@@ -1969,8 +1969,8 @@
         },
         {
           "ingredient": "Onion",
-          "amount": "½ unit",
-          "quantity_display": "½",
+          "amount": "\u00bd unit",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "unit"
         },
@@ -2062,8 +2062,8 @@
         },
         {
           "ingredient": "Jasmine Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
+          "amount": "\u00be cup",
+          "quantity_display": "\u00be",
           "quantity": 0.75,
           "unit": "cup"
         },
@@ -2092,8 +2092,8 @@
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
-          "amount": "½ cup",
-          "quantity_display": "½",
+          "amount": "\u00bd cup",
+          "quantity_display": "\u00bd",
           "quantity": 0.5,
           "unit": "cup"
         },
@@ -2278,7 +2278,7 @@
     {
       "url": "https://www.everyplate.com/recipes/caesar-salad-and-garlic-bread-685e5b9272166fd56408f43f?week=2025-W44",
       "title": "Caesar Salad & Garlic Bread",
-      "subtitle": "Meal or side—you decide! | 2 Servings",
+      "subtitle": "Meal or side\u2014you decide! | 2 Servings",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/649357774b18c31a619ff871-b97b1d69.jpeg",
       "pdf": "",
       "ingredients": [
