@@ -143,42 +143,59 @@
   nextBtn && nextBtn.addEventListener("click", () => {
     if (!selected.size) return;
     locked = true;
-    const chosen = Array.from(selected).map(id => meals[parseInt(id)]);
+
+    // IMPORTANT: capture portions from the current rendered selects BEFORE we re-render the menu.
+    // The indices in `selected` are the original meal indices, so read those selects now.
+    const portionsMap = {};
+    Array.from(selected).forEach(id => {
+      const selectEl = document.querySelector(`select[data-portion="${id}"]`);
+      portionsMap[id] = selectEl ? parseInt(selectEl.value, 10) : 2;
+    });
+
+    // Build chosen as pairs to preserve original ids -> meal mapping
+    const chosenPairs = Array.from(selected).map(id => ({ id, meal: meals[parseInt(id, 10)] }));
+
     // show selected in preview
     if (selectedDiv) {
       selectedDiv.innerHTML = "";
-      chosen.forEach(m => {
+      chosenPairs.forEach(({meal}) => {
         const c = document.createElement("div");
         c.className = "card";
-        c.innerHTML = `<img src="${m.image||''}" alt="${m.title||''}"><h4>${m.title||''}</h4>`;
+        // include link so user can click from "My Week"
+        const linkHref = meal.pdf || meal.url || "#";
+        const linkText = (meal.pdf || meal.url) ? (meal.pdf && meal.pdf.endsWith(".pdf") ? "Open PDF" : "Open recipe") : "";
+        const anchor = linkHref && linkText ? `<a href="${linkHref}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><img src="${meal.image||''}" alt="${meal.title||''}"><h4>${meal.title||''}</h4><p class="muted">${meal.subtitle||''}</p></a>` : `<img src="${meal.image||''}" alt="${meal.title||''}"><h4>${meal.title||''}</h4><p class="muted">${meal.subtitle||''}</p>`;
+        c.innerHTML = anchor;
         selectedDiv.appendChild(c);
       });
     }
-    // render only selected in menu
+
+    // render only selected in menu (re-create cards for chosen)
     if (menu) {
       menu.innerHTML = "";
-      chosen.forEach((m,i) => {
-        const card = createCard(m,i);
+      chosenPairs.forEach(({meal}, i) => {
+        const card = createCard(meal,i);
         card.classList.add("selected");
         const pill = card.querySelector(".selector");
         if (pill) pill.textContent = "Selected";
         menu.appendChild(card);
       });
     }
-    // build grocery
+
+    // build grocery using the captured portionsMap so user-chosen portions persist
     const groceryItems = [];
-    chosen.forEach((m,i) => {
-      const selectEl = document.querySelector(`select[data-portion="${i}"]`);
-      const portion = selectEl ? parseInt(selectEl.value) : 2;
-      (m.ingredients || []).forEach(ing => {
+    chosenPairs.forEach(({id, meal}, idx) => {
+      const portion = portionsMap[id] || 2;
+      (meal.ingredients || []).forEach(ing => {
         const copy = Object.assign({}, ing);
-        if (copy.quantity) {
+        if (copy.quantity != null) {
           copy.quantity = copy.quantity * (portion/2);
-          copy.quantity_display = copy.quantity % 1 === 0 ? String(copy.quantity) : copy.quantity.toFixed(2);
+          copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
         }
         groceryItems.push(copy);
       });
     });
+
     // aggregate simple
     const grouped = {};
     groceryItems.forEach(ing => {
@@ -230,4 +247,3 @@
 
   // Initial render
   renderMenu();
-})();
