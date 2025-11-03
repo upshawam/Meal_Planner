@@ -274,3 +274,4 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 @media (max-width:480px){
   .grid{ grid-template-columns: repeat(1, 1fr); }
   .myweek-card { width: 100%; }
+}
