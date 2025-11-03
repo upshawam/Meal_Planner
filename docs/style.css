@@ -1,170 +1,82 @@
-/* Updated styles:
-   - grid layout with responsive fallbacks
-   - card styling
-   - modal styling and strong hidden rule so the modal never shows until explicitly opened
-*/
-:root{
-  --bg: #f7fafc;
-  --card: #fff;
-  --muted: #6b7280;
-  --accent: #16a34a;
-  --radius:10px;
-  --gap:16px;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+/* Added styles for floating action, my-week preview, prettier build button and +N indicator */
+
+/* Floating action button (bottom-right) */
+.float-action {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-body{
-  margin:20px;
-  background:var(--bg);
-  color:#0f172a;
+/* Simple button styles used by float and build controls */
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+}
+.btn.secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+.btn.primary {
+  background: var(--accent);
+  color: white;
+}
+.btn.fullwidth {
+  width: 100%;
 }
 
-header h1{margin:0 0 12px 0}
-
-/* Use CSS Grid so we can enforce columns per row.
-   On narrow screens it will fall back to fewer columns via media queries. */
-.grid{
-  display:grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap:var(--gap);
+/* my week preview */
+#selected {
+  margin-top: 12px;
+}
+.myweek-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.myweek-card {
+  width: 220px;
+  min-height: 140px;
+  padding: 8px;
+}
+.more-card {
+  width: 120px;
+  min-height: 120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
-/* Card */
-.card{
-  border-radius:8px;
-  background:var(--card);
-  box-shadow:0 6px 12px rgba(2,6,23,0.06);
-  padding:10px;
-  border:2px solid transparent;
-  cursor:pointer;
-  position:relative;
-  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+/* center controls under My Week */
+.myweek-controls {
+  margin-top: 12px;
   display:flex;
   flex-direction:column;
-  min-height: 200px;
-}
-.card:hover{transform:translateY(-4px)}
-.card img{
-  width:100%;
-  border-radius:6px;
-  height:120px;
-  object-fit:cover;
-  flex: 0 0 auto;
-}
-.card h4{
-  margin:8px 0 4px 0;
-  font-size:1.06rem; /* slightly larger title than subtitle */
-  line-height:1.15;
-}
-.card p{
-  margin:0;
-  color:var(--muted);
-  font-size:0.88rem; /* subtitle slightly smaller */
+  gap:8px;
+  max-width: 720px;
 }
 
-/* selection pill */
-/* moved to bottom-right as requested */
-.selector{
-  position:absolute;
-  /* top:10px; right:10px; */ /* old position */
-  bottom:10px;
-  right:10px;
-  padding:6px 10px;
-  border-radius:999px;
-  background:rgba(0,0,0,0.04);
-  font-weight:600;
-  font-size:0.85rem;
-}
-.card.selected{
-  border-color:var(--accent);
-  box-shadow:0 12px 24px rgba(22,163,74,0.08);
-}
-.card.selected .selector{
-  background:var(--accent);
-  color:white;
-}
+/* small helper classes */
+.small { font-size: 0.85rem; }
+.muted { color: var(--muted); }
 
-/* portion control (used now in My Week preview) */
-.portion{
-  display:block;
-  margin-top:8px;
-  font-size:0.88rem;
-  color:var(--muted);
-  margin-top: auto; /* push portion selector to bottom of card when used */
-}
+/* Reduce duplication: ensure selected preview cards look different */
+.card.myweek-card img { height: 80px; object-fit: cover; border-radius:6px; }
+.card.more-card { background: rgba(0,0,0,0.02); }
 
-/* controls */
-.controls{
-  margin:18px 0;
-  display:flex;
-  gap:12px;
-}
-button{
-  padding:10px 14px;
-  border-radius:8px;
-  border:0;
-  background:#111827;
-  color:white;
-  cursor:pointer;
-  font-weight:600;
-}
-button.secondary{background:#e5e7eb; color:#111827}
-button:disabled{opacity:0.45; cursor:not-allowed}
-
-.hidden{display:none}
-
-/* Ensure hidden truly hides modal (override ordering/priority issues) */
-.modal.hidden {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* modal (visible state) */
-.modal{
-  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-  background:rgba(2,6,23,0.45);
-  z-index:1000;
-}
-.modal-content{
-  background:var(--card);
-  border-radius:10px;
-  padding:18px;
-  width:min(780px,96%);
-  box-shadow:0 18px 48px rgba(2,6,23,0.28);
-  position:relative;
-}
-.modal-close{
-  position:absolute;
-  right:12px;
-  top:8px;
-  border:0;
-  background:transparent;
-  font-size:20px;
-  cursor:pointer;
-}
-.muted{color:var(--muted)}
-
-/* selected preview */
-#selected .card{
-  min-height: 120px;
-  padding:6px;
-}
-#selected .card img{height:80px}
-
-/* Responsiveness: reduce columns on smaller screens */
-@media (max-width:1600px){
-  .grid{ grid-template-columns: repeat(6, 1fr); }
-}
-@media (max-width:1400px){
-  .grid{ grid-template-columns: repeat(5, 1fr); }
-}
-@media (max-width:1100px){
-  .grid{ grid-template-columns: repeat(4, 1fr); }
-}
-@media (max-width:860px){
-  .grid{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width:480px){
-  .grid{ grid-template-columns: repeat(1, 1fr); }
+/* ensure floating action is unobtrusive on small screens */
+@media (max-width:600px) {
+  .float-action { right: 10px; bottom: 10px; }
+  .myweek-wrap { gap: 8px; }
+  .myweek-card { width: calc(50% - 8px); }

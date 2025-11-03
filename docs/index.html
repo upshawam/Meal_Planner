@@ -1,46 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Weekly Meal Planner</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Weekly Menu</h1>
-  </header>
+/* Added styles for floating action, my-week preview, prettier build button and +N indicator */
 
-  <main>
-    <section id="menu" class="grid" aria-live="polite"></section>
+/* Floating action button (bottom-right) */
+.float-action {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 
-    <div class="controls">
-      <button id="next" disabled>Next</button>
-      <button id="reset" class="secondary hidden">Reset</button>
-    </div>
+/* Simple button styles used by float and build controls */
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+}
+.btn.secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+.btn.primary {
+  background: var(--accent);
+  color: white;
+}
+.btn.fullwidth {
+  width: 100%;
+}
 
-    <section aria-hidden="false">
-      <h2>My Week</h2>
-      <div id="selected" class="grid"></div>
-    </section>
+/* my week preview */
+#selected {
+  margin-top: 12px;
+}
+.myweek-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.myweek-card {
+  width: 220px;
+  min-height: 140px;
+  padding: 8px;
+}
+.more-card {
+  width: 120px;
+  min-height: 120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
 
-    <section id="grocery-section" class="hidden">
-      <h2>Grocery List</h2>
-      <ul id="grocery"></ul>
-      <button id="download">Download List</button>
-    </section>
-  </main>
+/* center controls under My Week */
+.myweek-controls {
+  margin-top: 12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-width: 720px;
+}
 
-  <!-- Modal for details (start hidden) -->
-  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-content">
-      <button id="modal-close" class="modal-close" aria-label="Close">×</button>
-      <h2 id="modal-title"></h2>
-      <p id="modal-subtitle" class="muted"></p>
-      <p id="modal-desc"></p>
-      <p id="modal-ingredients"></p>
-      <a id="modal-link" target="_blank" rel="noopener">Open recipe</a>
-    </div>
-  </div>
+/* small helper classes */
+.small { font-size: 0.85rem; }
+.muted { color: var(--muted); }
 
-  <script src="app.js"></script>
-</body>
+/* Reduce duplication: ensure selected preview cards look different */
+.card.myweek-card img { height: 80px; object-fit: cover; border-radius:6px; }
+.card.more-card { background: rgba(0,0,0,0.02); }
+
+/* ensure floating action is unobtrusive on small screens */
+@media (max-width:600px) {
+  .float-action { right: 10px; bottom: 10px; }
+  .myweek-wrap { gap: 8px; }
+  .myweek-card { width: calc(50% - 8px); }
