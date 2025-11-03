@@ -6,14 +6,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Weekly Menu</h1>
-  </header>
-
-  <!-- Sticky top action bar (visible while scrolling on desktop) -->
+  <!-- top sticky action bar replaces the old header -->
   <div class="top-action" role="region" aria-label="Selection controls" id="top-action">
     <div class="top-left">
-      <strong>Weekly Menu</strong>
+      <strong class="top-title">Weekly Menu</strong>
     </div>
     <div class="top-right">
       <span id="top-selected-count" class="count muted">0 selected</span>
@@ -25,20 +21,9 @@
   <main>
     <section id="menu" class="grid" aria-live="polite"></section>
 
-    <div class="controls">
-      <button id="next" disabled>Next</button>
-      <button id="reset" class="secondary hidden">Reset</button>
-    </div>
-
     <section aria-hidden="false">
-      <h2>My Week</h2>
-      <div id="selected" class="grid"></div>
-    </section>
-
-    <section id="grocery-section" class="hidden">
-      <h2>Grocery List</h2>
-      <ul id="grocery"></ul>
-      <button id="download">Download List</button>
+      <h2 class="visually-hidden">My Week</h2>
+      <div id="selected" class=""></div>
     </section>
   </main>
 
