@@ -63,9 +63,11 @@ header h1{margin:0 0 12px 0}
 }
 
 /* selection pill */
+/* moved to bottom-right as requested */
 .selector{
   position:absolute;
-  top:10px;
+  /* top:10px; right:10px; */ /* old position */
+  bottom:10px;
   right:10px;
   padding:6px 10px;
   border-radius:999px;
@@ -82,13 +84,13 @@ header h1{margin:0 0 12px 0}
   color:white;
 }
 
-/* portion control */
+/* portion control (used now in My Week preview) */
 .portion{
   display:block;
   margin-top:8px;
   font-size:0.88rem;
   color:var(--muted);
-  margin-top: auto; /* push portion selector to bottom of card */
+  margin-top: auto; /* push portion selector to bottom of card when used */
 }
 
 /* controls */
