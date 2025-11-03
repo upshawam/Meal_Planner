@@ -1,7 +1,6 @@
-// Full updated docs/app.js — tight grid, visible selector pill, selected-state preserved,
-// preview packed into columns (3 rows per column), recipe pill top-right on preview cards,
-// sticky top-action and sticky Build Ingredients control.
-// Drop this file into docs/app.js (replace existing).
+// Full updated docs/app.js — keeps selected-state on back, packs preview columns with small padding,
+// places recipe-pill top-right (solid), and preserves selector visuals.
+// Replace docs/app.js with this file.
 (async function() {
   // Load week.json
   let data;
@@ -245,6 +244,10 @@
       const left = document.createElement("div");
       left.className = "myweek-left";
 
+      // small wrapper to give left column a bit of inner padding
+      const leftInner = document.createElement("div");
+      leftInner.style.paddingRight = "8px";
+
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
 
@@ -306,10 +309,10 @@
         const maybeSelector = c.querySelector(".selector");
         if (maybeSelector) maybeSelector.remove();
 
-        // add a recipe pill top-right
+        // add a recipe pill top-right (solid; more visible)
         if (linkHref) {
           const recipe = document.createElement("a");
-          recipe.className = "recipe-pill";
+          recipe.className = "recipe-pill strong";
           recipe.textContent = "Recipe";
           recipe.href = linkHref;
           recipe.target = isLocalPdf(linkHref) ? "_self" : "_blank";
@@ -322,7 +325,8 @@
         previewWrap.appendChild(c);
       });
 
-      left.appendChild(previewWrap);
+      leftInner.appendChild(previewWrap);
+      left.appendChild(leftInner);
 
       // sticky build controls so the Build button is always visible
       const controls = document.createElement("div");
@@ -330,8 +334,10 @@
       controls.style.position = "sticky";
       controls.style.top = "72px"; // below top bar
       controls.style.zIndex = "12";
+      // normal-size build button slightly wider than text
       const buildBtn = document.createElement("button");
       buildBtn.className = "btn primary";
+      buildBtn.style.minWidth = "150px";
       buildBtn.textContent = "Build Ingredients";
       buildBtn.addEventListener("click", () => buildIngredients(chosen));
       controls.appendChild(buildBtn);
@@ -341,10 +347,12 @@
       controls.appendChild(note);
       left.appendChild(controls);
 
-      // right column: grocery notepad
+      // right column: grocery notepad (closer to left now)
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
+      right.style.maxWidth = "320px";   // not full-page wide anymore
+      right.style.marginLeft = "12px";  // small gap next to cards
 
       const header = document.createElement("div");
       header.className = "note-header";
