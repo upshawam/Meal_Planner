@@ -1,8 +1,4 @@
-// docs/app.js — updated housekeeping and UX improvements:
-// - Hide original menu after Next; show a non-duplicated My Week preview (max 3 cards + "+N more")
-// - Floating Next/Back action so it's visible while scrolling
-// - Prettier Build Ingredients button below My Week; supports repeated rebuilds and changing portions
-// - Back restores menu and keeps selections and portions
+// docs/app.js — keep top sticky bar synced with selection and wire top-next/top-back to same handlers
 (async function() {
   // Load week.json
   let data;
@@ -20,13 +16,16 @@
   const meals = data.meals || [];
   const menu = document.getElementById("menu");
   const nextBtn = document.getElementById("next");
+  const topNext = document.getElementById("top-next");
+  const topBack = document.getElementById("top-back");
+  const topCount = document.getElementById("top-selected-count");
   const resetBtn = document.getElementById("reset");
   const selectedDiv = document.getElementById("selected");
   const grocerySection = document.getElementById("grocery-section");
   const groceryList = document.getElementById("grocery");
   const downloadBtn = document.getElementById("download");
 
-  // modal elements
+  // modal elements (unchanged)
   const modal = document.getElementById("modal");
   const modalClose = document.getElementById("modal-close");
   const modalTitle = document.getElementById("modal-title");
@@ -48,20 +47,16 @@
 
   safeHideModal();
 
-  // stable id helper
   function mealIdFor(meal, idx) {
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
-  // state
-  let selected = new Set();        // set of mealId strings
-  let locked = false;              // locked after pressing Next
-  let isMenuVisible = true;        // toggles menu vs my-week view
+  let selected = new Set();
+  let locked = false;
+  let isMenuVisible = true;
+  const portions = {};
 
-  // remember portion choices by meal id (persist while navigating)
-  const portions = {}; // { [mealId]: number }
-
-  // UI: floating action (created if not present)
+  // floating action (keep if present) — still used for mobile UX
   let floatAction = document.getElementById("float-action");
   if (!floatAction) {
     floatAction = document.createElement("div");
@@ -70,23 +65,24 @@
     document.body.appendChild(floatAction);
   }
 
-  // ensure next button exists in DOM control too (for accessibility / non-JS)
-  // But the floating action will control Next/Back and mirror state.
-  function setFloatingToNext() {
-    floatAction.innerHTML = '<button id="float-next" class="btn primary">Next</button>';
-    const btn = document.getElementById("float-next");
-    if (btn) btn.addEventListener("click", () => nextHandler());
+  function updateTopControls() {
+    const count = selected.size;
+    if (topCount) topCount.textContent = `${count} selected`;
+    if (topNext) {
+      topNext.disabled = count === 0;
+      topNext.classList.toggle("disabled", count === 0);
+      topNext.style.opacity = count === 0 ? "0.6" : "1";
+    }
+    // keep static next in sync for non-JS fallback
+    if (nextBtn) nextBtn.disabled = count === 0;
+    // show/hide topBack depending on menu state
+    if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
+    // if we have a floatNext (mobile), keep it in sync too
+    const floatNext = document.querySelector("#float-action .fab, #float-next");
+    if (floatNext) floatNext.disabled = count === 0;
   }
-  function setFloatingToBack() {
-    floatAction.innerHTML = '<button id="float-back" class="btn secondary">Back</button>';
-    const btn = document.getElementById("float-back");
-    if (btn) btn.addEventListener("click", () => backToSelection());
-  }
-  // start state
-  setFloatingToNext();
 
   function createCard(meal, idx, options = {}) {
-    // options: { showSelector: true/false, preSelected: true/false }
     const id = mealIdFor(meal, idx);
     const card = document.createElement("div");
     card.className = "card";
@@ -116,7 +112,6 @@
     card.appendChild(title);
     card.appendChild(subtitle);
 
-    // Toggle select on click (only when not locked)
     card.addEventListener("click", () => {
       if (locked) return;
       const sid = String(id);
@@ -130,24 +125,13 @@
         card.classList.add("selected");
         if (selector) selector.textContent = "Selected";
       }
-      // sync visible control
-      nextBtn.disabled = selected.size === 0;
-      const floatNext = document.getElementById("float-next");
-      if (floatNext) floatNext.disabled = selected.size === 0;
+      updateTopControls();
     });
 
-    // double click shows modal
-    card.addEventListener("dblclick", () => {
-      showModalForMeal(meal);
-    });
-
-    // keyboard
+    card.addEventListener("dblclick", () => showModalForMeal(meal));
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") card.click();
-      if (e.key === " ") {
-        e.preventDefault();
-        card.dispatchEvent(new Event("dblclick"));
-      }
+      if (e.key === " ") { e.preventDefault(); card.dispatchEvent(new Event("dblclick")); }
     });
 
     return card;
@@ -161,19 +145,33 @@
       return;
     }
     meals.forEach((m,i) => menu.appendChild(createCard(m,i,{ showSelector:true, preSelected: selected.has(mealIdFor(m,i)) })));
-    nextBtn.disabled = selected.size === 0;
-    const floatNext = document.getElementById("float-next");
-    if (floatNext) floatNext.disabled = selected.size === 0;
     isMenuVisible = true;
-    // floating should show Next
     setFloatingToNext();
-    // ensure menu visible
     if (menu) menu.classList.remove("hidden");
-    // hide My Week area if present
     if (selectedDiv) selectedDiv.classList.add("hidden");
+    updateTopControls();
   }
 
-  // Modal & PDF logic re-used from previous version (no changes to behavior)
+  // topNext/topBack wiring
+  if (topNext) topNext.addEventListener("click", () => nextHandler());
+  if (topBack) topBack.addEventListener("click", () => backToSelection());
+  // mirror of non-js fallback next button
+  if (nextBtn) nextBtn.addEventListener("click", () => nextHandler());
+
+  // simple floating action helpers (keeps previous mobile behavior)
+  function setFloatingToNext() {
+    floatAction.innerHTML = '<button id="float-next" class="fab">Next</button>';
+    const btn = document.getElementById("float-next");
+    if (btn) btn.addEventListener("click", () => nextHandler());
+  }
+  function setFloatingToBack() {
+    floatAction.innerHTML = '<button id="float-back" class="btn secondary">Back</button>';
+    const btn = document.getElementById("float-back");
+    if (btn) btn.addEventListener("click", () => backToSelection());
+  }
+  setFloatingToNext();
+
+  // Modal & PDF logic (unchanged)
   function isLocalPdf(url) {
     if (!url) return false;
     try {
@@ -195,7 +193,6 @@
       safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
         meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
     } else safeText(modalIngredients, "");
-    // reset pdf viewer
     if (modalPdfViewer) modalPdfViewer.style.display = "none";
     if (modalPdfIframe) modalPdfIframe.src = "";
     if (modalPdfMessage) modalPdfMessage.textContent = "";
@@ -240,27 +237,28 @@
     });
   }
 
-  // Build / My Week behavior
+  // Build / My Week behavior (unchanged logic — kept from previous version)
   function nextHandler() {
     if (!selected.size) return;
     locked = true;
-    // show My Week preview (only show up to 3 cards with +N indicator)
     const chosen = Array.from(selected).map(id => {
-      // find by id
       const m = meals.find((mm, idx) => mealIdFor(mm, idx) === id);
       return { id, meal: m };
     }).filter(x => x.meal);
 
-    // hide menu
     if (menu) menu.classList.add("hidden");
     isMenuVisible = false;
-    // update floating button to Back
     setFloatingToBack();
 
-    // render preview
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
       selectedDiv.innerHTML = "";
+
+      const twoCol = document.createElement("div");
+      twoCol.className = "my-week-two-col";
+
+      const left = document.createElement("div");
+      left.className = "myweek-left";
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
 
@@ -269,13 +267,11 @@
         const c = document.createElement("div");
         c.className = "card myweek-card";
 
-        // anchor wraps image/title/subtitle and links to pdf or recipe
         const linkHref = meal.pdf || meal.url || "";
         const hasLink = !!linkHref;
         const anchor = hasLink ? document.createElement("a") : document.createElement("div");
         if (hasLink) {
           anchor.href = linkHref;
-          // local pdfs shouldn't force new tab so users can view inline
           if (isLocalPdf(linkHref)) { anchor.target = "_self"; anchor.rel = ""; } else { anchor.target = "_blank"; anchor.rel = "noopener"; }
           anchor.style.textDecoration = "none";
           anchor.style.color = "inherit";
@@ -299,7 +295,6 @@
           c.appendChild(p);
         }
 
-        // portion control (persisting previous selection if present)
         const portionLabel = document.createElement("label");
         portionLabel.className = "portion";
         const select = document.createElement("select");
@@ -310,7 +305,6 @@
           opt.textContent = n;
           select.appendChild(opt);
         }
-        // set preselected value if we have one
         const prev = portions[id];
         if (prev) select.value = String(prev);
         portionLabel.innerHTML = "Portions: ";
@@ -320,66 +314,92 @@
         previewWrap.appendChild(c);
       });
 
-      // if more than showCount, add a small +N indicator card
-      if (chosen.length > 3) {
+      if (chosen.length > showCount) {
         const more = document.createElement("div");
         more.className = "card more-card";
-        more.innerHTML = `<div style="padding:18px;text-align:center"><strong>+${chosen.length - 3} more</strong><div class="muted">selected</div></div>`;
+        more.innerHTML = `<div style="padding:18px;text-align:center"><strong>+${chosen.length - showCount} more</strong><div class="muted">selected</div></div>`;
         previewWrap.appendChild(more);
       }
 
-      selectedDiv.appendChild(previewWrap);
+      left.appendChild(previewWrap);
 
-      // Build button (styled) and small "Rebuild" capability
-      let controls = document.getElementById("myweek-controls");
-      if (!controls) {
-        controls = document.createElement("div");
-        controls.id = "myweek-controls";
-        controls.className = "myweek-controls";
-        selectedDiv.appendChild(controls);
-      }
-      controls.innerHTML = '';
+      let controls = document.createElement("div");
+      controls.className = "myweek-controls";
       const buildBtn = document.createElement("button");
       buildBtn.className = "btn primary";
       buildBtn.textContent = "Build Ingredients";
       buildBtn.addEventListener("click", () => buildIngredients(chosen));
       controls.appendChild(buildBtn);
-
       const rebuildNote = document.createElement("div");
       rebuildNote.className = "muted small";
       rebuildNote.textContent = "Change portions and press Build Ingredients again to update the list.";
       controls.appendChild(rebuildNote);
+      left.appendChild(controls);
+
+      const right = document.createElement("div");
+      right.className = "grocery-notepad";
+      right.id = "grocery-notepad";
+      const header = document.createElement("div");
+      header.className = "note-header";
+      const title = document.createElement("div");
+      title.className = "note-title";
+      title.textContent = "Grocery List";
+      const sub = document.createElement("div");
+      sub.className = "note-sub";
+      sub.textContent = "Built from selected meals";
+      header.appendChild(title);
+      header.appendChild(sub);
+      right.appendChild(header);
+      const body = document.createElement("div");
+      body.className = "note-body";
+      const ul = document.createElement("ul");
+      ul.id = "grocery-notepad-list";
+      body.appendChild(ul);
+      right.appendChild(body);
+      const noteControls = document.createElement("div");
+      noteControls.className = "note-controls";
+      const download = document.createElement("button");
+      download.className = "btn secondary";
+      download.textContent = "Download";
+      download.addEventListener("click", () => {
+        const lis = Array.from((document.getElementById("grocery-notepad-list")||{querySelectorAll:() => []}).querySelectorAll("li"));
+        const text = lis.map(li=> "• " + li.textContent).join("\n");
+        const blob = new Blob([text], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "grocery-list.txt";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+      noteControls.appendChild(download);
+      right.appendChild(noteControls);
+
+      twoCol.appendChild(left);
+      twoCol.appendChild(right);
+      selectedDiv.appendChild(twoCol);
     }
 
-    // disable main next UI
     nextBtn.disabled = true;
-    const floatNextEl = document.getElementById("float-next");
-    if (floatNextEl) floatNextEl.disabled = true;
+    updateTopControls();
   }
 
   function backToSelection() {
-    // show menu again, keep selection and portions
     locked = false;
     isMenuVisible = true;
     renderMenu();
-    // clear my week preview but keep it in memory
     if (selectedDiv) selectedDiv.innerHTML = "";
     setFloatingToNext();
-    // enable next if selections exist
-    nextBtn.disabled = selected.size === 0;
-    const floatNext = document.getElementById("float-next");
-    if (floatNext) floatNext.disabled = selected.size === 0;
+    updateTopControls();
   }
 
   function buildIngredients(chosen) {
-    // read portions from selects and persist them
     chosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
       const val = sel ? parseInt(sel.value, 10) : 2;
       portions[id] = val;
     });
 
-    // construct grocery items using portions mapping
     const groceryItems = [];
     chosen.forEach(({id, meal}) => {
       const portion = portions[id] || 2;
@@ -393,7 +413,6 @@
       });
     });
 
-    // aggregate simple
     const grouped = {};
     groceryItems.forEach(ing => {
       if (!ing || !ing.ingredient) return;
@@ -403,50 +422,47 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
-    // render grocery
-    if (groceryList) groceryList.innerHTML = "";
-    Object.values(grouped).forEach(ing => {
-      const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
-      const li = document.createElement("li");
-      li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
-      groceryList && groceryList.appendChild(li);
-    });
+    // render grocery into notepad list (if present) and into grocerySection fallback
+    const ul = document.getElementById("grocery-notepad-list");
+    if (ul) {
+      ul.innerHTML = "";
+      Object.values(grouped).forEach(ing => {
+        const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
+        const li = document.createElement("li");
+        li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+        ul.appendChild(li);
+      });
+    }
+
+    if (groceryList) {
+      groceryList.innerHTML = "";
+      Object.values(grouped).forEach(ing => {
+        const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
+        const li = document.createElement("li");
+        li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+        groceryList.appendChild(li);
+      });
+    }
+
     grocerySection && grocerySection.classList.remove("hidden");
-    // allow multiple rebuilds: do not disable the build button; it remains active for changes
   }
 
-  // Reset handler resets everything
+  // reset handler
   resetBtn && resetBtn.addEventListener("click", () => {
     selected = new Set();
     locked = false;
-    portions = {}; // reset portions mapping
-    selectedDiv && (selectedDiv.innerHTML = "");
-    groceryList && (groceryList.innerHTML = "");
-    grocerySection && (grocerySection.classList.add("hidden"));
+    if (selectedDiv) selectedDiv.innerHTML = "";
+    if (groceryList) groceryList.innerHTML = "";
+    grocerySection && grocerySection.classList.add("hidden");
     resetBtn.classList.add("hidden");
     renderMenu();
+    updateTopControls();
   });
 
-  // wire floating "Next" to mirror the static next button (in case of non-JS)
-  if (nextBtn) nextBtn.addEventListener("click", () => nextHandler());
-  // and ensure float button also responds to keyboard (already a button)
-
-  // modal close handlers
+  // modal close
   if (modalClose) modalClose.addEventListener("click", safeHideModal);
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
-
-  // download grocery
-  downloadBtn && downloadBtn.addEventListener("click", () => {
-    const text = Array.from((groceryList||{querySelectorAll:() => []}).querySelectorAll("li")).map(li => "• " + li.textContent).join("\n");
-    const blob = new Blob([text], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "grocery-list.txt";
-    a.click();
-    URL.revokeObjectURL(url);
-  });
 
   // initial render
   renderMenu();
