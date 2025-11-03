@@ -1,4 +1,6 @@
-// Updated app.js to support: top sticky Next/Back bar, visible selector pill, only show selected cards in My Week
+// Updated app.js to show tighter grid, visible selector pill, recipe pill on selected preview cards,
+// sticky top-action bar controls, sticky Build Ingredients in the left column, and grocery notepad on the right.
+// Drop this into docs/app.js to replace the current file.
 (async function() {
   // Load week.json
   let data;
@@ -51,9 +53,9 @@
   let selected = new Set();
   let locked = false;
   let isMenuVisible = true;
-  const portions = {}; // persisted portion choices while navigating
+  const portions = {}; // persisted portion choices
 
-  // Update top controls (count + enable/disable Next)
+  // update top controls (count + enable/disable Next)
   function updateTopControls() {
     const count = selected.size;
     if (topCount) topCount.textContent = `${count} selected`;
@@ -81,7 +83,7 @@
     subtitle.className = "muted";
     subtitle.textContent = meal.subtitle || "";
 
-    // selector pill shown on all menu cards
+    // selector pill shown on initial menu cards
     if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
@@ -94,7 +96,7 @@
     card.appendChild(subtitle);
 
     // click toggles selection (only when menu visible)
-    card.addEventListener("click", () => {
+    card.addEventListener("click", (e) => {
       if (locked) return;
       const sid = id;
       if (selected.has(sid)) {
@@ -111,11 +113,12 @@
       updateTopControls();
     });
 
-    // double-click opens modal
-    card.addEventListener("dblclick", () => {
+    // double-click opens modal (details)
+    card.addEventListener("dblclick", (e) => {
       showModalForMeal(meal);
     });
 
+    // keyboard accessibility
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") card.click();
       if (e.key === " ") { e.preventDefault(); card.dispatchEvent(new Event("dblclick")); }
@@ -124,7 +127,7 @@
     return card;
   }
 
-  // render initial menu grid
+  // initial render of the menu grid
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
@@ -137,11 +140,11 @@
     if (menu) menu.classList.remove("hidden");
     if (selectedDiv) selectedDiv.classList.add("hidden");
     isMenuVisible = true;
-    updateTopControls();
     locked = false;
+    updateTopControls();
   }
 
-  // modal & PDF helpers (same as before)
+  // PDF helper
   function isLocalPdf(url) {
     if (!url) return false;
     try {
@@ -214,13 +217,13 @@
     locked = true;
     isMenuVisible = false;
 
-    // gather chosen meals preserving order of selection array
+    // gather chosen meals preserving selection order
     const chosen = Array.from(selected).map(id => {
       const m = meals.find((mm, idx) => mealIdFor(mm, idx) === id);
       return { id, meal: m };
     }).filter(x => x.meal);
 
-    // hide original menu entirely
+    // hide original menu
     if (menu) menu.classList.add("hidden");
 
     // build two-column preview
@@ -230,22 +233,25 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // left column: preview grid with up to 3 rows per column
+      // left column: compact preview + sticky controls
       const left = document.createElement("div");
       left.className = "myweek-left";
+
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
 
+      // create one preview card per chosen meal; recipe-pill appears top-right
       chosen.forEach(({id, meal}) => {
         const c = document.createElement("div");
         c.className = "card myweek-card";
 
-        // anchor to recipe/pdf on card
+        // anchor for main content
         const linkHref = meal.pdf || meal.url || "";
         const anchor = linkHref ? document.createElement("a") : document.createElement("div");
         if (linkHref) {
           anchor.href = linkHref;
-          if (isLocalPdf(linkHref)) { anchor.target = "_self"; anchor.rel = ""; } else { anchor.target = "_blank"; anchor.rel = "noopener"; }
+          anchor.target = isLocalPdf(linkHref) ? "_self" : "_blank";
+          anchor.rel = "noopener";
           anchor.style.textDecoration = "none";
           anchor.style.color = "inherit";
         }
@@ -268,7 +274,7 @@
           c.appendChild(p);
         }
 
-        // portion selector
+        // portion selector (bottom-left)
         const portionLabel = document.createElement("label");
         portionLabel.className = "portion";
         const select = document.createElement("select");
@@ -285,14 +291,18 @@
         portionLabel.appendChild(select);
         c.appendChild(portionLabel);
 
-        // recipe pill on bottom-right of card to indicate PDF
-        if (meal.pdf || meal.url) {
+        // remove any selector pill (menu selector) and add a recipe pill top-right
+        const maybeSelector = c.querySelector(".selector");
+        if (maybeSelector) maybeSelector.remove();
+
+        if (linkHref) {
           const recipe = document.createElement("a");
           recipe.className = "recipe-pill";
           recipe.textContent = "Recipe";
-          recipe.href = meal.pdf || meal.url || "#";
-          recipe.target = isLocalPdf(meal.pdf || meal.url) ? "_self" : "_blank";
+          recipe.href = linkHref;
+          recipe.target = isLocalPdf(linkHref) ? "_self" : "_blank";
           recipe.rel = "noopener";
+          recipe.addEventListener("click", (ev) => ev.stopPropagation());
           c.appendChild(recipe);
         }
 
@@ -301,15 +311,16 @@
 
       left.appendChild(previewWrap);
 
-      // controls under preview
+      // sticky build controls so the Build button is always visible
       const controls = document.createElement("div");
       controls.className = "myweek-controls";
+      controls.style.position = "sticky";
+      controls.style.top = "72px"; // below top bar
       const buildBtn = document.createElement("button");
       buildBtn.className = "btn primary";
       buildBtn.textContent = "Build Ingredients";
       buildBtn.addEventListener("click", () => buildIngredients(chosen));
       controls.appendChild(buildBtn);
-
       const note = document.createElement("div");
       note.className = "muted small";
       note.textContent = "Change portions and press Build Ingredients again to update the list.";
