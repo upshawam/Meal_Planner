@@ -3,7 +3,9 @@
    - Build Ingredients moved to the top sticky button (topNext triggers Build when in My Week)
    - Preview columns tightly packed with slight padding (no overlap)
    - Grocery notepad sits beside cards (modest width)
-   Replace docs/style.css with this file.
+   - My Week preview and notepad center aligned with clear gap
+   - Grocery ingredients can be two columns if the list is long
+   - Replace download button with copy button
 */
 
 /* Core variables & typography */
@@ -173,6 +175,31 @@ button{
 button:disabled{opacity:0.45; cursor:not-allowed}
 .hidden{display:none}
 
+/* Copy button styling */
+.copy-btn {
+  padding:10px 22px;
+  border-radius:8px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 12px rgba(22,163,74,0.10);
+  transition: background .16s;
+}
+.copy-btn:hover {
+  background: #128137;
+}
+.copy-success {
+  margin-left: 8px;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 0.98rem;
+  background: #dcffe4;
+  border-radius: 4px;
+  padding:2px 8px;
+}
+
 /* Modal */
 .modal.hidden {
   display: none !important;
@@ -203,92 +230,102 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   cursor:pointer;
 }
 
-/* My Week multi-column layout: up to 3 rows per column; packed columns with small padding */
+/* My Week multi-column layout: preview center aligned with notepad, and cards spaced */
 .my-week-two-col {
-  display: grid;
-  grid-template-columns: 1fr 320px; /* left flexible, right notepad modest width */
-  gap: 12px;
-  align-items: start;
-  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 32px;
+}
+.myweek-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 250px;
 }
 .myweek-wrap {
   display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(3, auto);
-  grid-auto-columns: 216px; /* fixed column width slightly wider than card to add breathing room */
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+  grid-auto-rows: 1fr;
+  gap: 18px;
   align-items: start;
-  padding-bottom: 8px; /* avoid overlap */
+  padding-bottom: 8px;
+  margin-bottom: 4px;
 }
 .myweek-card {
-  width: 210px;
-  min-height: 130px;
-  padding: 8px;
-  display:flex;
-  flex-direction:column;
+  width: 220px;
+  min-height: 140px;
+  padding: 12px;
+  margin: 0;
   position:relative;
-}
-.more-card {
-  width: 120px;
-  min-height: 120px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-.myweek-controls {
-  margin-top: 8px;
-  display:flex;
+  display: flex;
   flex-direction:column;
-  gap:8px;
-  max-width: 720px;
-  /* left-column build button removed; top button used. keep small note styling */
+  background: var(--card);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(2,6,23,0.11);
 }
 
-/* Grocery notepad */
+/* Grocery notepad two-column styling */
 .grocery-notepad {
   background: #fffbea;
   border-radius: 8px;
-  padding: 12px 14px;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.08);
-  border: 1px solid rgba(0,0,0,0.04);
+  padding: 20px 18px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.10);
+  border: 1px solid rgba(0,0,0,0.05);
   position: relative;
-  min-height: 220px;
+  min-width: 320px;
+  max-width: 480px;
   font-family: 'Segoe UI', Tahoma, sans-serif;
+  margin-left: 0;
 }
 .grocery-notepad .note-body {
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size: 100% 28px;
-  padding: 8px;
+  padding: 4px 2px;
   border-radius:6px;
   min-height: 160px;
   overflow:auto;
 }
-.grocery-notepad ul { margin: 0; padding-left: 18px; list-style-type: disc; }
-.grocery-notepad li { margin: 6px 0; line-height: 1.2; }
-.grocery-notepad::after { content: ""; position: absolute; right: 8px; top: -6px; width: 36px; height: 36px; background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(255,255,255,0.6)); border-radius: 6px; transform: rotate(15deg); opacity: 0.7; }
-.grocery-notepad .note-controls { display:flex; gap:8px; margin-top:8px; align-items:center; }
+
+/* Grocery ingredient list in two columns if long */
+.grocery-notepad ul {
+  margin: 0;
+  padding-left: 18px;
+  list-style-type: disc;
+  column-count: 1;
+  column-gap: 34px;
+}
+.grocery-notepad ul.two-cols {
+  column-count: 2;
+}
+.grocery-notepad li {
+  margin: 6px 0;
+  line-height: 1.2;
+  break-inside: avoid;
+}
+
+.grocery-notepad .note-controls {
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+  align-items:center;
+}
 
 /* Responsive */
-@media (max-width:1600px){
-  .grid{ grid-template-columns: repeat(6, 1fr); }
-}
-@media (max-width:1400px){
-  .grid{ grid-template-columns: repeat(5, 1fr); }
-}
-@media (max-width:1100px){
-  .grid{ grid-template-columns: repeat(4, 1fr); }
-}
-@media (max-width:860px){
-  .grid{ grid-template-columns: repeat(2, 1fr); }
+@media (max-width:1000px) {
+  .my-week-two-col {
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+  .grocery-notepad {
+    max-width: 98vw;
+    min-width: 210px;
+  }
 }
 @media (max-width:720px) {
-  .my-week-two-col { display: block; }
-  .grocery-notepad { margin-top: 12px; max-width: none; }
-  .myweek-card { width: calc(50% - 8px); }
-  .float-action { display: flex; } /* if you still want a FAB on mobile */
-}
-@media (max-width:480px){
-  .grid{ grid-template-columns: repeat(1, 1fr); }
-  .myweek-card { width: 100%; }
+  .my-week-two-col { flex-direction: column; gap: 10px;}
+  .grocery-notepad { margin-top: 12px; }
+  .myweek-wrap { grid-template-columns: repeat(1, 1fr); }
+  .grocery-notepad ul, .grocery-notepad ul.two-cols { column-count:1;}
 }
