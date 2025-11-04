@@ -1,4 +1,4 @@
-// Updated docs/app.js with persistent PDF-only filtering toggle
+// Updated docs/app.js with My Week cards grid, preview/notepad centering, ingredient notepad two columns (if long), and copy button
 (async function() {
   // Load week.json
   let data;
@@ -261,7 +261,7 @@
       leftInner.style.paddingRight = "6px";
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
-      currentChosen.forEach(({id, meal}) => {
+      currentChosen.forEach(({id, meal}, idx) => {
         const c = document.createElement("div");
         c.className = "card myweek-card";
         const linkHref = meal.pdf || meal.url || "";
@@ -333,8 +333,8 @@
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
-      right.style.maxWidth = "320px";
-      right.style.marginLeft = "10px";
+      right.style.maxWidth = "480px";
+      right.style.marginLeft = "0";
       const header = document.createElement("div");
       header.className = "note-header";
       const title = document.createElement("div");
@@ -354,21 +354,30 @@
       right.appendChild(body);
       const noteControls = document.createElement("div");
       noteControls.className = "note-controls";
-      const download = document.createElement("button");
-      download.className = "btn secondary";
-      download.textContent = "Download";
-      download.addEventListener("click", () => {
-        const lis = Array.from((document.getElementById("grocery-notepad-list")||{querySelectorAll:() => []}).querySelectorAll("li"));
-        const text = lis.map(li=> "• " + li.textContent).join("\n");
-        const blob = new Blob([text], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "grocery-list.txt";
-        a.click();
-        URL.revokeObjectURL(url);
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "copy-btn";
+      copyBtn.textContent = "Copy List";
+      const copySuccess = document.createElement("span");
+      copySuccess.className = "copy-success";
+      copySuccess.style.display = "none";
+
+      copyBtn.addEventListener("click", () => {
+        const lis = Array.from(ul.querySelectorAll("li"));
+        const text = lis.map(li => "• " + li.textContent).join("\n");
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            copySuccess.textContent = "Copied!";
+            copySuccess.style.display = "";
+            setTimeout(() => { copySuccess.style.display = "none"; }, 1500);
+          })
+          .catch(() => {
+            copySuccess.textContent = "Copy failed";
+            copySuccess.style.display = "";
+            setTimeout(() => { copySuccess.style.display = "none"; }, 1700);
+          });
       });
-      noteControls.appendChild(download);
+      noteControls.appendChild(copyBtn);
+      noteControls.appendChild(copySuccess);
       right.appendChild(noteControls);
       twoCol.appendChild(left);
       twoCol.appendChild(right);
@@ -425,6 +434,12 @@
         li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
         ul.appendChild(li);
       });
+      // Make two columns if list is long
+      if (ul.childElementCount > 14) {
+        ul.classList.add("two-cols");
+      } else {
+        ul.classList.remove("two-cols");
+      }
     }
   }
 
