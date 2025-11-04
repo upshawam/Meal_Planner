@@ -1,4 +1,4 @@
-// Build step: add orange border box behind cards, notepad pops right of build button, improved card min-height, pinned portion select
+// Grocery list and portions UI update: no portions in initial menu, full grocery list on Next, portions/rebuild on preview
 (async function() {
   let data;
   let allMeals = [];
@@ -53,6 +53,7 @@
   let isMenuVisible = true;
   const portions = {};
   let currentChosen = [];
+  let displayMealsGrocery = [];
 
   function getDisplayMeals() {
     if (!allMeals) return [];
@@ -70,7 +71,7 @@
       topNext.textContent = "Next";
     } else {
       topNext.disabled = currentChosen.length === 0;
-      topNext.textContent = "Build Ingredients";
+      topNext.textContent = "Rebuild Ingredients";
     }
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
   }
@@ -101,40 +102,39 @@
     if (selected.has(id)) {
       card.classList.add("selected");
     }
-
     if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
       selector.textContent = selected.has(id) ? "Selected" : "Select";
       card.appendChild(selector);
     }
-
-    // Portion selector: always at absolute bottom inside card
-    const portionLabel = document.createElement("label");
-    portionLabel.className = "portion";
-    portionLabel.style.position = "absolute";
-    portionLabel.style.left = "14px";
-    portionLabel.style.right = "14px";
-    portionLabel.style.bottom = "12px";
-    portionLabel.style.background = "#f3f4f6";
-    portionLabel.style.borderRadius = "5px";
-    portionLabel.style.padding = "8px";
-    portionLabel.style.marginBottom = "0";
-    portionLabel.style.textAlign = "left";
-
-    const select = document.createElement("select");
-    select.setAttribute("data-portion-id", encodeURIComponent(id));
-    for (let n=2; n<=10; n++) {
-      const opt = document.createElement("option");
-      opt.value = n;
-      opt.textContent = n;
-      select.appendChild(opt);
+    // Portion select: if recipePreview mode only
+    if (opts.recipePreview) {
+      const portionLabel = document.createElement("label");
+      portionLabel.className = "portion";
+      portionLabel.style.position = "absolute";
+      portionLabel.style.left = "14px";
+      portionLabel.style.right = "14px";
+      portionLabel.style.bottom = "12px";
+      portionLabel.style.background = "#f3f4f6";
+      portionLabel.style.borderRadius = "5px";
+      portionLabel.style.padding = "8px";
+      portionLabel.style.marginBottom = "0";
+      portionLabel.style.textAlign = "left";
+      const select = document.createElement("select");
+      select.setAttribute("data-portion-id", encodeURIComponent(id));
+      for (let n=2; n<=10; n++) {
+        const opt = document.createElement("option");
+        opt.value = n;
+        opt.textContent = n;
+        select.appendChild(opt);
+      }
+      const prev = portions[id];
+      if (prev) select.value = String(prev);
+      portionLabel.innerHTML = "Portions: ";
+      portionLabel.appendChild(select);
+      card.appendChild(portionLabel);
     }
-    const prev = portions[id];
-    if (prev) select.value = String(prev);
-    portionLabel.innerHTML = "Portions: ";
-    portionLabel.appendChild(select);
-    card.appendChild(portionLabel);
 
     card.addEventListener("click", (e) => {
       if (locked) return;
@@ -175,7 +175,7 @@
         </div>`;
       return;
     }
-    displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i, { showSelector: true })));
+    displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i, { showSelector: true, recipePreview: false })));
     if (menu) menu.classList.remove("hidden");
     if (selectedDiv) selectedDiv.classList.add("hidden");
     isMenuVisible = true;
@@ -259,6 +259,8 @@
       return m ? { id, meal: m } : null;
     }).filter(x => x && x.meal);
 
+    displayMealsGrocery = currentChosen.map(({ meal }) => meal);
+
     if (menu) menu.classList.add("hidden");
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
@@ -267,52 +269,42 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // Left column: card grid inside orange border box
+      // Left column: card grid inside orange border
       const left = document.createElement("div");
       left.className = "myweek-left";
       const orangeBox = document.createElement("div");
       orangeBox.className = "orange-card-bg";
-
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
       currentChosen.forEach(({id, meal}, idx) => {
-        previewWrap.appendChild(createCard(meal, idx, { showSelector: false }));
+        previewWrap.appendChild(createCard(meal, idx, { showSelector: false, recipePreview: true }));
       });
       orangeBox.appendChild(previewWrap);
       left.appendChild(orangeBox);
 
-      // Controls column: portion section (top) and grocery notepad (right, only visible after build)
+      // Right column: grocery notepad (visible immediately), and rebuild controls
       const rightCol = document.createElement("div");
       rightCol.className = "myweek-controls-col";
 
-      // Portion instructions and build button
+      // Portion/rebuild UI at top right
       const controlsList = document.createElement("div");
       controlsList.className = "myweek-controls-list";
       const portionTitle = document.createElement("div");
       portionTitle.className = "portion-title";
-      portionTitle.textContent = "First Select Portions";
+      portionTitle.textContent = "Adjust Portions";
       controlsList.appendChild(portionTitle);
-
-      // Then text (gap)
-      const thenText = document.createElement("div");
-      thenText.className = "then-text";
-      thenText.textContent = "Then";
-      controlsList.appendChild(thenText);
-
-      // Build Ingredients button
       const buildBtn = document.createElement("button");
       buildBtn.className = "build-btn-big";
-      buildBtn.textContent = "Build Ingredients";
+      buildBtn.textContent = "Rebuild Ingredients";
       buildBtn.addEventListener("click", buildIngredients);
       controlsList.appendChild(buildBtn);
-
       rightCol.appendChild(controlsList);
 
-      // grocery notepad (shows after Build Ingredients)
+      // grocery notepad—wide, visible after next
       const notepad = document.createElement("div");
       notepad.className = "grocery-notepad";
       notepad.id = "grocery-notepad";
-      notepad.style.display = "none";
+      notepad.style.display = "";
       const header = document.createElement("div");
       header.className = "note-header";
       const title = document.createElement("div");
@@ -360,6 +352,9 @@
       twoCol.appendChild(left);
       twoCol.appendChild(rightCol);
       selectedDiv.appendChild(twoCol);
+
+      // Initial build on Next
+      buildIngredients();
     }
     updateTopControls();
   }
@@ -402,7 +397,6 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
-    // Show notepad, render list; two columns if long
     const notepad = document.getElementById("grocery-notepad");
     const ul = document.getElementById("grocery-notepad-list");
     if (notepad) notepad.style.display = "";
@@ -414,6 +408,9 @@
         li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
         ul.appendChild(li);
       });
+      // Dynamically set notepad width
+      const widest = Math.max(370, ...Array.from(ul.children).map(li => li.textContent.length * 8));
+      ul.parentElement.parentElement.style.maxWidth = widest + "px";
       if (ul.childElementCount > 14) {
         ul.classList.add("two-cols");
       } else {
