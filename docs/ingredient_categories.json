@@ -1,0 +1,67 @@
+{
+  "produce": [
+    "apple","banana","orange","lemon","lime","grapefruit","strawberry","blueberry","raspberry","blackberry",
+    "grape","pear","peach","plum","cherry","mango","pineapple","kiwi","melon","watermelon",
+    "avocado","tomato","onion","garlic","shallot","leek","scallion","chive","ginger","potato",
+    "sweet potato","yam","carrot","celery","cucumber","zucchini","squash","eggplant","bell pepper","jalapeno",
+    "chili pepper","broccoli","cauliflower","cabbage","brussels sprouts","spinach","kale","lettuce","romaine","arugula",
+    "mixed greens","parsley","cilantro","basil","mint","dill","rosemary","thyme","oregano","sage",
+    "mushroom","green bean","snow pea","sugar snap pea","asparagus","corn","beet","radish","turnip","parsnip",
+    "artichoke","fennel","bok choy","napa cabbage","collard greens","swiss chard","radicchio","persimmon","passionfruit","lychee",
+    "pomegranate","fig","date","cantaloupe","honeydew","coconut","plantain","okra","butternut squash","acorn squash"
+  ],
+  "meat": [
+    "chicken breast","chicken thigh","chicken drumstick","chicken wing","whole chicken",
+    "ground beef","beef steak","beef roast","beef ribs","beef brisket",
+    "pork chop","pork tenderloin","pork shoulder","pork ribs","ground pork",
+    "bacon","ham","sausage","hot dog","pepperoni",
+    "turkey breast","ground turkey","duck breast","lamb chop","lamb shank",
+    "veal cutlet","prosciutto","salami","anchovy","sardine",
+    "salmon","cod","tilapia","tuna","trout",
+    "haddock","mahi mahi","squid","octopus","shrimp",
+    "scallop","clam","mussel","lobster","crab"
+  ],
+  "dairy": [
+    "milk","whole milk","skim milk","buttermilk","cream","heavy cream","half and half","evaporated milk","condensed milk",
+    "butter","margarine","yogurt","greek yogurt","sour cream","cream cheese","cottage cheese","ricotta","mascarpone","cheddar cheese",
+    "mozzarella","parmesan","feta","goat cheese","blue cheese","swiss cheese","provolone","colby jack","monterey jack","brie",
+    "kefir","ghee","queso fresco","paneer","halloumi","manchego","camembert"
+  ],
+  "bakery": [
+    "white bread","whole wheat bread","rye bread","sourdough bread","bagel","english muffin","croissant","pita","naan","tortilla",
+    "hamburger bun","hot dog bun","brioche","ciabatta","focaccia","flatbread","breadstick","roll","muffin","donut",
+    "biscuit","pancake","waffle","cupcake","cake","pie crust"
+  ],
+  "dry_goods": [
+    "flour","all purpose flour","bread flour","cake flour","rye flour","semolina","cornmeal","cornstarch","baking powder","baking soda",
+    "yeast","sugar","brown sugar","powdered sugar","honey","maple syrup","molasses","rice","white rice","brown rice",
+    "basmati rice","jasmine rice","wild rice","quinoa","couscous","pearl couscous","barley","oats","rolled oats","steel cut oats",
+    "pasta","spaghetti","penne","macaroni","lasagna noodles","egg noodles","ramen noodles","soba noodles","udon noodles","vermicelli",
+    "lentils","black beans","kidney beans","pinto beans","chickpeas","split peas","canned beans","breadcrumbs","panko breadcrumbs","crackers",
+    "pretzels","popcorn","cereal","granola","trail mix","almonds","walnuts","pecans","cashews","peanuts",
+    "hazelnuts","pistachios","sunflower seeds","pumpkin seeds","chia seeds","flaxseed","farro","millet","bulgur","polenta"
+  ],
+  "condiments": [
+    "ketchup","mustard","mayonnaise","bbq sauce","soy sauce","fish sauce","oyster sauce","hoisin sauce","sriracha","hot sauce",
+    "vinegar","balsamic vinegar","red wine vinegar","white wine vinegar","apple cider vinegar","rice vinegar","worcestershire sauce","teriyaki sauce","ponzu sauce","tahini",
+    "salad dressing","ranch dressing","italian dressing","caesar dressing","greek vinaigrette","honey mustard","buffalo sauce","pesto","salsa","guacamole",
+    "harissa","gochujang","miso paste","chimichurri","tzatziki","chutney","relish","aioli","tartar sauce","cocktail sauce"
+  ],
+  "spices": [
+    "salt","black pepper","white pepper","red pepper flakes","paprika","smoked paprika","cayenne pepper","chili powder","cumin","coriander",
+    "turmeric","curry powder","garam masala","five spice","nutmeg","cinnamon","clove","allspice","cardamom","ginger powder",
+    "onion powder","garlic powder","mustard seed","fennel seed","anise seed","bay leaf","oregano","thyme","rosemary","sage",
+    "parsley flakes","dill weed","basil flakes","mint flakes","chili flakes","vanilla extract","almond extract","cocoa powder","instant coffee","tea",
+    "saffron","sumac","zaatar","fenugreek","star anise","lemongrass","kaffir lime leaf"
+  ],
+  "packaged": [
+    "chicken stock","beef stock","vegetable stock","stock concentrate","bouillon cube","ramen packet","instant noodles","mac and cheese box","canned soup","canned tomato",
+    "tomato paste","canned corn","canned peas","canned tuna","canned salmon","canned chicken","canned fruit","canned pineapple","canned peaches","canned pears",
+    "canned chickpeas","canned coconut milk","canned pumpkin","instant mashed potatoes","frozen peas","frozen spinach","frozen corn","frozen broccoli","frozen berries","frozen pizza"
+  ],
+  "snacks": [
+    "potato chips","corn chips","tortilla chips","pita chips","rice crackers","cheese puffs","granola bar","protein bar","fruit snacks","cookies",
+    "chocolate bar","candy","gummy bears","marshmallows","rice cakes","biscotti","jerky","trail mix","mixed nuts","peanut butter",
+    "nutella","graham crackers","animal crackers","cup noodles","instant ramen"
+  ]
+}
