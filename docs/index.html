@@ -8,8 +8,14 @@
 <body>
   <!-- top sticky action bar replaces the old header -->
   <div class="top-action" role="region" aria-label="Selection controls" id="top-action">
-    <div class="top-left">
+    <div class="top-left" style="display:flex;align-items:center;gap:18px;">
       <strong class="top-title">Weekly Menu</strong>
+      <div class="filter-toggle" style="margin-left:0;">
+        <label style="font-weight:600;cursor:pointer;">
+          <input type="checkbox" id="filter-pdf-toggle" style="margin-right:6px;">
+          Show only recipes with PDF
+        </label>
+      </div>
     </div>
     <div class="top-right">
       <span id="top-selected-count" class="count muted">0 selected</span>
@@ -52,3 +58,4 @@
 
   <script src="app.js"></script>
 </body>
+</html>
