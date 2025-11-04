@@ -10,11 +10,12 @@
   <div class="top-action" role="region" aria-label="Selection controls" id="top-action">
     <div class="top-left" style="display:flex;align-items:center;gap:18px;">
       <strong class="top-title">Weekly Menu</strong>
-      <div class="filter-toggle">
+      <div class="filter-toggle" style="display:flex;align-items:center;gap:14px;">
         <label style="font-weight:600;cursor:pointer;">
           <input type="checkbox" id="filter-pdf-toggle" style="margin-right:6px;">
           Show only recipes with PDF
         </label>
+        <button id="clear-btn-inline" class="clear-btn-inline" type="button">Clear All</button>
       </div>
     </div>
     <div class="top-right">
@@ -24,7 +25,6 @@
     </div>
   </div>
 
-  <!-- The menu grid; the Clear All button is floated above via JS -->
   <main>
     <section id="menu" class="grid" aria-live="polite"></section>
     <section aria-hidden="false">
