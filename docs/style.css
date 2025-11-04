@@ -57,35 +57,35 @@ body{
 
 /* PDF-only filter toggle styling */
 .filter-toggle {
-  display:inline-block;
+  display:inline-flex;
+  align-items: center;
   margin-top:2px;
   font-size:0.97rem;
+  gap:14px;
 }
 .filter-toggle label {
   cursor:pointer;
   user-select:none;
 }
 
-/* Floating Clear All button */
-.clear-btn-floating {
-  position: absolute;
-  top: 18px;
-  right: 24px;
-  z-index: 1500;
-  background: var(--accent);
-  color: white;
+/* Inline Clear All button (grey, subtle, next to pdf toggle) */
+.clear-btn-inline {
+  font-size: 1.01rem;
   font-weight: 700;
+  background: #e5e7eb;
+  color: #374151;
   border-radius: 8px;
-  padding: 10px 20px;
   border: none;
-  box-shadow: 0 8px 22px rgba(22,163,74,0.14);
+  padding: 7px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   cursor: pointer;
-  transition: background .15s;
-  font-size:1.09rem;
-  opacity: 0.95;
+  transition: background .13s;
+  opacity: 1;
+  margin-left:2px;
 }
-.clear-btn-floating:hover {
-  background: #128137;
+.clear-btn-inline:hover {
+  background: #d1d5db;
+  color: #111827;
 }
 
 /* Grid layout */
@@ -253,7 +253,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   cursor:pointer;
 }
 
-/* My Week multi-column layout: preview+notepad centered with big gap */
+/* My Week two-column (cards left, controls right) */
 .my-week-two-col {
   display: flex;
   flex-direction: row;
@@ -272,7 +272,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   min-width: 250px;
 }
 
-/* Preview grid: 3 cards wide always */
+/* Preview meal cards grid 3x3 */
 .myweek-wrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -301,13 +301,22 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   box-shadow: 0 4px 12px rgba(2,6,23,0.11);
 }
 
-/* Build Ingredients button in preview */
+/* Controls column for Build Ingredients and grocery notepad */
+.myweek-controls-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  width: 340px;
+  min-width: 240px;
+}
+
+/* Portion instructions and Build Ingredients */
 .myweek-controls-list {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 24px;
-  margin-top: 24px;
+  align-items: flex-start;
+  gap: 12px;
   width: 100%;
 }
 
@@ -325,17 +334,18 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 }
 
 .build-btn-big {
-  margin-top:10px;
-  font-size: 1.13rem;
+  margin-top:8px;
+  font-size: 1.03rem;
+  padding: 10px 24px;
   background: var(--accent);
   color: white;
   font-weight: 700;
-  padding: 14px 32px;
-  border-radius: 10px;
+  border-radius: 9px;
   border: none;
   cursor: pointer;
   transition: background .14s;
   box-shadow: 0 7px 22px rgba(22,163,74,0.12);
+  display:inline-block;
 }
 .build-btn-big:hover{ background: #128137; }
 
@@ -365,7 +375,6 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   margin-top: 0;
 }
 
-/* Remove note-sub (hidden in JS) */
 .grocery-notepad .note-sub {
   display: none;
 }
@@ -400,12 +409,15 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   align-items:center;
 }
 
-/* Responsive */
 @media (max-width:1000px) {
   .my-week-two-col {
     flex-direction: column;
     align-items: center;
     gap: 22px;
+  }
+  .myweek-controls-col {
+    width: 100%;
+    min-width: unset;
   }
   .grocery-notepad {
     max-width: 98vw;
@@ -414,7 +426,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 }
 @media (max-width:720px) {
   .my-week-two-col { flex-direction: column; gap: 10px;}
-  .grocery-notepad { margin-top: 12px; }
   .myweek-wrap { grid-template-columns: repeat(1, 1fr); }
   .grocery-notepad ul, .grocery-notepad ul.two-cols { column-count:1;}
+  .myweek-controls-col { width:100%; }
 }
