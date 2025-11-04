@@ -1,4 +1,4 @@
-// Grocery list and portions UI update: no portions in initial menu, full grocery list on Next, portions/rebuild on preview
+// Only one rebuild button, notepad header row with copy button, portion select after next, three-high stack grid
 (async function() {
   let data;
   let allMeals = [];
@@ -53,7 +53,6 @@
   let isMenuVisible = true;
   const portions = {};
   let currentChosen = [];
-  let displayMealsGrocery = [];
 
   function getDisplayMeals() {
     if (!allMeals) return [];
@@ -108,7 +107,7 @@
       selector.textContent = selected.has(id) ? "Selected" : "Select";
       card.appendChild(selector);
     }
-    // Portion select: if recipePreview mode only
+    // Portion select: only on build page!
     if (opts.recipePreview) {
       const portionLabel = document.createElement("label");
       portionLabel.className = "portion";
@@ -167,7 +166,6 @@
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
-
     const displayMeals = getDisplayMeals();
     if (!displayMeals.length) {
       menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
@@ -259,8 +257,6 @@
       return m ? { id, meal: m } : null;
     }).filter(x => x && x.meal);
 
-    displayMealsGrocery = currentChosen.map(({ meal }) => meal);
-
     if (menu) menu.classList.add("hidden");
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
@@ -269,59 +265,47 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // Left column: card grid inside orange border
+      // Cards stacked vertically, three high, then fill next column
       const left = document.createElement("div");
       left.className = "myweek-left";
-      const orangeBox = document.createElement("div");
-      orangeBox.className = "orange-card-bg";
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
       currentChosen.forEach(({id, meal}, idx) => {
         previewWrap.appendChild(createCard(meal, idx, { showSelector: false, recipePreview: true }));
       });
-      orangeBox.appendChild(previewWrap);
-      left.appendChild(orangeBox);
+      left.appendChild(previewWrap);
 
-      // Right column: grocery notepad (visible immediately), and rebuild controls
+      // Controls (one rebuild button, and notepad with header row)
       const rightCol = document.createElement("div");
       rightCol.className = "myweek-controls-col";
-
-      // Portion/rebuild UI at top right
       const controlsList = document.createElement("div");
       controlsList.className = "myweek-controls-list";
       const portionTitle = document.createElement("div");
       portionTitle.className = "portion-title";
-      portionTitle.textContent = "Adjust Portions";
+      portionTitle.textContent = "Adjust Portions?";
+      portionTitle.style.paddingTop="2px";
       controlsList.appendChild(portionTitle);
+
       const buildBtn = document.createElement("button");
       buildBtn.className = "build-btn-big";
       buildBtn.textContent = "Rebuild Ingredients";
       buildBtn.addEventListener("click", buildIngredients);
       controlsList.appendChild(buildBtn);
+
       rightCol.appendChild(controlsList);
 
-      // grocery notepad—wide, visible after next
+      // grocery notepad—wide, visible after next, header row with copy button right
       const notepad = document.createElement("div");
       notepad.className = "grocery-notepad";
       notepad.id = "grocery-notepad";
       notepad.style.display = "";
-      const header = document.createElement("div");
-      header.className = "note-header";
+      const headerRow = document.createElement("div");
+      headerRow.className = "header-row";
       const title = document.createElement("div");
       title.className = "note-title";
       title.textContent = "Grocery List";
-      header.appendChild(title);
-      notepad.appendChild(header);
+      headerRow.appendChild(title);
 
-      const body = document.createElement("div");
-      body.className = "note-body";
-      const ul = document.createElement("ul");
-      ul.id = "grocery-notepad-list";
-      body.appendChild(ul);
-      notepad.appendChild(body);
-
-      const noteControls = document.createElement("div");
-      noteControls.className = "note-controls";
       const copyBtn = document.createElement("button");
       copyBtn.className = "copy-btn";
       copyBtn.textContent = "Copy List";
@@ -329,6 +313,7 @@
       copySuccess.className = "copy-success";
       copySuccess.style.display = "none";
       copyBtn.addEventListener("click", () => {
+        const ul = document.getElementById("grocery-notepad-list");
         const lis = Array.from(ul.querySelectorAll("li"));
         const text = lis.map(li => "• " + li.textContent).join("\n");
         navigator.clipboard.writeText(text)
@@ -343,9 +328,16 @@
             setTimeout(() => { copySuccess.style.display = "none"; }, 1700);
           });
       });
-      noteControls.appendChild(copyBtn);
-      noteControls.appendChild(copySuccess);
-      notepad.appendChild(noteControls);
+      headerRow.appendChild(copyBtn);
+      headerRow.appendChild(copySuccess);
+      notepad.appendChild(headerRow);
+
+      const body = document.createElement("div");
+      body.className = "note-body";
+      const ul = document.createElement("ul");
+      ul.id = "grocery-notepad-list";
+      body.appendChild(ul);
+      notepad.appendChild(body);
 
       rightCol.appendChild(notepad);
 
@@ -353,7 +345,6 @@
       twoCol.appendChild(rightCol);
       selectedDiv.appendChild(twoCol);
 
-      // Initial build on Next
       buildIngredients();
     }
     updateTopControls();
@@ -388,6 +379,7 @@
       });
     });
 
+    // Aggregate
     const grouped = {};
     groceryItems.forEach(ing => {
       if (!ing || !ing.ingredient) return;
@@ -397,9 +389,7 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
-    const notepad = document.getElementById("grocery-notepad");
     const ul = document.getElementById("grocery-notepad-list");
-    if (notepad) notepad.style.display = "";
     if (ul) {
       ul.innerHTML = "";
       Object.values(grouped).forEach(ing => {
@@ -408,13 +398,10 @@
         li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
         ul.appendChild(li);
       });
-      // Dynamically set notepad width
-      const widest = Math.max(370, ...Array.from(ul.children).map(li => li.textContent.length * 8));
-      ul.parentElement.parentElement.style.maxWidth = widest + "px";
-      if (ul.childElementCount > 14) {
-        ul.classList.add("two-cols");
+      if (ul.childElementCount < 10) {
+        ul.classList.add("one-col");
       } else {
-        ul.classList.remove("two-cols");
+        ul.classList.remove("one-col");
       }
     }
   }
@@ -423,7 +410,6 @@
     if (isMenuVisible) nextHandler();
     else buildIngredients();
   });
-
   if (topBack) topBack.addEventListener("click", () => backToSelection());
   if (pdfToggle) {
     pdfToggle.checked = filterPdfOnly;
