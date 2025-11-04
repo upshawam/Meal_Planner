@@ -1,9 +1,11 @@
-// Updated docs/app.js with My Week cards grid, preview/notepad centering, ingredient notepad two columns (if long), and copy button
-(async function() {
-  // Load week.json
-  let data;
-  let allMeals = []; // all loaded meals, unfiltered
+// Full updated app.js handling:
+// - Menu view: floating "Clear All" button
+// - My Week preview: 3x3 grid, no notepad until Build Ingredients, improved build workflow
+// - Grocery list: always editable portions & copy button, bold heading, two columns if long
 
+(async function() {
+  let data;
+  let allMeals = [];
   try {
     const res = await fetch("./week.json", { cache: "no-store" });
     if (!res.ok) throw new Error("week.json not found");
@@ -16,15 +18,16 @@
     return;
   }
 
-  // DOM elements
+  // DOM
   const menu = document.getElementById("menu");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
   const topCount = document.getElementById("top-selected-count");
   const selectedDiv = document.getElementById("selected");
   const pdfToggle = document.getElementById("filter-pdf-toggle");
+  let clearBtn = null;
 
-  // modal elements
+  // Modal elements
   const modal = document.getElementById("modal");
   const modalClose = document.getElementById("modal-close");
   const modalTitle = document.getElementById("modal-title");
@@ -46,7 +49,6 @@
 
   safeHideModal();
 
-  // stable id helper
   function mealIdFor(meal, idx) {
     return (meal && meal.url) ? meal.url : String(idx);
   }
@@ -66,7 +68,6 @@
     return allMeals;
   }
 
-  // update top controls (count + Next text/behavior)
   function updateTopControls() {
     const count = selected.size;
     if (topCount) topCount.textContent = `${count} selected`;
@@ -79,9 +80,9 @@
       topNext.textContent = "Build Ingredients";
     }
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
+    if (clearBtn) clearBtn.style.display = isMenuVisible ? "" : "none";
   }
 
-  // create a card element for menu or preview
   function createCard(meal, idx, opts = {}) {
     const id = mealIdFor(meal, idx);
     const card = document.createElement("div");
@@ -101,7 +102,6 @@
     subtitle.className = "muted";
     subtitle.textContent = meal.subtitle || "";
 
-    // selector pill shown on initial menu cards (unless explicitly disabled)
     if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
@@ -119,7 +119,6 @@
       if (sel) sel.textContent = "Selected";
     }
 
-    // click toggles selection
     card.addEventListener("click", (e) => {
       if (locked) return;
       if (selected.has(id)) {
@@ -136,12 +135,10 @@
       updateTopControls();
     });
 
-    // double-click opens modal details
     card.addEventListener("dblclick", (e) => {
       showModalForMeal(meal);
     });
 
-    // keyboard accessibility
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") card.click();
       if (e.key === " ") { e.preventDefault(); card.dispatchEvent(new Event("dblclick")); }
@@ -150,13 +147,25 @@
     return card;
   }
 
-  // render the menu grid (PDF-only optional)
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
 
-    const displayMeals = getDisplayMeals();
+    if (!clearBtn) {
+      clearBtn = document.createElement("button");
+      clearBtn.className = "clear-btn-floating";
+      clearBtn.textContent = "Clear All";
+      clearBtn.style.display = isMenuVisible ? "" : "none";
+      clearBtn.addEventListener("click", () => {
+        selected = new Set();
+        updateTopControls();
+        renderMenu();
+      });
+      // Place above menu grid
+      menu.parentElement.appendChild(clearBtn);
+    }
 
+    const displayMeals = getDisplayMeals();
     if (!displayMeals.length) {
       menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
         ${filterPdfOnly ? "No meals with PDF in week.json" : "No meals found in week.json"}
@@ -254,11 +263,13 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // left column (preview)
+      // left: preview meal cards
       const left = document.createElement("div");
       left.className = "myweek-left";
       const leftInner = document.createElement("div");
       leftInner.style.paddingRight = "6px";
+
+      // grid of cards for My Week, 3 columns
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
       currentChosen.forEach(({id, meal}, idx) => {
@@ -291,6 +302,7 @@
           c.appendChild(h4);
           c.appendChild(p);
         }
+        // Portion selector (bottom-left)
         const portionLabel = document.createElement("label");
         portionLabel.className = "portion";
         const select = document.createElement("select");
@@ -306,6 +318,7 @@
         portionLabel.innerHTML = "Portions: ";
         portionLabel.appendChild(select);
         c.appendChild(portionLabel);
+
         c.classList.add("selected");
         const maybeSelector = c.querySelector(".selector");
         if (maybeSelector) maybeSelector.remove();
@@ -323,35 +336,49 @@
       });
       leftInner.appendChild(previewWrap);
       left.appendChild(leftInner);
-      const controlsNote = document.createElement("div");
-      controlsNote.className = "muted small";
-      controlsNote.style.marginTop = "8px";
-      controlsNote.textContent = "Use the 'Build Ingredients' button at the top to build the grocery list.";
-      left.appendChild(controlsNote);
 
-      // right column (grocery notepad)
+      // below cards: steps section and Build Ingredients button
+      const controlsList = document.createElement("div");
+      controlsList.className = "myweek-controls-list";
+      const portionTitle = document.createElement("div");
+      portionTitle.className = "portion-title";
+      portionTitle.textContent = "1. Select Portions for Your Meals";
+      controlsList.appendChild(portionTitle);
+      const portionDesc = document.createElement("div");
+      portionDesc.className = "portion-desc";
+      portionDesc.textContent = "Choose number of portions for each meal. You can adjust these any time.";
+      controlsList.appendChild(portionDesc);
+      const buildBtn = document.createElement("button");
+      buildBtn.className = "build-btn-big";
+      buildBtn.textContent = "Build Ingredients";
+      buildBtn.addEventListener("click", buildIngredients);
+      controlsList.appendChild(buildBtn);
+
+      left.appendChild(controlsList);
+
+      // right: grocery notepad, initially hidden
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
       right.style.maxWidth = "480px";
-      right.style.marginLeft = "0";
+      right.style.display = "none";
       const header = document.createElement("div");
       header.className = "note-header";
       const title = document.createElement("div");
       title.className = "note-title";
       title.textContent = "Grocery List";
-      const sub = document.createElement("div");
-      sub.className = "note-sub";
-      sub.textContent = "Built from selected meals";
       header.appendChild(title);
-      header.appendChild(sub);
       right.appendChild(header);
+
+      // notepad body
       const body = document.createElement("div");
       body.className = "note-body";
       const ul = document.createElement("ul");
       ul.id = "grocery-notepad-list";
       body.appendChild(ul);
       right.appendChild(body);
+
+      // note controls (copy button)
       const noteControls = document.createElement("div");
       noteControls.className = "note-controls";
       const copyBtn = document.createElement("button");
@@ -360,7 +387,6 @@
       const copySuccess = document.createElement("span");
       copySuccess.className = "copy-success";
       copySuccess.style.display = "none";
-
       copyBtn.addEventListener("click", () => {
         const lis = Array.from(ul.querySelectorAll("li"));
         const text = lis.map(li => "• " + li.textContent).join("\n");
@@ -379,6 +405,7 @@
       noteControls.appendChild(copyBtn);
       noteControls.appendChild(copySuccess);
       right.appendChild(noteControls);
+
       twoCol.appendChild(left);
       twoCol.appendChild(right);
       selectedDiv.appendChild(twoCol);
@@ -396,6 +423,8 @@
 
   function buildIngredients() {
     if (!currentChosen || !currentChosen.length) return;
+
+    // Record all current portion selectors (portion may be changed any time)
     currentChosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
       const val = sel ? parseInt(sel.value, 10) : 2;
@@ -424,8 +453,10 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
-    // render into notepad list
+    // Show notepad, render list; two columns if long
+    const notepad = document.getElementById("grocery-notepad");
     const ul = document.getElementById("grocery-notepad-list");
+    if (notepad) notepad.style.display = "";
     if (ul) {
       ul.innerHTML = "";
       Object.values(grouped).forEach(ing => {
@@ -434,7 +465,6 @@
         li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
         ul.appendChild(li);
       });
-      // Make two columns if list is long
       if (ul.childElementCount > 14) {
         ul.classList.add("two-cols");
       } else {
@@ -447,13 +477,14 @@
     if (isMenuVisible) nextHandler();
     else buildIngredients();
   });
+
   if (topBack) topBack.addEventListener("click", () => backToSelection());
 
   if (pdfToggle) {
     pdfToggle.checked = filterPdfOnly;
     pdfToggle.addEventListener("change", function() {
       filterPdfOnly = pdfToggle.checked;
-      selected = new Set(); // clear selection on filter change
+      selected = new Set();
       renderMenu();
     });
   }
