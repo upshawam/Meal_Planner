@@ -1,11 +1,14 @@
-// Updated docs/app.js with persistent PDF-only filtering everywhere
+// Updated docs/app.js with persistent PDF-only filtering toggle
 (async function() {
   // Load week.json
   let data;
+  let allMeals = []; // all loaded meals, unfiltered
+
   try {
     const res = await fetch("./week.json", { cache: "no-store" });
     if (!res.ok) throw new Error("week.json not found");
     data = await res.json();
+    allMeals = data.meals || [];
   } catch (err) {
     console.error("Failed to load ./week.json:", err);
     const menu = document.getElementById("menu");
@@ -13,13 +16,13 @@
     return;
   }
 
-  // Filter for recipes with a PDF everywhere
-  const allMeals = (data.meals || []).filter(m => m.pdf && (typeof m.pdf === "string") && m.pdf.trim());
+  // DOM elements
   const menu = document.getElementById("menu");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
   const topCount = document.getElementById("top-selected-count");
   const selectedDiv = document.getElementById("selected");
+  const pdfToggle = document.getElementById("filter-pdf-toggle");
 
   // modal elements
   const modal = document.getElementById("modal");
@@ -48,12 +51,20 @@
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
-  // state (persistent selection and portion mapping)
+  // state
+  let filterPdfOnly = false;
   let selected = new Set();
   let locked = false;
   let isMenuVisible = true;
-  const portions = {}; // persisted portion choices
-  let currentChosen = []; // last chosen array (id, meal) used in My Week view
+  const portions = {};
+  let currentChosen = [];
+
+  function getDisplayMeals() {
+    if (!allMeals) return [];
+    if (filterPdfOnly)
+      return allMeals.filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+    return allMeals;
+  }
 
   // update top controls (count + Next text/behavior)
   function updateTopControls() {
@@ -102,24 +113,22 @@
     card.appendChild(title);
     card.appendChild(subtitle);
 
-    // If this meal is already selected, mark it visually on render
     if (selected.has(id)) {
       card.classList.add("selected");
       const sel = card.querySelector(".selector");
       if (sel) sel.textContent = "Selected";
     }
 
-    // click toggles selection (only when menu visible / not locked)
+    // click toggles selection
     card.addEventListener("click", (e) => {
       if (locked) return;
-      const sid = id;
-      if (selected.has(sid)) {
-        selected.delete(sid);
+      if (selected.has(id)) {
+        selected.delete(id);
         card.classList.remove("selected");
         const sel = card.querySelector(".selector");
         if (sel) sel.textContent = "Select";
       } else {
-        selected.add(sid);
+        selected.add(id);
         card.classList.add("selected");
         const sel = card.querySelector(".selector");
         if (sel) sel.textContent = "Selected";
@@ -127,7 +136,7 @@
       updateTopControls();
     });
 
-    // double-click opens modal details (ingredients + pdf controls)
+    // double-click opens modal details
     card.addEventListener("dblclick", (e) => {
       showModalForMeal(meal);
     });
@@ -141,20 +150,20 @@
     return card;
   }
 
-  // initial render of the menu grid (PDF-only)
+  // render the menu grid (PDF-only optional)
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
 
-    // Only show meals with PDF
-    const displayMeals = allMeals;
+    const displayMeals = getDisplayMeals();
 
     if (!displayMeals.length) {
-      menu.innerHTML = '<div style="grid-column:1/-1;color:#374151;padding:12px">No meals with PDF in week.json</div>';
+      menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
+        ${filterPdfOnly ? "No meals with PDF in week.json" : "No meals found in week.json"}
+        </div>`;
       return;
     }
     displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i)));
-    // ensure menu visible
     if (menu) menu.classList.remove("hidden");
     if (selectedDiv) selectedDiv.classList.add("hidden");
     isMenuVisible = true;
@@ -163,7 +172,6 @@
     updateTopControls();
   }
 
-  // PDF helper
   function isLocalPdf(url) {
     if (!url) return false;
     try {
@@ -185,7 +193,6 @@
       safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
         meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
     } else safeText(modalIngredients, "");
-    // reset pdf viewer
     if (modalPdfViewer) modalPdfViewer.style.display = "none";
     if (modalPdfIframe) modalPdfIframe.src = "";
     if (modalPdfMessage) modalPdfMessage.textContent = "";
@@ -230,45 +237,33 @@
     });
   }
 
-  // Next: hide full menu and show selected-only preview + notepad (two-column)
   function nextHandler() {
     if (!selected.size) return;
     locked = true;
     isMenuVisible = false;
-
-    // only consider selected PDF-meals
     const chosenIds = Array.from(selected);
     currentChosen = chosenIds.map(id => {
-      const m = allMeals.find((mm, idx) => mealIdFor(mm, idx) === id);
+      const m = getDisplayMeals().find((mm, idx) => mealIdFor(mm, idx) === id);
       return m ? { id, meal: m } : null;
-    }).filter(x => x && x.meal && x.meal.pdf && x.meal.pdf.trim());
+    }).filter(x => x && x.meal);
 
-    // hide original menu
     if (menu) menu.classList.add("hidden");
-
-    // build two-column preview
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
       selectedDiv.innerHTML = "";
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // left column: compact preview + small inner padding to avoid overlap
+      // left column (preview)
       const left = document.createElement("div");
       left.className = "myweek-left";
-
       const leftInner = document.createElement("div");
       leftInner.style.paddingRight = "6px";
-
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
-
-      // create recipe card for each chosen meal (PDF guarantee)
       currentChosen.forEach(({id, meal}) => {
         const c = document.createElement("div");
         c.className = "card myweek-card";
-
-        // anchor for main content
         const linkHref = meal.pdf || meal.url || "";
         const anchor = linkHref ? document.createElement("a") : document.createElement("div");
         if (linkHref) {
@@ -296,8 +291,6 @@
           c.appendChild(h4);
           c.appendChild(p);
         }
-
-        // portion selector (bottom-left)
         const portionLabel = document.createElement("label");
         portionLabel.className = "portion";
         const select = document.createElement("select");
@@ -313,15 +306,9 @@
         portionLabel.innerHTML = "Portions: ";
         portionLabel.appendChild(select);
         c.appendChild(portionLabel);
-
-        // ensure this preview card is visually "selected"
         c.classList.add("selected");
-
-        // remove any selector pill left on preview card (if present)
         const maybeSelector = c.querySelector(".selector");
         if (maybeSelector) maybeSelector.remove();
-
-        // recipe pill top-right (solid & visible, PDF-only)
         if (linkHref) {
           const recipe = document.createElement("a");
           recipe.className = "recipe-pill";
@@ -332,27 +319,22 @@
           recipe.addEventListener("click", (ev) => ev.stopPropagation());
           c.appendChild(recipe);
         }
-
         previewWrap.appendChild(c);
       });
-
       leftInner.appendChild(previewWrap);
       left.appendChild(leftInner);
-
-      // left-column build button note
       const controlsNote = document.createElement("div");
       controlsNote.className = "muted small";
       controlsNote.style.marginTop = "8px";
       controlsNote.textContent = "Use the 'Build Ingredients' button at the top to build the grocery list.";
       left.appendChild(controlsNote);
 
-      // right column: grocery notepad (closer to left now)
+      // right column (grocery notepad)
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
       right.style.maxWidth = "320px";
       right.style.marginLeft = "10px";
-
       const header = document.createElement("div");
       header.className = "note-header";
       const title = document.createElement("div");
@@ -364,14 +346,12 @@
       header.appendChild(title);
       header.appendChild(sub);
       right.appendChild(header);
-
       const body = document.createElement("div");
       body.className = "note-body";
       const ul = document.createElement("ul");
       ul.id = "grocery-notepad-list";
       body.appendChild(ul);
       right.appendChild(body);
-
       const noteControls = document.createElement("div");
       noteControls.className = "note-controls";
       const download = document.createElement("button");
@@ -390,16 +370,13 @@
       });
       noteControls.appendChild(download);
       right.appendChild(noteControls);
-
       twoCol.appendChild(left);
       twoCol.appendChild(right);
       selectedDiv.appendChild(twoCol);
     }
-
     updateTopControls();
   }
 
-  // Back: show menu again, preserve selected set and portion choices
   function backToSelection() {
     locked = false;
     isMenuVisible = true;
@@ -408,11 +385,8 @@
     updateTopControls();
   }
 
-  // Build ingredients: read portions, scale, aggregate, render to notepad (PDF-only)
   function buildIngredients() {
-    // use currentChosen (PDF guarantee)
     if (!currentChosen || !currentChosen.length) return;
-
     currentChosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
       const val = sel ? parseInt(sel.value, 10) : 2;
@@ -454,18 +428,24 @@
     }
   }
 
-  // wire top controls
   if (topNext) topNext.addEventListener("click", () => {
     if (isMenuVisible) nextHandler();
     else buildIngredients();
   });
   if (topBack) topBack.addEventListener("click", () => backToSelection());
 
-  // modal close handlers
+  if (pdfToggle) {
+    pdfToggle.checked = filterPdfOnly;
+    pdfToggle.addEventListener("change", function() {
+      filterPdfOnly = pdfToggle.checked;
+      selected = new Set(); // clear selection on filter change
+      renderMenu();
+    });
+  }
+
   if (modalClose) modalClose.addEventListener("click", safeHideModal);
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
 
-  // initial render (PDF guarantee)
   renderMenu();
 })();
