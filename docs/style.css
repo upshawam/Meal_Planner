@@ -1,11 +1,11 @@
 :root{
-  --bg: #ff8c42; /* EveryPlate Orange */
+  --bg: #f7fafc;
   --card: #fff;
   --muted: #6b7280;
   --accent: #16a34a;
   --orange: #ff8c42;
   --orange-dark: #e96f1a;
-  --radius:10px;
+  --radius:14px;
   --gap:10px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -83,12 +83,21 @@ body{
   margin: 22px 0;
 }
 
+/* Orange highlight box behind meal cards in build step */
+.orange-card-bg {
+  background: var(--orange);
+  border-radius: var(--radius);
+  padding: 26px 26px 20px 26px;
+  box-shadow: 0 8px 36px rgba(255,140,66,0.23);
+  display: inline-block;
+}
+
 /* Card */
 .card{
-  border-radius:10px;
+  border-radius:12px;
   background:var(--card);
   box-shadow:0 6px 12px rgba(2,6,23,0.06);
-  padding:16px 12px 12px 12px;
+  padding:16px 12px;
   border:2px solid transparent;
   cursor:pointer;
   position:relative;
@@ -115,7 +124,7 @@ body{
   font-weight:700;
 }
 .card p{
-  margin:0 0 16px 0;
+  margin:0 0 20px 0;
   color:var(--muted);
   font-size:0.95rem;
   line-height:1.30;
@@ -126,7 +135,21 @@ body{
 /* Ensures consistent spacing to portion select */
 .card .portion {
   margin-top: auto;
-  padding-top:10px;
+  padding-top:14px;
+}
+
+/* Prevent portion selector overflow, stick to bottom */
+.card .portion,
+.myweek-card .portion {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  margin-bottom: 0;
+  background: #f3f4f6;
+  border-radius: 5px;
+  padding: 8px;
+  text-align:left;
 }
 
 /* Selector pill: now solid orange with thin black outline by default.
@@ -173,14 +196,6 @@ body{
   text-decoration:none;
   border:0;
   box-shadow: 0 8px 20px rgba(22,163,74,0.16);
-}
-
-/* Portion styling */
-.portion{
-  display:block;
-  font-size:0.95rem;
-  color:var(--muted);
-  margin-top: auto;
 }
 
 /* Buttons */
@@ -274,7 +289,12 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   min-width: 250px;
 }
 
-/* Grid for cards: always 3 columns, wrap as needed */
+/* Orange dynamic grid border/card background in build step */
+.myweek-left .orange-card-bg {
+  width: auto;
+  max-width: none;
+}
+
 .myweek-wrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -294,21 +314,32 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   width: 220px;
   min-height: 225px;
   max-height: 225px;
-  padding: 16px 12px 12px 12px;
+  padding:16px 12px;
   margin: 0;
   position:relative;
   display: flex;
   flex-direction:column;
   background: var(--card);
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(2,6,23,0.11);
+}
+.myweek-card .portion {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  margin-bottom: 0;
+  background: #f3f4f6;
+  border-radius: 5px;
+  padding: 8px;
+  text-align:left;
 }
 
 .myweek-controls-col {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 26px;
+  gap: 22px;
   width: 470px;
   min-width: 240px;
 }
@@ -323,13 +354,20 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   min-width: 160px;
 }
 .myweek-controls-list .portion-title {
-  font-size: 1.04rem;
+  font-size: 1.08rem;
   font-weight: 600;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   letter-spacing:0.02rem;
 }
+.myweek-controls-list .then-text {
+  font-size: 1.09rem;
+  font-weight: 700;
+  color: var(--orange-dark);
+  margin: 7px 0 8px 0;
+  letter-spacing: 0.04rem;
+}
 .build-btn-big {
-  margin-top:8px;
+  margin-top:0;
   font-size: 1.03rem;
   padding: 10px 20px;
   background: var(--accent);
@@ -344,7 +382,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 }
 .build-btn-big:hover{ background: #128137; }
 
-/* Bold bigger Grocery List */
+/* Grocery Notepad much wider, less wrapping */
 .grocery-notepad {
   background: #fffbea;
   border-radius: 8px;
@@ -352,8 +390,8 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   box-shadow: 0 10px 30px rgba(2,6,23,0.09);
   border: 1px solid rgba(0,0,0,0.04);
   position: relative;
-  min-width: 220px;
-  max-width: 295px;
+  min-width: 370px;
+  max-width: 550px;
   font-family: 'Segoe UI', Tahoma, sans-serif;
   margin-left: 0;
   display: flex;
@@ -361,7 +399,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   align-items: flex-start;
 }
 .grocery-notepad .note-title {
-  font-size: 1.37rem;
+  font-size: 1.45rem;
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 8px;
@@ -374,6 +412,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   border-radius:6px;
   min-height: 120px;
   overflow:auto;
+  width:100%;
 }
 .grocery-notepad ul {
   margin: 0;
@@ -381,15 +420,19 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   list-style-type: disc;
   column-count: 1;
   column-gap: 34px;
+  width:100%;
+  word-break:keep-all;
+  white-space:nowrap;
 }
 .grocery-notepad ul.two-cols {
   column-count: 2;
 }
 .grocery-notepad li {
   margin: 6px 0;
-  line-height: 1.2;
+  line-height: 1.34;
   break-inside: avoid;
 }
+
 .grocery-notepad .note-controls {
   display:flex;
   gap:8px;
@@ -397,6 +440,11 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   align-items:center;
 }
 
+
+@media (max-width:1200px) {
+  .grocery-notepad {max-width: 96vw;min-width:240px;}
+  .myweek-controls-col { width:100%; }
+}
 @media (max-width:1000px) {
   .my-week-two-col {
     flex-direction: column;
@@ -413,6 +461,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   .grocery-notepad {
     max-width: 98vw;
     min-width: 210px;
+    width:100%;
   }
 }
 @media (max-width:720px) {
