@@ -1,4 +1,4 @@
-// Only one rebuild button, notepad header row with copy button, portion select after next, three-high stack grid
+// Only one rebuild button, notepad header row with copy button, portion select below description, three-high stack grid
 (async function() {
   let data;
   let allMeals = [];
@@ -109,17 +109,19 @@
     }
     // Portion select: only on build page!
     if (opts.recipePreview) {
+      // Place "portions" below description & avoid overlap
       const portionLabel = document.createElement("label");
       portionLabel.className = "portion";
-      portionLabel.style.position = "absolute";
-      portionLabel.style.left = "14px";
-      portionLabel.style.right = "14px";
-      portionLabel.style.bottom = "12px";
+      portionLabel.style.position = "relative"; // changed from absolute!
+      portionLabel.style.left = "";
+      portionLabel.style.right = "";
+      portionLabel.style.bottom = "";
       portionLabel.style.background = "#f3f4f6";
       portionLabel.style.borderRadius = "5px";
       portionLabel.style.padding = "8px";
       portionLabel.style.marginBottom = "0";
       portionLabel.style.textAlign = "left";
+      portionLabel.style.marginTop = "0";
       const select = document.createElement("select");
       select.setAttribute("data-portion-id", encodeURIComponent(id));
       for (let n=2; n<=10; n++) {
@@ -132,7 +134,7 @@
       if (prev) select.value = String(prev);
       portionLabel.innerHTML = "Portions: ";
       portionLabel.appendChild(select);
-      card.appendChild(portionLabel);
+      card.appendChild(portionLabel); // below subtitle, will never overlap
     }
 
     card.addEventListener("click", (e) => {
