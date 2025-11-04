@@ -6,6 +6,7 @@
    - My Week preview and notepad center aligned with clear gap
    - Grocery ingredients can be two columns if the list is long
    - Replace download button with copy button
+   - Floating clear selection button for all recipes
 */
 
 /* Core variables & typography */
@@ -63,6 +64,28 @@ body{
 .filter-toggle label {
   cursor:pointer;
   user-select:none;
+}
+
+/* Floating Clear All button */
+.clear-btn-floating {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  z-index: 1500;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+  box-shadow: 0 8px 22px rgba(22,163,74,0.14);
+  cursor: pointer;
+  transition: background .15s;
+  font-size:1.09rem;
+  opacity: 0.95;
+}
+.clear-btn-floating:hover {
+  background: #128137;
 }
 
 /* Grid layout */
@@ -230,29 +253,40 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   cursor:pointer;
 }
 
-/* My Week multi-column layout: preview center aligned with notepad, and cards spaced */
+/* My Week multi-column layout: preview+notepad centered with big gap */
 .my-week-two-col {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: 40px;
+  gap: 48px;
   margin-top: 32px;
+  min-height: 320px;
+  position:relative;
 }
+
 .myweek-left {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 250px;
 }
+
+/* Preview grid: 3 cards wide always */
 .myweek-wrap {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+  grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 1fr;
   gap: 18px;
   align-items: start;
   padding-bottom: 8px;
   margin-bottom: 4px;
+}
+@media (max-width:830px) {
+  .myweek-wrap{grid-template-columns: repeat(2, 1fr);}
+}
+@media (max-width:540px) {
+  .myweek-wrap{grid-template-columns: 1fr;}
 }
 .myweek-card {
   width: 220px;
@@ -267,27 +301,82 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   box-shadow: 0 4px 12px rgba(2,6,23,0.11);
 }
 
-/* Grocery notepad two-column styling */
+/* Build Ingredients button in preview */
+.myweek-controls-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.myweek-controls-list .portion-title {
+  font-size: 1.04rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  letter-spacing:0.02rem;
+}
+
+.myweek-controls-list .portion-desc {
+  font-size: 0.99rem;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.build-btn-big {
+  margin-top:10px;
+  font-size: 1.13rem;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background .14s;
+  box-shadow: 0 7px 22px rgba(22,163,74,0.12);
+}
+.build-btn-big:hover{ background: #128137; }
+
 .grocery-notepad {
   background: #fffbea;
   border-radius: 8px;
-  padding: 20px 18px;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.10);
-  border: 1px solid rgba(0,0,0,0.05);
+  padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.09);
+  border: 1px solid rgba(0,0,0,0.04);
   position: relative;
   min-width: 320px;
   max-width: 480px;
   font-family: 'Segoe UI', Tahoma, sans-serif;
   margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
+
+/* Bold bigger Grocery List */
+.grocery-notepad .note-title {
+  font-size: 1.37rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+  letter-spacing: 0.03rem;
+  margin-top: 0;
+}
+
+/* Remove note-sub (hidden in JS) */
+.grocery-notepad .note-sub {
+  display: none;
+}
+
 .grocery-notepad .note-body {
-  padding: 4px 2px;
+  padding: 5px 2px 1px 2px;
   border-radius:6px;
-  min-height: 160px;
+  min-height: 120px;
   overflow:auto;
 }
 
-/* Grocery ingredient list in two columns if long */
 .grocery-notepad ul {
   margin: 0;
   padding-left: 18px;
@@ -307,7 +396,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 .grocery-notepad .note-controls {
   display:flex;
   gap:8px;
-  margin-top:10px;
+  margin-top:12px;
   align-items:center;
 }
 
