@@ -1,4 +1,4 @@
-// My Week "controls" now in right column, Build Ingredients smaller, Clear All inline, everything else preserved!
+// Build step: add orange border box behind cards, notepad pops right of build button, improved card min-height, pinned portion select
 (async function() {
   let data;
   let allMeals = [];
@@ -78,7 +78,7 @@
   function createCard(meal, idx, opts = {}) {
     const id = mealIdFor(meal, idx);
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card myweek-card";
     card.tabIndex = 0;
     card.dataset.idx = idx;
     card.dataset.id = id;
@@ -94,6 +94,14 @@
     subtitle.className = "muted";
     subtitle.textContent = meal.subtitle || "";
 
+    card.appendChild(img);
+    card.appendChild(title);
+    card.appendChild(subtitle);
+
+    if (selected.has(id)) {
+      card.classList.add("selected");
+    }
+
     if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
@@ -101,15 +109,32 @@
       card.appendChild(selector);
     }
 
-    card.appendChild(img);
-    card.appendChild(title);
-    card.appendChild(subtitle);
+    // Portion selector: always at absolute bottom inside card
+    const portionLabel = document.createElement("label");
+    portionLabel.className = "portion";
+    portionLabel.style.position = "absolute";
+    portionLabel.style.left = "14px";
+    portionLabel.style.right = "14px";
+    portionLabel.style.bottom = "12px";
+    portionLabel.style.background = "#f3f4f6";
+    portionLabel.style.borderRadius = "5px";
+    portionLabel.style.padding = "8px";
+    portionLabel.style.marginBottom = "0";
+    portionLabel.style.textAlign = "left";
 
-    if (selected.has(id)) {
-      card.classList.add("selected");
-      const sel = card.querySelector(".selector");
-      if (sel) sel.textContent = "Selected";
+    const select = document.createElement("select");
+    select.setAttribute("data-portion-id", encodeURIComponent(id));
+    for (let n=2; n<=10; n++) {
+      const opt = document.createElement("option");
+      opt.value = n;
+      opt.textContent = n;
+      select.appendChild(opt);
     }
+    const prev = portions[id];
+    if (prev) select.value = String(prev);
+    portionLabel.innerHTML = "Portions: ";
+    portionLabel.appendChild(select);
+    card.appendChild(portionLabel);
 
     card.addEventListener("click", (e) => {
       if (locked) return;
@@ -150,7 +175,7 @@
         </div>`;
       return;
     }
-    displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i)));
+    displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i, { showSelector: true })));
     if (menu) menu.classList.remove("hidden");
     if (selectedDiv) selectedDiv.classList.add("hidden");
     isMenuVisible = true;
@@ -238,96 +263,43 @@
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
       selectedDiv.innerHTML = "";
+
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // left: preview meal cards grid
+      // Left column: card grid inside orange border box
       const left = document.createElement("div");
       left.className = "myweek-left";
-      const leftInner = document.createElement("div");
-      leftInner.style.paddingRight = "6px";
+      const orangeBox = document.createElement("div");
+      orangeBox.className = "orange-card-bg";
+
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
       currentChosen.forEach(({id, meal}, idx) => {
-        const c = document.createElement("div");
-        c.className = "card myweek-card";
-        const linkHref = meal.pdf || meal.url || "";
-        const anchor = linkHref ? document.createElement("a") : document.createElement("div");
-        if (linkHref) {
-          anchor.href = linkHref;
-          anchor.target = isLocalPdf(linkHref) ? "_self" : "_blank";
-          anchor.rel = "noopener";
-          anchor.style.textDecoration = "none";
-          anchor.style.color = "inherit";
-        }
-        const imgEl = document.createElement("img");
-        imgEl.src = meal.image || "";
-        imgEl.alt = meal.title || "";
-        const h4 = document.createElement("h4");
-        h4.textContent = meal.title || "";
-        const p = document.createElement("p");
-        p.className = "muted";
-        p.textContent = meal.subtitle || "";
-        if (linkHref) {
-          anchor.appendChild(imgEl);
-          anchor.appendChild(h4);
-          anchor.appendChild(p);
-          c.appendChild(anchor);
-        } else {
-          c.appendChild(imgEl);
-          c.appendChild(h4);
-          c.appendChild(p);
-        }
-        // Portion selector (bottom-left)
-        const portionLabel = document.createElement("label");
-        portionLabel.className = "portion";
-        const select = document.createElement("select");
-        select.setAttribute("data-portion-id", encodeURIComponent(id));
-        for (let n=2; n<=10; n++) {
-          const opt = document.createElement("option");
-          opt.value = n;
-          opt.textContent = n;
-          select.appendChild(opt);
-        }
-        const prev = portions[id];
-        if (prev) select.value = String(prev);
-        portionLabel.innerHTML = "Portions: ";
-        portionLabel.appendChild(select);
-        c.appendChild(portionLabel);
-
-        c.classList.add("selected");
-        const maybeSelector = c.querySelector(".selector");
-        if (maybeSelector) maybeSelector.remove();
-        if (linkHref) {
-          const recipe = document.createElement("a");
-          recipe.className = "recipe-pill";
-          recipe.textContent = "Recipe";
-          recipe.href = linkHref;
-          recipe.target = isLocalPdf(linkHref) ? "_self" : "_blank";
-          recipe.rel = "noopener";
-          recipe.addEventListener("click", (ev) => ev.stopPropagation());
-          c.appendChild(recipe);
-        }
-        previewWrap.appendChild(c);
+        previewWrap.appendChild(createCard(meal, idx, { showSelector: false }));
       });
-      leftInner.appendChild(previewWrap);
-      left.appendChild(leftInner);
+      orangeBox.appendChild(previewWrap);
+      left.appendChild(orangeBox);
 
-      // right: controls column, then grocery notepad (hidden initially)
+      // Controls column: portion section (top) and grocery notepad (right, only visible after build)
       const rightCol = document.createElement("div");
       rightCol.className = "myweek-controls-col";
 
-      // Portion instructions and Build Ingredients
+      // Portion instructions and build button
       const controlsList = document.createElement("div");
       controlsList.className = "myweek-controls-list";
       const portionTitle = document.createElement("div");
       portionTitle.className = "portion-title";
-      portionTitle.textContent = "1. Select Portions for Your Meals";
+      portionTitle.textContent = "First Select Portions";
       controlsList.appendChild(portionTitle);
-      const portionDesc = document.createElement("div");
-      portionDesc.className = "portion-desc";
-      portionDesc.textContent = "Choose number of portions for each meal. You can adjust these any time.";
-      controlsList.appendChild(portionDesc);
+
+      // Then text (gap)
+      const thenText = document.createElement("div");
+      thenText.className = "then-text";
+      thenText.textContent = "Then";
+      controlsList.appendChild(thenText);
+
+      // Build Ingredients button
       const buildBtn = document.createElement("button");
       buildBtn.className = "build-btn-big";
       buildBtn.textContent = "Build Ingredients";
@@ -340,7 +312,6 @@
       const notepad = document.createElement("div");
       notepad.className = "grocery-notepad";
       notepad.id = "grocery-notepad";
-      notepad.style.maxWidth = "480px";
       notepad.style.display = "none";
       const header = document.createElement("div");
       header.className = "note-header";
@@ -403,7 +374,6 @@
 
   function buildIngredients() {
     if (!currentChosen || !currentChosen.length) return;
-
     currentChosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
       const val = sel ? parseInt(sel.value, 10) : 2;
@@ -432,6 +402,7 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
+    // Show notepad, render list; two columns if long
     const notepad = document.getElementById("grocery-notepad");
     const ul = document.getElementById("grocery-notepad-list");
     if (notepad) notepad.style.display = "";
@@ -457,7 +428,6 @@
   });
 
   if (topBack) topBack.addEventListener("click", () => backToSelection());
-
   if (pdfToggle) {
     pdfToggle.checked = filterPdfOnly;
     pdfToggle.addEventListener("change", function() {
@@ -466,7 +436,6 @@
       renderMenu();
     });
   }
-
   if (clearBtnInline) {
     clearBtnInline.addEventListener("click", function() {
       selected = new Set();
@@ -474,7 +443,6 @@
       renderMenu();
     });
   }
-
   if (modalClose) modalClose.addEventListener("click", safeHideModal);
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
