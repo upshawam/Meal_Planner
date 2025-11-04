@@ -1,8 +1,4 @@
-// Updated docs/app.js
-// - Top sticky button acts as Next on menu, becomes Build Ingredients in My Week view.
-// - Build action happens from top button; left-column Build button removed.
-// - Keeps selected-state on Back and adds currentChosen persistence.
-// - Adds small layout improvements for preview packing.
+// Updated docs/app.js with persistent PDF-only filtering everywhere
 (async function() {
   // Load week.json
   let data;
@@ -17,7 +13,8 @@
     return;
   }
 
-  const meals = data.meals || [];
+  // Filter for recipes with a PDF everywhere
+  const allMeals = (data.meals || []).filter(m => m.pdf && (typeof m.pdf === "string") && m.pdf.trim());
   const menu = document.getElementById("menu");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
@@ -51,7 +48,7 @@
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
-  // state
+  // state (persistent selection and portion mapping)
   let selected = new Set();
   let locked = false;
   let isMenuVisible = true;
@@ -144,15 +141,19 @@
     return card;
   }
 
-  // initial render of the menu grid
+  // initial render of the menu grid (PDF-only)
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
-    if (!meals.length) {
-      menu.innerHTML = '<div style="grid-column:1/-1;color:#374151;padding:12px">No meals in week.json</div>';
+
+    // Only show meals with PDF
+    const displayMeals = allMeals;
+
+    if (!displayMeals.length) {
+      menu.innerHTML = '<div style="grid-column:1/-1;color:#374151;padding:12px">No meals with PDF in week.json</div>';
       return;
     }
-    meals.forEach((m,i) => menu.appendChild(createCard(m,i)));
+    displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i)));
     // ensure menu visible
     if (menu) menu.classList.remove("hidden");
     if (selectedDiv) selectedDiv.classList.add("hidden");
@@ -235,11 +236,12 @@
     locked = true;
     isMenuVisible = false;
 
-    // gather chosen meals preserving selection order
-    currentChosen = Array.from(selected).map(id => {
-      const m = meals.find((mm, idx) => mealIdFor(mm, idx) === id);
-      return { id, meal: m };
-    }).filter(x => x.meal);
+    // only consider selected PDF-meals
+    const chosenIds = Array.from(selected);
+    currentChosen = chosenIds.map(id => {
+      const m = allMeals.find((mm, idx) => mealIdFor(mm, idx) === id);
+      return m ? { id, meal: m } : null;
+    }).filter(x => x && x.meal && x.meal.pdf && x.meal.pdf.trim());
 
     // hide original menu
     if (menu) menu.classList.add("hidden");
@@ -261,7 +263,7 @@
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
 
-      // create one preview card per chosen meal; recipe-pill appears top-right
+      // create recipe card for each chosen meal (PDF guarantee)
       currentChosen.forEach(({id, meal}) => {
         const c = document.createElement("div");
         c.className = "card myweek-card";
@@ -319,7 +321,7 @@
         const maybeSelector = c.querySelector(".selector");
         if (maybeSelector) maybeSelector.remove();
 
-        // add a recipe pill top-right (solid & visible)
+        // recipe pill top-right (solid & visible, PDF-only)
         if (linkHref) {
           const recipe = document.createElement("a");
           recipe.className = "recipe-pill";
@@ -327,7 +329,6 @@
           recipe.href = linkHref;
           recipe.target = isLocalPdf(linkHref) ? "_self" : "_blank";
           recipe.rel = "noopener";
-          // prevent recipe click from toggling selection
           recipe.addEventListener("click", (ev) => ev.stopPropagation());
           c.appendChild(recipe);
         }
@@ -338,8 +339,7 @@
       leftInner.appendChild(previewWrap);
       left.appendChild(leftInner);
 
-      // remove left-column build button (we call build from top button now),
-      // but keep a small note explaining where to build
+      // left-column build button note
       const controlsNote = document.createElement("div");
       controlsNote.className = "muted small";
       controlsNote.style.marginTop = "8px";
@@ -350,8 +350,8 @@
       const right = document.createElement("div");
       right.className = "grocery-notepad";
       right.id = "grocery-notepad";
-      right.style.maxWidth = "320px";   // modest width
-      right.style.marginLeft = "10px";  // small gap next to cards
+      right.style.maxWidth = "320px";
+      right.style.marginLeft = "10px";
 
       const header = document.createElement("div");
       header.className = "note-header";
@@ -408,9 +408,9 @@
     updateTopControls();
   }
 
-  // Build ingredients: read portions, scale, aggregate, render to notepad
+  // Build ingredients: read portions, scale, aggregate, render to notepad (PDF-only)
   function buildIngredients() {
-    // use currentChosen (must be set by nextHandler)
+    // use currentChosen (PDF guarantee)
     if (!currentChosen || !currentChosen.length) return;
 
     currentChosen.forEach(({id}) => {
@@ -466,6 +466,6 @@
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
 
-  // initial render
+  // initial render (PDF guarantee)
   renderMenu();
 })();
