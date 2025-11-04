@@ -1,17 +1,5 @@
-/* Updated stylesheet:
-   - Selector pill now solid orange with thin black outline (not transparent)
-   - Build Ingredients moved to the top sticky button (topNext triggers Build when in My Week)
-   - Preview columns tightly packed with slight padding (no overlap)
-   - Grocery notepad sits beside cards (modest width)
-   - My Week preview and notepad center aligned with clear gap
-   - Grocery ingredients can be two columns if the list is long
-   - Replace download button with copy button
-   - Floating clear selection button for all recipes
-*/
-
-/* Core variables & typography */
 :root{
-  --bg: #f7fafc;
+  --bg: #ff8c42; /* EveryPlate Orange */
   --card: #fff;
   --muted: #6b7280;
   --accent: #16a34a;
@@ -23,9 +11,10 @@
 }
 
 body{
-  margin:18px;
+  margin:0;
   background:var(--bg);
   color:#0f172a;
+  min-height: 100vh;
 }
 
 /* visually-hidden helper */
@@ -43,10 +32,8 @@ body{
   padding: 10px 14px;
   margin-bottom: 12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
-  backdrop-filter: blur(6px);
-  border-radius: 10px;
-  border: 1px solid rgba(2,6,23,0.04);
-  box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.07);
+  border-radius: 0 0 18px 18px;
 }
 .top-title { font-size:1.28rem; }
 .top-action .top-right { display:flex; align-items:center; gap:8px; }
@@ -93,39 +80,53 @@ body{
   display:grid;
   grid-template-columns: repeat(7, 1fr);
   gap:var(--gap);
+  margin: 22px 0;
 }
 
 /* Card */
 .card{
-  border-radius:8px;
+  border-radius:10px;
   background:var(--card);
   box-shadow:0 6px 12px rgba(2,6,23,0.06);
-  padding:8px;
+  padding:16px 12px 12px 12px;
   border:2px solid transparent;
   cursor:pointer;
   position:relative;
   transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
   display:flex;
   flex-direction:column;
-  min-height: 170px;
+  min-height: 225px;
+  max-height: 225px;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 .card:hover{transform:translateY(-3px)}
 .card img{
   width:100%;
-  border-radius:6px;
+  border-radius:8px;
   height:106px;
   object-fit:cover;
   flex: 0 0 auto;
 }
 .card h4{
-  margin:8px 0 4px 0;
-  font-size:1.02rem;
-  line-height:1.15;
+  margin:10px 0 4px 0;
+  font-size:1.09rem;
+  line-height:1.17;
+  font-weight:700;
 }
 .card p{
-  margin:0;
+  margin:0 0 16px 0;
   color:var(--muted);
-  font-size:0.86rem;
+  font-size:0.95rem;
+  line-height:1.30;
+  min-height: 23px;
+  flex: 0 0 auto;
+}
+
+/* Ensures consistent spacing to portion select */
+.card .portion {
+  margin-top: auto;
+  padding-top:10px;
 }
 
 /* Selector pill: now solid orange with thin black outline by default.
@@ -134,8 +135,8 @@ body{
 */
 .selector{
   position:absolute;
-  top:8px;
-  right:8px;
+  top:10px;
+  right:10px;
   padding:6px 10px;
   border-radius:10px;
   background: var(--orange);       /* solid orange */
@@ -152,8 +153,8 @@ body{
   box-shadow:0 12px 24px rgba(22,163,74,0.08);
 }
 .card.selected .selector{
-  background: var(--orange-dark);  /* darker orange */
-  color: #fff;                     /* white text when selected */
+  background: var(--orange-dark);
+  color: #fff;
   border-color: #000;
   box-shadow: 0 10px 22px rgba(233,111,26,0.12);
 }
@@ -161,8 +162,8 @@ body{
 /* Recipe pill (preview cards, top-right) - solid and visible */
 .recipe-pill{
   position:absolute;
-  top:8px;
-  right:8px;
+  top:10px;
+  right:10px;
   padding:6px 10px;
   border-radius:999px;
   background:var(--accent);    /* green */
@@ -177,8 +178,7 @@ body{
 /* Portion styling */
 .portion{
   display:block;
-  margin-top:8px;
-  font-size:0.88rem;
+  font-size:0.95rem;
   color:var(--muted);
   margin-top: auto;
 }
@@ -200,15 +200,18 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 
 /* Copy button styling */
 .copy-btn {
-  padding:10px 22px;
+  padding:9px 16px;
   border-radius:8px;
   background: var(--accent);
   color: white;
   cursor: pointer;
   font-weight: 600;
   border: none;
+  font-size: 1.01rem;
   box-shadow: 0 4px 12px rgba(22,163,74,0.10);
   transition: background .16s;
+  margin-left: 0;
+  margin-bottom:6px;
 }
 .copy-btn:hover {
   background: #128137;
@@ -217,7 +220,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   margin-left: 8px;
   color: var(--accent);
   font-weight: 500;
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   background: #dcffe4;
   border-radius: 4px;
   padding:2px 8px;
@@ -253,7 +256,6 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   cursor:pointer;
 }
 
-/* My Week two-column (cards left, controls right) */
 .my-week-two-col {
   display: flex;
   flex-direction: row;
@@ -272,7 +274,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   min-width: 250px;
 }
 
-/* Preview meal cards grid 3x3 */
+/* Grid for cards: always 3 columns, wrap as needed */
 .myweek-wrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -290,8 +292,9 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 }
 .myweek-card {
   width: 220px;
-  min-height: 140px;
-  padding: 12px;
+  min-height: 225px;
+  max-height: 225px;
+  padding: 16px 12px 12px 12px;
   margin: 0;
   position:relative;
   display: flex;
@@ -301,42 +304,34 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   box-shadow: 0 4px 12px rgba(2,6,23,0.11);
 }
 
-/* Controls column for Build Ingredients and grocery notepad */
 .myweek-controls-col {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
-  gap: 32px;
-  width: 340px;
+  gap: 26px;
+  width: 470px;
   min-width: 240px;
 }
 
-/* Portion instructions and Build Ingredients */
-.myweek-controls-list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  width: 100%;
+/* Portion block to left, notepad to right */
+.myweek-controls-list{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  width:180px;
+  min-width: 160px;
 }
-
 .myweek-controls-list .portion-title {
   font-size: 1.04rem;
   font-weight: 600;
   margin-bottom: 3px;
   letter-spacing:0.02rem;
 }
-
-.myweek-controls-list .portion-desc {
-  font-size: 0.99rem;
-  color: var(--muted);
-  margin-bottom: 0;
-}
-
 .build-btn-big {
   margin-top:8px;
   font-size: 1.03rem;
-  padding: 10px 24px;
+  padding: 10px 20px;
   background: var(--accent);
   color: white;
   font-weight: 700;
@@ -349,6 +344,7 @@ button:disabled{opacity:0.45; cursor:not-allowed}
 }
 .build-btn-big:hover{ background: #128137; }
 
+/* Bold bigger Grocery List */
 .grocery-notepad {
   background: #fffbea;
   border-radius: 8px;
@@ -356,16 +352,14 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   box-shadow: 0 10px 30px rgba(2,6,23,0.09);
   border: 1px solid rgba(0,0,0,0.04);
   position: relative;
-  min-width: 320px;
-  max-width: 480px;
+  min-width: 220px;
+  max-width: 295px;
   font-family: 'Segoe UI', Tahoma, sans-serif;
   margin-left: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-
-/* Bold bigger Grocery List */
 .grocery-notepad .note-title {
   font-size: 1.37rem;
   font-weight: 800;
@@ -374,18 +368,13 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   letter-spacing: 0.03rem;
   margin-top: 0;
 }
-
-.grocery-notepad .note-sub {
-  display: none;
-}
-
-.grocery-notepad .note-body {
+.grocery-notepad .note-sub {display:none;}
+.grocery-notepad .note-body{
   padding: 5px 2px 1px 2px;
   border-radius:6px;
   min-height: 120px;
   overflow:auto;
 }
-
 .grocery-notepad ul {
   margin: 0;
   padding-left: 18px;
@@ -401,7 +390,6 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   line-height: 1.2;
   break-inside: avoid;
 }
-
 .grocery-notepad .note-controls {
   display:flex;
   gap:8px;
@@ -416,8 +404,11 @@ button:disabled{opacity:0.45; cursor:not-allowed}
     gap: 22px;
   }
   .myweek-controls-col {
+    flex-direction: column;
     width: 100%;
     min-width: unset;
+    gap: 18px;
+    align-items: flex-start;
   }
   .grocery-notepad {
     max-width: 98vw;
@@ -428,5 +419,5 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   .my-week-two-col { flex-direction: column; gap: 10px;}
   .myweek-wrap { grid-template-columns: repeat(1, 1fr); }
   .grocery-notepad ul, .grocery-notepad ul.two-cols { column-count:1;}
-  .myweek-controls-col { width:100%; }
+  .myweek-controls-col { width:100%; gap:12px;}
 }
