@@ -1,8 +1,4 @@
-// Full updated app.js handling:
-// - Menu view: floating "Clear All" button
-// - My Week preview: 3x3 grid, no notepad until Build Ingredients, improved build workflow
-// - Grocery list: always editable portions & copy button, bold heading, two columns if long
-
+// My Week "controls" now in right column, Build Ingredients smaller, Clear All inline, everything else preserved!
 (async function() {
   let data;
   let allMeals = [];
@@ -18,14 +14,13 @@
     return;
   }
 
-  // DOM
   const menu = document.getElementById("menu");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
   const topCount = document.getElementById("top-selected-count");
   const selectedDiv = document.getElementById("selected");
   const pdfToggle = document.getElementById("filter-pdf-toggle");
-  let clearBtn = null;
+  const clearBtnInline = document.getElementById("clear-btn-inline");
 
   // Modal elements
   const modal = document.getElementById("modal");
@@ -41,7 +36,6 @@
   const modalPdfIframe = document.getElementById("modal-pdf-iframe");
   const modalPdfMessage = document.getElementById("modal-pdf-message");
 
-  // helpers
   function safeText(el, text) { if (el) el.textContent = text || ""; }
   function safeHtml(el, html) { if (el) el.innerHTML = html || ""; }
   function safeShowModal() { if (modal) modal.classList.remove("hidden"); }
@@ -53,7 +47,6 @@
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
-  // state
   let filterPdfOnly = false;
   let selected = new Set();
   let locked = false;
@@ -80,7 +73,6 @@
       topNext.textContent = "Build Ingredients";
     }
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
-    if (clearBtn) clearBtn.style.display = isMenuVisible ? "" : "none";
   }
 
   function createCard(meal, idx, opts = {}) {
@@ -150,20 +142,6 @@
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
-
-    if (!clearBtn) {
-      clearBtn = document.createElement("button");
-      clearBtn.className = "clear-btn-floating";
-      clearBtn.textContent = "Clear All";
-      clearBtn.style.display = isMenuVisible ? "" : "none";
-      clearBtn.addEventListener("click", () => {
-        selected = new Set();
-        updateTopControls();
-        renderMenu();
-      });
-      // Place above menu grid
-      menu.parentElement.appendChild(clearBtn);
-    }
 
     const displayMeals = getDisplayMeals();
     if (!displayMeals.length) {
@@ -263,13 +241,11 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // left: preview meal cards
+      // left: preview meal cards grid
       const left = document.createElement("div");
       left.className = "myweek-left";
       const leftInner = document.createElement("div");
       leftInner.style.paddingRight = "6px";
-
-      // grid of cards for My Week, 3 columns
       const previewWrap = document.createElement("div");
       previewWrap.className = "myweek-wrap";
       currentChosen.forEach(({id, meal}, idx) => {
@@ -337,7 +313,11 @@
       leftInner.appendChild(previewWrap);
       left.appendChild(leftInner);
 
-      // below cards: steps section and Build Ingredients button
+      // right: controls column, then grocery notepad (hidden initially)
+      const rightCol = document.createElement("div");
+      rightCol.className = "myweek-controls-col";
+
+      // Portion instructions and Build Ingredients
       const controlsList = document.createElement("div");
       controlsList.className = "myweek-controls-list";
       const portionTitle = document.createElement("div");
@@ -354,31 +334,29 @@
       buildBtn.addEventListener("click", buildIngredients);
       controlsList.appendChild(buildBtn);
 
-      left.appendChild(controlsList);
+      rightCol.appendChild(controlsList);
 
-      // right: grocery notepad, initially hidden
-      const right = document.createElement("div");
-      right.className = "grocery-notepad";
-      right.id = "grocery-notepad";
-      right.style.maxWidth = "480px";
-      right.style.display = "none";
+      // grocery notepad (shows after Build Ingredients)
+      const notepad = document.createElement("div");
+      notepad.className = "grocery-notepad";
+      notepad.id = "grocery-notepad";
+      notepad.style.maxWidth = "480px";
+      notepad.style.display = "none";
       const header = document.createElement("div");
       header.className = "note-header";
       const title = document.createElement("div");
       title.className = "note-title";
       title.textContent = "Grocery List";
       header.appendChild(title);
-      right.appendChild(header);
+      notepad.appendChild(header);
 
-      // notepad body
       const body = document.createElement("div");
       body.className = "note-body";
       const ul = document.createElement("ul");
       ul.id = "grocery-notepad-list";
       body.appendChild(ul);
-      right.appendChild(body);
+      notepad.appendChild(body);
 
-      // note controls (copy button)
       const noteControls = document.createElement("div");
       noteControls.className = "note-controls";
       const copyBtn = document.createElement("button");
@@ -404,10 +382,12 @@
       });
       noteControls.appendChild(copyBtn);
       noteControls.appendChild(copySuccess);
-      right.appendChild(noteControls);
+      notepad.appendChild(noteControls);
+
+      rightCol.appendChild(notepad);
 
       twoCol.appendChild(left);
-      twoCol.appendChild(right);
+      twoCol.appendChild(rightCol);
       selectedDiv.appendChild(twoCol);
     }
     updateTopControls();
@@ -424,7 +404,6 @@
   function buildIngredients() {
     if (!currentChosen || !currentChosen.length) return;
 
-    // Record all current portion selectors (portion may be changed any time)
     currentChosen.forEach(({id}) => {
       const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
       const val = sel ? parseInt(sel.value, 10) : 2;
@@ -453,7 +432,6 @@
       else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
     });
 
-    // Show notepad, render list; two columns if long
     const notepad = document.getElementById("grocery-notepad");
     const ul = document.getElementById("grocery-notepad-list");
     if (notepad) notepad.style.display = "";
@@ -485,6 +463,14 @@
     pdfToggle.addEventListener("change", function() {
       filterPdfOnly = pdfToggle.checked;
       selected = new Set();
+      renderMenu();
+    });
+  }
+
+  if (clearBtnInline) {
+    clearBtnInline.addEventListener("click", function() {
+      selected = new Set();
+      updateTopControls();
       renderMenu();
     });
   }
