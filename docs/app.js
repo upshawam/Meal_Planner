@@ -1,98 +1,536 @@
-// Debug build of app.js — temporary. Adds logging to surface fetch/errors.
-(function() {
-  console.log("DEBUG: app.js loaded");
+// Only one rebuild button, notepad header row with copy button, portion select below description, three-high stack grid
+(async function() {
+  // Main data/state
+  let allMeals = [];
+  let weeksIndex = []; // entries from docs/weeks_index.json (latest-first)
+  let currentIndex = 0; // index into weeksIndex (0 = latest)
 
-  window.addEventListener('error', (e) => {
-    console.error("DEBUG window error:", e.error || e.message, e);
-  });
-  window.addEventListener('unhandledrejection', (e) => {
-    console.error("DEBUG unhandledrejection:", e.reason);
-  });
+  // Try to load weeks_index.json, fallback to week.json
+  try {
+    const hasIndex = await loadWeeksIndex();
+    if (hasIndex) {
+      currentIndex = 0;
+      await loadWeekFromPath(weeksIndex[0].path);
+    } else {
+      await loadWeekFromPath("./week.json");
+    }
+  } catch (err) {
+    console.error("Failed to load week data:", err);
+    const menu = document.getElementById("menu");
+    if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
+    return;
+  }
 
-  // Preserve the original IIFE pattern but wrap the async initialization in a try so we see errors.
-  (async function init() {
-    let data;
-    let allMeals = [];
-    let weeksIndex = []; // entries from docs/weeks_index.json (latest-first)
-    let currentIndex = 0; // index into weeksIndex (0 = latest)
-    try {
-      console.log("DEBUG: trying loadWeeksIndex()");
-      // Try to load weeks index; if not present, fallback to week.json
-      const hasIndex = await loadWeeksIndex();
-      console.log("DEBUG: loadWeeksIndex returned:", hasIndex, "weeksIndex length:", (weeksIndex && weeksIndex.length) || 0);
-      if (hasIndex) {
-        currentIndex = 0;
-        console.log("DEBUG: loading week from path:", weeksIndex[0].path);
-        await loadWeekFromPath(weeksIndex[0].path);
-      } else {
-        // fallback to single week.json
-        console.log('DEBUG: falling back to ./week.json');
-        await loadWeekFromPath("./week.json");
+  // DOM elements (cached)
+  const menu = document.getElementById("menu");
+  const topNext = document.getElementById("top-next");
+  const topBack = document.getElementById("top-back");
+  const topCount = document.getElementById("top-selected-count");
+  const selectedDiv = document.getElementById("selected");
+  const pdfToggle = document.getElementById("filter-pdf-toggle");
+  const clearBtnInline = document.getElementById("clear-btn-inline");
+
+  const weekPrevBtn = document.getElementById("week-prev");
+  const weekNextBtn = document.getElementById("week-next");
+  const weekIndicator = document.getElementById("week-indicator");
+
+  // Modal elements
+  const modal = document.getElementById("modal");
+  const modalClose = document.getElementById("modal-close");
+  const modalTitle = document.getElementById("modal-title");
+  const modalSubtitle = document.getElementById("modal-subtitle");
+  const modalDesc = document.getElementById("modal-desc");
+  const modalIngredients = document.getElementById("modal-ingredients");
+  const modalLink = document.getElementById("modal-link");
+  const modalViewPdfBtn = document.getElementById("modal-view-pdf");
+  const modalDownloadLink = document.getElementById("modal-download");
+  const modalPdfViewer = document.getElementById("modal-pdf-viewer");
+  const modalPdfIframe = document.getElementById("modal-pdf-iframe");
+  const modalPdfMessage = document.getElementById("modal-pdf-message");
+
+  // Utility helpers
+  function safeText(el, text) { if (el) el.textContent = text || ""; }
+  function safeHtml(el, html) { if (el) el.innerHTML = html || ""; }
+  function safeShowModal() { if (modal) modal.classList.remove("hidden"); }
+  function safeHideModal() { if (modal) modal.classList.add("hidden"); }
+
+  safeHideModal();
+
+  function mealIdFor(meal, idx) {
+    return (meal && meal.url) ? meal.url : String(idx);
+  }
+
+  // UI state
+  let filterPdfOnly = false;
+  let selected = new Set();
+  let locked = false;
+  let isMenuVisible = true;
+  const portions = {};
+  let currentChosen = [];
+
+  // Main data accessors
+  function getDisplayMeals() {
+    if (!allMeals) return [];
+    if (filterPdfOnly)
+      return allMeals.filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+    return allMeals;
+  }
+
+  // Top controls update
+  function updateTopControls() {
+    const count = selected.size;
+    if (topCount) topCount.textContent = `${count} selected`;
+    if (!topNext) return;
+    if (isMenuVisible) {
+      topNext.disabled = count === 0;
+      topNext.textContent = "Next";
+    } else {
+      topNext.disabled = currentChosen.length === 0;
+      topNext.textContent = "Rebuild Ingredients";
+    }
+    if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
+  }
+
+  // Card creation
+  function createCard(meal, idx, opts = {}) {
+    const id = mealIdFor(meal, idx);
+    const card = document.createElement("div");
+    card.className = "card myweek-card";
+    card.tabIndex = 0;
+    card.dataset.idx = idx;
+    card.dataset.id = id;
+
+    const img = document.createElement("img");
+    img.src = meal.image || "";
+    img.alt = meal.title || "";
+
+    const title = document.createElement("h4");
+    title.textContent = meal.title || "";
+
+    const subtitle = document.createElement("p");
+    subtitle.className = "muted";
+    subtitle.textContent = meal.subtitle || "";
+
+    card.appendChild(img);
+    card.appendChild(title);
+    card.appendChild(subtitle);
+
+    if (selected.has(id)) {
+      card.classList.add("selected");
+    }
+    if (opts.showSelector !== false) {
+      const selector = document.createElement("div");
+      selector.className = "selector";
+      selector.textContent = selected.has(id) ? "Selected" : "Select";
+      card.appendChild(selector);
+    }
+    // Portion select: only on build page!
+    if (opts.recipePreview) {
+      const portionLabel = document.createElement("label");
+      portionLabel.className = "portion";
+      portionLabel.style.position = "relative";
+      portionLabel.style.background = "#f3f4f6";
+      portionLabel.style.borderRadius = "5px";
+      portionLabel.style.padding = "8px";
+      portionLabel.style.marginBottom = "0";
+      portionLabel.style.textAlign = "left";
+      const select = document.createElement("select");
+      select.setAttribute("data-portion-id", encodeURIComponent(id));
+      for (let n=2; n<=10; n++) {
+        const opt = document.createElement("option");
+        opt.value = n;
+        opt.textContent = n;
+        select.appendChild(opt);
       }
-    } catch (err) {
-      console.error("DEBUG Failed to load week data:", err);
-      const menu = document.getElementById("menu");
-      if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
-      return;
+      const prev = portions[id];
+      if (prev) select.value = String(prev);
+      portionLabel.innerHTML = "Portions: ";
+      portionLabel.appendChild(select);
+      card.appendChild(portionLabel);
     }
 
-    // --- continue with the rest of the original app.js logic ---
-    // (for brevity, re-import your original app.js code here unchanged after the debug block)
-    window.DEBUG_app_initialized = true;
-    // NOTE: keep your full app.js implementation below (createCard, renderMenu, etc.)
-  })();
+    card.addEventListener("click", () => {
+      if (locked) return;
+      if (selected.has(id)) {
+        selected.delete(id);
+        card.classList.remove("selected");
+        const sel = card.querySelector(".selector");
+        if (sel) sel.textContent = "Select";
+      } else {
+        selected.add(id);
+        card.classList.add("selected");
+        const sel = card.querySelector(".selector");
+        if (sel) sel.textContent = "Selected";
+      }
+      updateTopControls();
+    });
 
-  // Minimal stubbed functions so the debug replacement does not crash before you paste the full file.
+    card.addEventListener("dblclick", () => {
+      showModalForMeal(meal);
+    });
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") card.click();
+      if (e.key === " ") { e.preventDefault(); card.dispatchEvent(new Event("dblclick")); }
+    });
+
+    return card;
+  }
+
+  // Render menu grid
+  function renderMenu() {
+    if (!menu) return;
+    menu.innerHTML = "";
+    const displayMeals = getDisplayMeals();
+    if (!displayMeals.length) {
+      menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
+        ${filterPdfOnly ? "No meals with PDF in week file" : "No meals found in week file"}
+        </div>`;
+      return;
+    }
+    displayMeals.forEach((m,i) => menu.appendChild(createCard(m,i, { showSelector: true, recipePreview: false })));
+    if (menu) menu.classList.remove("hidden");
+    if (selectedDiv) selectedDiv.classList.add("hidden");
+    isMenuVisible = true;
+    locked = false;
+    currentChosen = [];
+    updateTopControls();
+  }
+
+  // PDF detection helper
+  function isLocalPdf(url) {
+    if (!url) return false;
+    try {
+      if (url.startsWith("./pdfs/") || url.startsWith("/docs/pdfs/") || url.startsWith("/pdfs/") || url.startsWith("/static/pdfs/")) return true;
+      const parsed = new URL(url, location.href);
+      if (parsed.origin === location.origin) {
+        const p = parsed.pathname || "";
+        if (p.startsWith("/docs/pdfs/") || p.startsWith("/pdfs/") || p.startsWith("/static/pdfs/")) return true;
+      }
+    } catch (e){}
+    return false;
+  }
+
+  // Modal display
+  function showModalForMeal(meal) {
+    safeText(modalTitle, meal.title || "");
+    safeText(modalSubtitle, meal.subtitle || "");
+    safeText(modalDesc, meal.description || "");
+    if (meal.ingredients && meal.ingredients.length) {
+      safeHtml(modalIngredients, "<strong>Ingredients:</strong><br>" +
+        meal.ingredients.map(i => `${i.quantity_display || i.quantity || ""} ${i.unit||""} ${i.ingredient}`).join("<br>"));
+    } else safeText(modalIngredients, "");
+    if (modalPdfViewer) modalPdfViewer.style.display = "none";
+    if (modalPdfIframe) modalPdfIframe.src = "";
+    if (modalPdfMessage) modalPdfMessage.textContent = "";
+    const pdfUrl = meal.pdf || meal.url || "";
+    if (modalLink) {
+      if (pdfUrl && isLocalPdf(pdfUrl) && pdfUrl.toLowerCase().endsWith(".pdf")) {
+        modalLink.href = pdfUrl;
+        modalLink.textContent = "Open PDF (download/view)";
+        modalLink.target = "_self";
+        modalLink.rel = "";
+      } else {
+        modalLink.href = pdfUrl || "#";
+        modalLink.textContent = pdfUrl ? ((meal.pdf && meal.pdf.endsWith(".pdf")) ? "Open PDF in new tab" : "Open recipe page") : "No link";
+        modalLink.target = "_blank";
+        modalLink.rel = "noopener";
+      }
+    }
+    if (modalViewPdfBtn) modalViewPdfBtn.style.display = (pdfUrl && pdfUrl.toLowerCase().endsWith(".pdf")) ? "" : "none";
+    if (modalDownloadLink) {
+      if (pdfUrl && pdfUrl.toLowerCase().endsWith(".pdf")) {
+        modalDownloadLink.style.display = "";
+        modalDownloadLink.href = pdfUrl;
+        modalDownloadLink.textContent = "Download PDF";
+        if (isLocalPdf(pdfUrl)) modalDownloadLink.setAttribute("download", "");
+      } else {
+        modalDownloadLink.style.display = "none";
+      }
+    }
+    safeShowModal();
+  }
+
+  if (modalViewPdfBtn) {
+    modalViewPdfBtn.addEventListener("click", () => {
+      const href = modalLink ? modalLink.href : "";
+      if (!href) return;
+      modalPdfMessage && (modalPdfMessage.textContent = "Loading PDF...");
+      modalPdfViewer && (modalPdfViewer.style.display = "");
+      if (modalPdfIframe) modalPdfIframe.src = href;
+      setTimeout(() => {
+        if (modalPdfMessage) modalPdfMessage.textContent = "If the PDF does not appear it may be blocked from embedding. Use the Download or Open links.";
+      }, 700);
+    });
+  }
+
+  // Transition from selection to build view
+  function nextHandler() {
+    if (!selected.size) return;
+    locked = true;
+    isMenuVisible = false;
+    const chosenIds = Array.from(selected);
+    currentChosen = chosenIds.map(id => {
+      const m = getDisplayMeals().find((mm, idx) => mealIdFor(mm, idx) === id);
+      return m ? { id, meal: m } : null;
+    }).filter(x => x && x.meal);
+
+    if (menu) menu.classList.add("hidden");
+    if (selectedDiv) {
+      selectedDiv.classList.remove("hidden");
+      selectedDiv.innerHTML = "";
+
+      const twoCol = document.createElement("div");
+      twoCol.className = "my-week-two-col";
+
+      // Left: stacked preview cards
+      const left = document.createElement("div");
+      left.className = "myweek-left";
+      const previewWrap = document.createElement("div");
+      previewWrap.className = "myweek-wrap";
+      currentChosen.forEach(({id, meal}, idx) => {
+        previewWrap.appendChild(createCard(meal, idx, { showSelector: false, recipePreview: true }));
+      });
+      left.appendChild(previewWrap);
+
+      // Right: controls & notepad
+      const rightCol = document.createElement("div");
+      rightCol.className = "myweek-controls-col";
+      const controlsList = document.createElement("div");
+      controlsList.className = "myweek-controls-list";
+      const portionTitle = document.createElement("div");
+      portionTitle.className = "portion-title";
+      portionTitle.textContent = "Adjust Portions?";
+      portionTitle.style.paddingTop="2px";
+      controlsList.appendChild(portionTitle);
+
+      const buildBtn = document.createElement("button");
+      buildBtn.className = "build-btn-big";
+      buildBtn.textContent = "Rebuild Ingredients";
+      buildBtn.addEventListener("click", buildIngredients);
+      controlsList.appendChild(buildBtn);
+
+      rightCol.appendChild(controlsList);
+
+      // Grocery notepad
+      const notepad = document.createElement("div");
+      notepad.className = "grocery-notepad";
+      notepad.id = "grocery-notepad";
+      notepad.style.display = "";
+      const headerRow = document.createElement("div");
+      headerRow.className = "header-row";
+      const title = document.createElement("div");
+      title.className = "note-title";
+      title.textContent = "Grocery List";
+      headerRow.appendChild(title);
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "copy-btn";
+      copyBtn.textContent = "Copy List";
+      const copySuccess = document.createElement("span");
+      copySuccess.className = "copy-success";
+      copySuccess.style.display = "none";
+      copyBtn.addEventListener("click", () => {
+        const ul = document.getElementById("grocery-notepad-list");
+        const lis = Array.from(ul.querySelectorAll("li"));
+        const text = lis.map(li => "• " + li.textContent).join("\n");
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            copySuccess.textContent = "Copied!";
+            copySuccess.style.display = "";
+            setTimeout(() => { copySuccess.style.display = "none"; }, 1500);
+          })
+          .catch(() => {
+            copySuccess.textContent = "Copy failed";
+            copySuccess.style.display = "";
+            setTimeout(() => { copySuccess.style.display = "none"; }, 1700);
+          });
+      });
+      headerRow.appendChild(copyBtn);
+      headerRow.appendChild(copySuccess);
+      notepad.appendChild(headerRow);
+
+      const body = document.createElement("div");
+      body.className = "note-body";
+      const ul = document.createElement("ul");
+      ul.id = "grocery-notepad-list";
+      body.appendChild(ul);
+      notepad.appendChild(body);
+
+      rightCol.appendChild(notepad);
+
+      twoCol.appendChild(left);
+      twoCol.appendChild(rightCol);
+      selectedDiv.appendChild(twoCol);
+
+      buildIngredients();
+    }
+    updateTopControls();
+  }
+
+  // Back to selection view
+  function backToSelection() {
+    locked = false;
+    isMenuVisible = true;
+    renderMenu();
+    if (selectedDiv) selectedDiv.innerHTML = "";
+    updateTopControls();
+  }
+
+  // Build and aggregate grocery items
+  function buildIngredients() {
+    if (!currentChosen || !currentChosen.length) return;
+    currentChosen.forEach(({id}) => {
+      const sel = document.querySelector(`select[data-portion-id="${encodeURIComponent(id)}"]`);
+      const val = sel ? parseInt(sel.value, 10) : 2;
+      portions[id] = val;
+    });
+
+    const groceryItems = [];
+    currentChosen.forEach(({id, meal}) => {
+      const portion = portions[id] || 2;
+      (meal.ingredients || []).forEach(ing => {
+        const copy = Object.assign({}, ing);
+        if (copy.quantity != null) {
+          copy.quantity = copy.quantity * (portion / 2);
+          copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
+        }
+        groceryItems.push(copy);
+      });
+    });
+
+    // Aggregate
+    const grouped = {};
+    groceryItems.forEach(ing => {
+      if (!ing || !ing.ingredient) return;
+      const key = (ing.ingredient + "|" + (ing.unit || "")).toLowerCase();
+      if (!grouped[key]) grouped[key] = { ...ing, quantity: 0 };
+      if (ing.quantity) grouped[key].quantity += Number(ing.quantity);
+      else if (!grouped[key].quantity && ing.quantity_display) grouped[key].quantity_display = ing.quantity_display;
+    });
+
+    const ul = document.getElementById("grocery-notepad-list");
+    if (ul) {
+      ul.innerHTML = "";
+      Object.values(grouped).forEach(ing => {
+        const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
+        const li = document.createElement("li");
+        li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+        ul.appendChild(li);
+      });
+      if (ul.childElementCount < 10) {
+        ul.classList.add("one-col");
+      } else {
+        ul.classList.remove("one-col");
+      }
+    }
+  }
+
+  // Event hookups for controls
+  if (topNext) topNext.addEventListener("click", () => {
+    if (isMenuVisible) nextHandler();
+    else buildIngredients();
+  });
+  if (topBack) topBack.addEventListener("click", () => backToSelection());
+  if (pdfToggle) {
+    pdfToggle.checked = filterPdfOnly;
+    pdfToggle.addEventListener("change", function() {
+      filterPdfOnly = pdfToggle.checked;
+      selected = new Set();
+      renderMenu();
+    });
+  }
+  if (clearBtnInline) {
+    clearBtnInline.addEventListener("click", function() {
+      selected = new Set();
+      updateTopControls();
+      renderMenu();
+    });
+  }
+  if (modalClose) modalClose.addEventListener("click", safeHideModal);
+  if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
+
+  // --- WEEK LOADING / NAVIGATION HELPERS ---
+
   async function loadWeeksIndex() {
     try {
-      console.log("DEBUG loadWeeksIndex(): fetching ./weeks_index.json");
       const res = await fetch("./weeks_index.json", { cache: "no-store" });
-      console.log("DEBUG weeks_index fetch status:", res.status);
       if (!res.ok) throw new Error("weeks_index.json not found");
       const json = await res.json();
-      console.log("DEBUG weeks_index content (first 2 entries):", json && json.slice ? json.slice(0,2) : json);
       if (!Array.isArray(json) || json.length === 0) throw new Error("weeks_index.json invalid or empty");
       // Expect index sorted latest-first; if not, sort by year/week desc
       json.sort((a,b) => {
         if (a.year !== b.year) return b.year - a.year;
         return b.week - a.week;
       });
-      // assign to outer scope variable by returning it (caller logs it)
-      // Note: original code expects weeksIndex variable in outer scope; debug wrapper reassigns it.
-      window.__DEBUG_weeksIndex = json;
-      // also patch the outer variable if present
-      try { weeksIndex = json; } catch (e) {}
+      weeksIndex = json;
       return true;
     } catch (e) {
-      console.warn("DEBUG No weeks_index.json; falling back to week.json", e);
-      try { weeksIndex = []; } catch (ee) {}
+      console.warn("No weeks_index.json; falling back to week.json", e);
+      weeksIndex = [];
       return false;
     }
   }
 
   async function loadWeekFromPath(path) {
     try {
-      console.log("DEBUG loadWeekFromPath fetch:", path);
       const res = await fetch(path, { cache: "no-store" });
-      console.log("DEBUG week file fetch status:", res.status);
       if (!res.ok) throw new Error("week file not found: " + path);
       const data = await res.json();
-      console.log("DEBUG loaded week data: week=", data.week, "year=", data.year, "meals=", (data.meals||[]).length);
-      try { allMeals = data.meals || []; } catch (e) {}
-      // update week indicator if present
-      const weekIndicator = document.getElementById("week-indicator");
+      allMeals = data.meals || [];
       if (weekIndicator) weekIndicator.textContent = `Week ${data.week} — ${data.year}`;
-      // call original renderMenu if present
-      try { renderMenu(); updateNavButtons(); } catch (e) { console.error("DEBUG renderMenu/updateNavButtons failed:", e); }
+      renderMenu();
+      updateNavButtons();
       return true;
     } catch (e) {
-      console.error("DEBUG Failed to load week file:", e);
+      console.error("Failed to load week file:", e);
       const menu = document.getElementById("menu");
       if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week file</div>';
-      const weekIndicator = document.getElementById("week-indicator");
       if (weekIndicator) weekIndicator.textContent = "Error loading week";
       return false;
     }
   }
+
+  function updateNavButtons() {
+    if (!weeksIndex || !weeksIndex.length) {
+      if (weekPrevBtn) weekPrevBtn.disabled = true;
+      if (weekNextBtn) weekNextBtn.disabled = true;
+      return;
+    }
+    if (weekPrevBtn) weekPrevBtn.disabled = (currentIndex >= weeksIndex.length - 1);
+    if (weekNextBtn) weekNextBtn.disabled = (currentIndex <= 0);
+  }
+
+  async function gotoIndex(idx) {
+    if (!weeksIndex || !weeksIndex.length) return;
+    if (idx < 0 || idx >= weeksIndex.length) return;
+    currentIndex = idx;
+    const path = weeksIndex[currentIndex].path;
+    await loadWeekFromPath(path);
+  }
+
+  if (weekPrevBtn) weekPrevBtn.addEventListener("click", async () => {
+    if (!weeksIndex.length) return;
+    if (currentIndex < weeksIndex.length - 1) {
+      await gotoIndex(currentIndex + 1);
+    }
+  });
+
+  if (weekNextBtn) weekNextBtn.addEventListener("click", async () => {
+    if (!weeksIndex.length) return;
+    if (currentIndex > 0) {
+      await gotoIndex(currentIndex - 1);
+    } else {
+      // already at latest
+    }
+  });
+
+  function renderMenuInitial() {
+    renderMenu();
+  }
+
+  // initial render call
+  renderMenuInitial();
 
 })();
