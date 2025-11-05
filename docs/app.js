@@ -1,27 +1,11 @@
 // Only one rebuild button, notepad header row with copy button, portion select below description, three-high stack grid
-(async function() {
+(function() {
   // Main data/state
   let allMeals = [];
   let weeksIndex = []; // entries from docs/weeks_index.json (latest-first)
   let currentIndex = 0; // index into weeksIndex (0 = latest)
 
-  // Try to load weeks_index.json, fallback to week.json
-  try {
-    const hasIndex = await loadWeeksIndex();
-    if (hasIndex) {
-      currentIndex = 0;
-      await loadWeekFromPath(weeksIndex[0].path);
-    } else {
-      await loadWeekFromPath("./week.json");
-    }
-  } catch (err) {
-    console.error("Failed to load week data:", err);
-    const menu = document.getElementById("menu");
-    if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
-    return;
-  }
-
-  // DOM elements (cached)
+  // DOM elements (cached) - declared early so functions can reference them
   const menu = document.getElementById("menu");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
@@ -485,8 +469,8 @@
       return true;
     } catch (e) {
       console.error("Failed to load week file:", e);
-      const menu = document.getElementById("menu");
-      if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week file</div>';
+      const menuEl = document.getElementById("menu");
+      if (menuEl) menuEl.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week file</div>';
       if (weekIndicator) weekIndicator.textContent = "Error loading week";
       return false;
     }
@@ -530,7 +514,23 @@
     renderMenu();
   }
 
-  // initial render call
-  renderMenuInitial();
+  // initial startup (after all functions and variables are defined)
+  (async function startup() {
+    try {
+      const hasIndex = await loadWeeksIndex();
+      if (hasIndex) {
+        currentIndex = 0;
+        await loadWeekFromPath(weeksIndex[0].path);
+      } else {
+        await loadWeekFromPath("./week.json");
+      }
+    } catch (err) {
+      console.error("Failed to load week data during startup:", err);
+      if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
+      return;
+    }
+    // Render initial UI
+    renderMenuInitial();
+  })();
 
 })();
