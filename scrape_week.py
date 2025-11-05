@@ -2,22 +2,21 @@
 """
 scrape_week.py
 
-Option A workflow (verify each candidate by scraping its recipe page):
-
+Workflow:
 - Collect candidate recipe cards via weekly_menu_scraper.scrape_weekly_menu()
 - For each candidate, verify by scraping recipe page with recipe_scraper.scrape_ingredients()
 - Keep only candidates that return at least 2 ingredients (to exclude single-ingredient add-ons)
 - Save docs/week.json (latest) and archive to docs/weeks/YYYY-Www.json
 - Maintain docs/weeks_index.json
-
-This version includes a small verification cache (docs/.verify_cache.json) to avoid re-verifying
-the same recipe URLs across runs. Adjust REQUEST_DELAY_SECONDS to be polite.
+- Generate EveryPlate PDF links from recipe URLs and store in meal["pdf"] when applicable.
 """
+
 import json
 import datetime
 import time
 import os
 import argparse
+import re
 from weekly_menu_scraper import scrape_weekly_menu
 from recipe_scraper import scrape_ingredients
 
@@ -26,8 +25,7 @@ LATEST_PATH = "docs/week.json"
 INDEX_PATH = "docs/weeks_index.json"
 VERIFY_CACHE_PATH = "docs/.verify_cache.json"
 
-# polite delay between per-recipe verification requests
-REQUEST_DELAY_SECONDS = 0.5
+REQUEST_DELAY_SECONDS = 0.5  # polite delay between per-recipe requests
 
 def ensure_dir(path):
     if path and not os.path.exists(path):
@@ -69,13 +67,22 @@ def update_weeks_index(archive_relpath, year, week):
         })
     index.sort(key=lambda x: (x["year"], x["week"]), reverse=True)
     save_json_atomic(INDEX_PATH, index)
+    print(f"[Index] Updated weeks index with {archive_relpath}")
+
+def generate_everyplate_pdf(url):
+    if not url:
+        return ""
+    try:
+        base = url.split("?", 1)[0].rstrip("/")
+        last_seg = base.split("/")[-1]
+        candidate_id = last_seg.rsplit("-", 1)[-1] if "-" in last_seg else last_seg
+        if re.fullmatch(r"[0-9a-fA-F]{8,}", candidate_id):
+            return f"https://www.everyplate.com/recipecards/card/{candidate_id}-en-US.pdf"
+    except Exception:
+        pass
+    return ""
 
 def verify_and_enrich_meals(candidates, verbose=True):
-    """
-    Given candidate meals, verify by scraping their recipe pages. Returns verified list.
-    Uses a small cache to skip re-verification of URLs that were already verified.
-    Requirement: at least 2 ingredients to be considered a valid recipe (excludes single-ingredient add-ons)
-    """
     ensure_dir(os.path.dirname(VERIFY_CACHE_PATH) or ".")
     cache = load_json_safe(VERIFY_CACHE_PATH) or {}
 
@@ -86,31 +93,37 @@ def verify_and_enrich_meals(candidates, verbose=True):
         title = meal.get("title") or "(no title)"
         print(f"[Verify] ({i}/{total}) Checking {title} -> {url}")
 
-        # Use cached result if present
+        pdf_link = generate_everyplate_pdf(url)
+        if pdf_link:
+            meal["pdf"] = pdf_link
+            if verbose:
+                print(f"[Verify] ℹ️ Generated PDF link: {pdf_link}")
+        else:
+            meal.setdefault("pdf", "")
+
         cached = cache.get(url)
         if cached is not None:
             if cached.get("verified"):
-                # cached verified includes ingredients (may be used downstream)
                 meal["ingredients"] = cached.get("ingredients", [])
+                if not meal.get("pdf"):
+                    meal["pdf"] = generate_everyplate_pdf(url)
                 verified.append(meal)
                 print(f"[Verify] ✅ Cached verified ({len(meal['ingredients'])} ingredients)")
             else:
                 print("[Verify] ⛔ Cached not a recipe")
             continue
 
-        # Not cached: run recipe scraper
         try:
             ingredients = scrape_ingredients(url)
         except Exception as e:
             print(f"[Verify] Error scraping ingredients for {url}: {e}")
             ingredients = []
 
-        # Polite delay
         time.sleep(REQUEST_DELAY_SECONDS)
 
-        # New rule: require at least 2 ingredients to be considered a recipe
         if ingredients and isinstance(ingredients, list) and len(ingredients) >= 2:
             meal["ingredients"] = ingredients
+            meal["pdf"] = meal.get("pdf", "") or generate_everyplate_pdf(url)
             verified.append(meal)
             cache[url] = {"verified": True, "ingredients": ingredients, "checked_at": int(time.time())}
             print(f"[Verify] ✅ Verified recipe: {title} ({len(ingredients)} ingredients)")
@@ -118,7 +131,6 @@ def verify_and_enrich_meals(candidates, verbose=True):
             cache[url] = {"verified": False, "ingredients": ingredients if isinstance(ingredients, list) else [], "checked_at": int(time.time())}
             print(f"[Verify] ⛔ Skipping non-recipe / addon: {title} ({url}) — ingredients found: {len(ingredients) if isinstance(ingredients, list) else 0}")
 
-        # Save cache incrementally to survive long runs / CI
         try:
             save_json_atomic(VERIFY_CACHE_PATH, cache)
         except Exception as e:
@@ -127,24 +139,16 @@ def verify_and_enrich_meals(candidates, verbose=True):
     return verified
 
 def run(force=False, verbose=True):
-    # 1) gather candidates
     candidates = scrape_weekly_menu()
     print(f"[Main] Collected {len(candidates)} candidate cards")
 
-    # 2) verify candidates by scraping recipe pages
     meals = verify_and_enrich_meals(candidates, verbose=verbose)
     print(f"[Main] Verified {len(meals)} recipes after checking recipe pages")
 
-    # 3) build payload
     now = datetime.date.today()
     year, week, _ = now.isocalendar()
-    payload = {
-        "week": week,
-        "year": year,
-        "meals": meals
-    }
+    payload = {"week": week, "year": year, "meals": meals}
 
-    # 4) write archive + latest
     ensure_dir(ARCHIVE_DIR)
     archive_name = make_archive_filename(year, week)
     archive_path = os.path.join(ARCHIVE_DIR, archive_name)
@@ -156,6 +160,7 @@ def run(force=False, verbose=True):
         print(f"[Archive] Saving archived week to {archive_path}")
         save_json_atomic(archive_path, payload)
         update_weeks_index(archive_relpath, year, week)
+        print(f"[Archive] Written {archive_path}")
 
     print(f"[Latest] Writing latest week file to {LATEST_PATH}")
     save_json_atomic(LATEST_PATH, payload)
@@ -167,4 +172,6 @@ if __name__ == "__main__":
     parser.add_argument("--force", action="store_true", help="Overwrite existing archive for this week")
     parser.add_argument("--no-verify-cache", action="store_true", help="Ignore cached verification results (not implemented)")
     args = parser.parse_args()
+
+    # 🔑 This was missing before — now it actually runs the workflow
     run(force=args.force, verbose=True)

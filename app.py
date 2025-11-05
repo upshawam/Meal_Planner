@@ -2,13 +2,41 @@ from flask import Flask, render_template, request
 from weekly_menu_scraper import scrape_weekly_menu
 from recipe_scraper import scrape_ingredients
 from aggregator import aggregate_ingredients
+import os
+import json
 
 app = Flask(__name__)
 
+def load_archive_by_path(relpath):
+    # relpath expected like "weeks/2025-W44.json" relative to docs/
+    path = os.path.join("docs", relpath)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("meals", [])
+    except Exception:
+        return None
+
+def load_archive_by_year_week(year, week):
+    name = f"{int(year)}-W{int(week):02d}.json"
+    relpath = os.path.join("weeks", name)
+    return load_archive_by_path(relpath)
+
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # Load weekly menu cards (title, subtitle, image, recipe URL)
-    meals = scrape_weekly_menu()
+    # If archive query param provided, attempt to load local archived week
+    archive_param = request.args.get("archive")
+    year = request.args.get("year")
+    week = request.args.get("week")
+
+    if archive_param:
+        meals = load_archive_by_path(archive_param) or []
+    elif year and week:
+        meals = load_archive_by_year_week(year, week) or []
+    else:
+        # Default: load weekly menu (live scrape)
+        meals = scrape_weekly_menu()
+
     selected_meals = []
     grocery_list = []
 
@@ -42,5 +70,3 @@ def index():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
-

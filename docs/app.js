@@ -1,19 +1,11 @@
 // Only one rebuild button, notepad header row with copy button, portion select below description, three-high stack grid
-(async function() {
-  let data;
+(function() {
+  // Main data/state
   let allMeals = [];
-  try {
-    const res = await fetch("./week.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("week.json not found");
-    data = await res.json();
-    allMeals = data.meals || [];
-  } catch (err) {
-    console.error("Failed to load ./week.json:", err);
-    const menu = document.getElementById("menu");
-    if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week.json</div>';
-    return;
-  }
+  let weeksIndex = []; // entries from docs/weeks_index.json (latest-first)
+  let currentIndex = 0; // index into weeksIndex (0 = latest)
 
+  // DOM elements (cached) - declared early so functions can reference them
   const menu = document.getElementById("menu");
   const topNext = document.getElementById("top-next");
   const topBack = document.getElementById("top-back");
@@ -21,6 +13,10 @@
   const selectedDiv = document.getElementById("selected");
   const pdfToggle = document.getElementById("filter-pdf-toggle");
   const clearBtnInline = document.getElementById("clear-btn-inline");
+
+  const weekPrevBtn = document.getElementById("week-prev");
+  const weekNextBtn = document.getElementById("week-next");
+  const weekIndicator = document.getElementById("week-indicator");
 
   // Modal elements
   const modal = document.getElementById("modal");
@@ -36,6 +32,7 @@
   const modalPdfIframe = document.getElementById("modal-pdf-iframe");
   const modalPdfMessage = document.getElementById("modal-pdf-message");
 
+  // Utility helpers
   function safeText(el, text) { if (el) el.textContent = text || ""; }
   function safeHtml(el, html) { if (el) el.innerHTML = html || ""; }
   function safeShowModal() { if (modal) modal.classList.remove("hidden"); }
@@ -47,6 +44,7 @@
     return (meal && meal.url) ? meal.url : String(idx);
   }
 
+  // UI state
   let filterPdfOnly = false;
   let selected = new Set();
   let locked = false;
@@ -54,6 +52,7 @@
   const portions = {};
   let currentChosen = [];
 
+  // Main data accessors
   function getDisplayMeals() {
     if (!allMeals) return [];
     if (filterPdfOnly)
@@ -61,6 +60,7 @@
     return allMeals;
   }
 
+  // Top controls update
   function updateTopControls() {
     const count = selected.size;
     if (topCount) topCount.textContent = `${count} selected`;
@@ -75,6 +75,7 @@
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
   }
 
+  // Card creation
   function createCard(meal, idx, opts = {}) {
     const id = mealIdFor(meal, idx);
     const card = document.createElement("div");
@@ -109,19 +110,14 @@
     }
     // Portion select: only on build page!
     if (opts.recipePreview) {
-      // Place "portions" below description & avoid overlap
       const portionLabel = document.createElement("label");
       portionLabel.className = "portion";
-      portionLabel.style.position = "relative"; // changed from absolute!
-      portionLabel.style.left = "";
-      portionLabel.style.right = "";
-      portionLabel.style.bottom = "";
+      portionLabel.style.position = "relative";
       portionLabel.style.background = "#f3f4f6";
       portionLabel.style.borderRadius = "5px";
       portionLabel.style.padding = "8px";
       portionLabel.style.marginBottom = "0";
       portionLabel.style.textAlign = "left";
-      portionLabel.style.marginTop = "0";
       const select = document.createElement("select");
       select.setAttribute("data-portion-id", encodeURIComponent(id));
       for (let n=2; n<=10; n++) {
@@ -134,10 +130,10 @@
       if (prev) select.value = String(prev);
       portionLabel.innerHTML = "Portions: ";
       portionLabel.appendChild(select);
-      card.appendChild(portionLabel); // below subtitle, will never overlap
+      card.appendChild(portionLabel);
     }
 
-    card.addEventListener("click", (e) => {
+    card.addEventListener("click", () => {
       if (locked) return;
       if (selected.has(id)) {
         selected.delete(id);
@@ -153,7 +149,7 @@
       updateTopControls();
     });
 
-    card.addEventListener("dblclick", (e) => {
+    card.addEventListener("dblclick", () => {
       showModalForMeal(meal);
     });
 
@@ -165,13 +161,14 @@
     return card;
   }
 
+  // Render menu grid
   function renderMenu() {
     if (!menu) return;
     menu.innerHTML = "";
     const displayMeals = getDisplayMeals();
     if (!displayMeals.length) {
       menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
-        ${filterPdfOnly ? "No meals with PDF in week.json" : "No meals found in week.json"}
+        ${filterPdfOnly ? "No meals with PDF in week file" : "No meals found in week file"}
         </div>`;
       return;
     }
@@ -184,6 +181,7 @@
     updateTopControls();
   }
 
+  // PDF detection helper
   function isLocalPdf(url) {
     if (!url) return false;
     try {
@@ -197,6 +195,7 @@
     return false;
   }
 
+  // Modal display
   function showModalForMeal(meal) {
     safeText(modalTitle, meal.title || "");
     safeText(modalSubtitle, meal.subtitle || "");
@@ -249,6 +248,7 @@
     });
   }
 
+  // Transition from selection to build view
   function nextHandler() {
     if (!selected.size) return;
     locked = true;
@@ -267,7 +267,7 @@
       const twoCol = document.createElement("div");
       twoCol.className = "my-week-two-col";
 
-      // Cards stacked vertically, three high, then fill next column
+      // Left: stacked preview cards
       const left = document.createElement("div");
       left.className = "myweek-left";
       const previewWrap = document.createElement("div");
@@ -277,7 +277,7 @@
       });
       left.appendChild(previewWrap);
 
-      // Controls (one rebuild button, and notepad with header row)
+      // Right: controls & notepad
       const rightCol = document.createElement("div");
       rightCol.className = "myweek-controls-col";
       const controlsList = document.createElement("div");
@@ -296,7 +296,7 @@
 
       rightCol.appendChild(controlsList);
 
-      // grocery notepad—wide, visible after next, header row with copy button right
+      // Grocery notepad
       const notepad = document.createElement("div");
       notepad.className = "grocery-notepad";
       notepad.id = "grocery-notepad";
@@ -352,6 +352,7 @@
     updateTopControls();
   }
 
+  // Back to selection view
   function backToSelection() {
     locked = false;
     isMenuVisible = true;
@@ -360,6 +361,7 @@
     updateTopControls();
   }
 
+  // Build and aggregate grocery items
   function buildIngredients() {
     if (!currentChosen || !currentChosen.length) return;
     currentChosen.forEach(({id}) => {
@@ -408,6 +410,7 @@
     }
   }
 
+  // Event hookups for controls
   if (topNext) topNext.addEventListener("click", () => {
     if (isMenuVisible) nextHandler();
     else buildIngredients();
@@ -432,5 +435,102 @@
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
 
-  renderMenu();
+  // --- WEEK LOADING / NAVIGATION HELPERS ---
+
+  async function loadWeeksIndex() {
+    try {
+      const res = await fetch("./weeks_index.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("weeks_index.json not found");
+      const json = await res.json();
+      if (!Array.isArray(json) || json.length === 0) throw new Error("weeks_index.json invalid or empty");
+      // Expect index sorted latest-first; if not, sort by year/week desc
+      json.sort((a,b) => {
+        if (a.year !== b.year) return b.year - a.year;
+        return b.week - a.week;
+      });
+      weeksIndex = json;
+      return true;
+    } catch (e) {
+      console.warn("No weeks_index.json; falling back to week.json", e);
+      weeksIndex = [];
+      return false;
+    }
+  }
+
+  async function loadWeekFromPath(path) {
+    try {
+      const res = await fetch(path, { cache: "no-store" });
+      if (!res.ok) throw new Error("week file not found: " + path);
+      const data = await res.json();
+      allMeals = data.meals || [];
+      if (weekIndicator) weekIndicator.textContent = `Week ${data.week} — ${data.year}`;
+      renderMenu();
+      updateNavButtons();
+      return true;
+    } catch (e) {
+      console.error("Failed to load week file:", e);
+      const menuEl = document.getElementById("menu");
+      if (menuEl) menuEl.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week file</div>';
+      if (weekIndicator) weekIndicator.textContent = "Error loading week";
+      return false;
+    }
+  }
+
+  function updateNavButtons() {
+    if (!weeksIndex || !weeksIndex.length) {
+      if (weekPrevBtn) weekPrevBtn.disabled = true;
+      if (weekNextBtn) weekNextBtn.disabled = true;
+      return;
+    }
+    if (weekPrevBtn) weekPrevBtn.disabled = (currentIndex >= weeksIndex.length - 1);
+    if (weekNextBtn) weekNextBtn.disabled = (currentIndex <= 0);
+  }
+
+  async function gotoIndex(idx) {
+    if (!weeksIndex || !weeksIndex.length) return;
+    if (idx < 0 || idx >= weeksIndex.length) return;
+    currentIndex = idx;
+    const path = weeksIndex[currentIndex].path;
+    await loadWeekFromPath(path);
+  }
+
+  if (weekPrevBtn) weekPrevBtn.addEventListener("click", async () => {
+    if (!weeksIndex.length) return;
+    if (currentIndex < weeksIndex.length - 1) {
+      await gotoIndex(currentIndex + 1);
+    }
+  });
+
+  if (weekNextBtn) weekNextBtn.addEventListener("click", async () => {
+    if (!weeksIndex.length) return;
+    if (currentIndex > 0) {
+      await gotoIndex(currentIndex - 1);
+    } else {
+      // already at latest
+    }
+  });
+
+  function renderMenuInitial() {
+    renderMenu();
+  }
+
+  // initial startup (after all functions and variables are defined)
+  (async function startup() {
+    try {
+      const hasIndex = await loadWeeksIndex();
+      if (hasIndex) {
+        currentIndex = 0;
+        await loadWeekFromPath(weeksIndex[0].path);
+      } else {
+        await loadWeekFromPath("./week.json");
+      }
+    } catch (err) {
+      console.error("Failed to load week data during startup:", err);
+      if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
+      return;
+    }
+    // Render initial UI
+    renderMenuInitial();
+  })();
+
 })();
