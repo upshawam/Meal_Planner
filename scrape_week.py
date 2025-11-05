@@ -12,12 +12,15 @@ Option A workflow (verify each candidate by scraping its recipe page):
 
 This version includes a small verification cache (docs/.verify_cache.json) to avoid re-verifying
 the same recipe URLs across runs. Adjust REQUEST_DELAY_SECONDS to be polite.
+
+New: generate EveryPlate PDF links from recipe URLs and store in meal["pdf"] when applicable.
 """
 import json
 import datetime
 import time
 import os
 import argparse
+import re
 from weekly_menu_scraper import scrape_weekly_menu
 from recipe_scraper import scrape_ingredients
 
@@ -69,12 +72,43 @@ def update_weeks_index(archive_relpath, year, week):
         })
     index.sort(key=lambda x: (x["year"], x["week"]), reverse=True)
     save_json_atomic(INDEX_PATH, index)
+    print(f"[Index] Updated weeks index with {archive_relpath}")
+
+def generate_everyplate_pdf(url):
+    """
+    Given an EveryPlate recipe URL like:
+      https://www.everyplate.com/recipes/...-65e55de93251bf1977c048bd?week=2025-W45
+    generate the PDF recipecard link:
+      https://www.everyplate.com/recipecards/card/65e55de93251bf1977c048bd-en-US.pdf
+
+    Returns the pdf url string if matched, otherwise empty string.
+    """
+    if not url:
+        return ""
+    try:
+        # strip query params and trailing slashes
+        base = url.split("?", 1)[0].rstrip("/")
+        # take the last path segment and pull the trailing hyphen token
+        last_seg = base.split("/")[-1]
+        # find the ID after the last hyphen
+        if "-" in last_seg:
+            candidate_id = last_seg.rsplit("-", 1)[-1]
+        else:
+            candidate_id = last_seg
+
+        # basic validation: look for hex-like id of reasonable length (>=8)
+        if re.fullmatch(r"[0-9a-fA-F]{8,}", candidate_id):
+            return f"https://www.everyplate.com/recipecards/card/{candidate_id}-en-US.pdf"
+    except Exception:
+        pass
+    return ""
 
 def verify_and_enrich_meals(candidates, verbose=True):
     """
     Given candidate meals, verify by scraping their recipe pages. Returns verified list.
     Uses a small cache to skip re-verification of URLs that were already verified.
     Requirement: at least 2 ingredients to be considered a valid recipe (excludes single-ingredient add-ons)
+    Also attempts to generate EveryPlate pdf links when the URL matches the expected pattern.
     """
     ensure_dir(os.path.dirname(VERIFY_CACHE_PATH) or ".")
     cache = load_json_safe(VERIFY_CACHE_PATH) or {}
@@ -86,12 +120,25 @@ def verify_and_enrich_meals(candidates, verbose=True):
         title = meal.get("title") or "(no title)"
         print(f"[Verify] ({i}/{total}) Checking {title} -> {url}")
 
+        # Generate pdf link when possible (even if cached)
+        pdf_link = generate_everyplate_pdf(url)
+        if pdf_link:
+            meal["pdf"] = pdf_link
+            if verbose:
+                print(f"[Verify] ℹ️ Generated PDF link: {pdf_link}")
+        else:
+            # ensure the field exists (preserve existing value if present)
+            meal.setdefault("pdf", "")
+
         # Use cached result if present
         cached = cache.get(url)
         if cached is not None:
             if cached.get("verified"):
                 # cached verified includes ingredients (may be used downstream)
                 meal["ingredients"] = cached.get("ingredients", [])
+                # ensure pdf is present (regenerate if cache predates this change)
+                if not meal.get("pdf"):
+                    meal["pdf"] = generate_everyplate_pdf(url)
                 verified.append(meal)
                 print(f"[Verify] ✅ Cached verified ({len(meal['ingredients'])} ingredients)")
             else:
@@ -111,6 +158,8 @@ def verify_and_enrich_meals(candidates, verbose=True):
         # New rule: require at least 2 ingredients to be considered a recipe
         if ingredients and isinstance(ingredients, list) and len(ingredients) >= 2:
             meal["ingredients"] = ingredients
+            # ensure pdf field is set (may have been set above)
+            meal["pdf"] = meal.get("pdf", "") or generate_everyplate_pdf(url)
             verified.append(meal)
             cache[url] = {"verified": True, "ingredients": ingredients, "checked_at": int(time.time())}
             print(f"[Verify] ✅ Verified recipe: {title} ({len(ingredients)} ingredients)")
@@ -156,6 +205,7 @@ def run(force=False, verbose=True):
         print(f"[Archive] Saving archived week to {archive_path}")
         save_json_atomic(archive_path, payload)
         update_weeks_index(archive_relpath, year, week)
+        print(f"[Archive] Written {archive_path}")
 
     print(f"[Latest] Writing latest week file to {LATEST_PATH}")
     save_json_atomic(LATEST_PATH, payload)
@@ -167,4 +217,3 @@ if __name__ == "__main__":
     parser.add_argument("--force", action="store_true", help="Overwrite existing archive for this week")
     parser.add_argument("--no-verify-cache", action="store_true", help="Ignore cached verification results (not implemented)")
     args = parser.parse_args()
-    run(force=args.force, verbose=True)

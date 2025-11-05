@@ -1,46 +1,40 @@
-name: Scrape Weekly Menu
+name: Scrape weekly menu & commit archives
 
 on:
   schedule:
-    - cron: "0 12 * * 1"   # every Monday at 12:00 UTC
-  workflow_dispatch:       # allow manual trigger
+    - cron: '0 7 * * 1'  # weekly Monday 07:00 UTC (adjust as needed)
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # ✅ allow pushing commits back to the repo
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # use the built-in token with write perms
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: '3.10'
 
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install Google Chrome
+      - name: Run scraper
+        env:
+          PYTHONUNBUFFERED: 1
         run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg unzip
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
-            sudo tee /etc/apt/sources.list.d/google-chrome.list
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          # Run scraper. Use --force if you want to overwrite existing archive for the current week.
+          python scrape_week.py || true
 
-      - name: Run weekly scraper
-        run: python scrape_week.py
-
-      - name: Commit results
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add docs/week.json
-          git commit -m "Update weekly menu JSON" || echo "No changes to commit"
-          git push
+      - name: Commit docs changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Automated: update weekly archive and latest week.json"
+          add: "docs/*"
+          author_name: "github-actions[bot]"

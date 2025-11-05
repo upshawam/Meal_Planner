@@ -17,7 +17,13 @@
         <button id="clear-btn-inline" class="clear-btn-inline" type="button">Clear All</button>
       </div>
     </div>
-    <div class="top-right">
+
+    <div class="top-right" style="display:flex;align-items:center;gap:10px;">
+      <!-- WEEK NAVIGATION -->
+      <button id="week-prev" class="btn secondary" type="button" title="Previous week">Prev</button>
+      <span id="week-indicator" class="muted" style="min-width:160px;text-align:center;">Loading week…</span>
+      <button id="week-next" class="btn secondary" type="button" title="Next week">Next</button>
+
       <span id="top-selected-count" class="count muted">0 selected</span>
       <button id="top-next" class="btn primary" disabled>Next</button>
       <button id="top-back" class="btn secondary hidden">Back</button>
@@ -55,4 +61,3 @@
   </div>
   <script src="app.js"></script>
 </body>
-</html>

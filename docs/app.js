@@ -2,15 +2,22 @@
 (async function() {
   let data;
   let allMeals = [];
+  let weeksIndex = []; // entries from docs/weeks_index.json (latest-first)
+  let currentIndex = 0; // index into weeksIndex (0 = latest)
   try {
-    const res = await fetch("./week.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("week.json not found");
-    data = await res.json();
-    allMeals = data.meals || [];
+    // Try to load weeks index; if not present, fallback to week.json
+    const hasIndex = await loadWeeksIndex();
+    if (hasIndex) {
+      currentIndex = 0;
+      await loadWeekFromPath(weeksIndex[0].path);
+    } else {
+      // fallback to single week.json
+      await loadWeekFromPath("./week.json");
+    }
   } catch (err) {
-    console.error("Failed to load ./week.json:", err);
+    console.error("Failed to load week data:", err);
     const menu = document.getElementById("menu");
-    if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week.json</div>';
+    if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
     return;
   }
 
@@ -21,6 +28,10 @@
   const selectedDiv = document.getElementById("selected");
   const pdfToggle = document.getElementById("filter-pdf-toggle");
   const clearBtnInline = document.getElementById("clear-btn-inline");
+
+  const weekPrevBtn = document.getElementById("week-prev");
+  const weekNextBtn = document.getElementById("week-next");
+  const weekIndicator = document.getElementById("week-indicator");
 
   // Modal elements
   const modal = document.getElementById("modal");
@@ -171,7 +182,7 @@
     const displayMeals = getDisplayMeals();
     if (!displayMeals.length) {
       menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
-        ${filterPdfOnly ? "No meals with PDF in week.json" : "No meals found in week.json"}
+        ${filterPdfOnly ? "No meals with PDF in week file" : "No meals found in week file"}
         </div>`;
       return;
     }
@@ -432,5 +443,87 @@
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
 
-  renderMenu();
-})();
+  // --- WEEK LOADING / NAVIGATION HELPERS ---
+
+  async function loadWeeksIndex() {
+    try {
+      const res = await fetch("./weeks_index.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("weeks_index.json not found");
+      const json = await res.json();
+      if (!Array.isArray(json) || json.length === 0) throw new Error("weeks_index.json invalid or empty");
+      // Expect index sorted latest-first; if not, sort by year/week desc
+      json.sort((a,b) => {
+        if (a.year !== b.year) return b.year - a.year;
+        return b.week - a.week;
+      });
+      weeksIndex = json;
+      return true;
+    } catch (e) {
+      console.warn("No weeks_index.json; falling back to week.json", e);
+      weeksIndex = [];
+      return false;
+    }
+  }
+
+  async function loadWeekFromPath(path) {
+    try {
+      const res = await fetch(path, { cache: "no-store" });
+      if (!res.ok) throw new Error("week file not found: " + path);
+      const data = await res.json();
+      allMeals = data.meals || [];
+      // update week indicator
+      if (weekIndicator) weekIndicator.textContent = `Week ${data.week} — ${data.year}`;
+      renderMenu();
+      updateNavButtons();
+      return true;
+    } catch (e) {
+      console.error("Failed to load week file:", e);
+      const menu = document.getElementById("menu");
+      if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week file</div>';
+      if (weekIndicator) weekIndicator.textContent = "Error loading week";
+      return false;
+    }
+  }
+
+  function updateNavButtons() {
+    if (!weeksIndex || !weeksIndex.length) {
+      if (weekPrevBtn) weekPrevBtn.disabled = true;
+      if (weekNextBtn) weekNextBtn.disabled = true;
+      return;
+    }
+    if (weekPrevBtn) weekPrevBtn.disabled = (currentIndex >= weeksIndex.length - 1);
+    if (weekNextBtn) weekNextBtn.disabled = (currentIndex <= 0);
+  }
+
+  async function gotoIndex(idx) {
+    if (!weeksIndex || !weeksIndex.length) return;
+    if (idx < 0 || idx >= weeksIndex.length) return;
+    currentIndex = idx;
+    const path = weeksIndex[currentIndex].path;
+    await loadWeekFromPath(path);
+  }
+
+  if (weekPrevBtn) weekPrevBtn.addEventListener("click", async () => {
+    if (!weeksIndex.length) return;
+    if (currentIndex < weeksIndex.length - 1) {
+      await gotoIndex(currentIndex + 1);
+    }
+  });
+
+  if (weekNextBtn) weekNextBtn.addEventListener("click", async () => {
+    if (!weeksIndex.length) return;
+    if (currentIndex > 0) {
+      await gotoIndex(currentIndex - 1);
+    } else {
+      // already at latest
+    }
+  });
+
+  function renderMenuInitial() {
+    // Convenient public render call
+    renderMenu();
+  }
+
+  // initial render call (menu data already loaded above)
+  renderMenuInitial();
+
