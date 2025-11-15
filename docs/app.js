@@ -136,9 +136,25 @@
       portionLabel.appendChild(select);
       card.appendChild(portionLabel); // below subtitle, will never overlap
     }
+    
+    // Add View Recipe button for all preview cards
+    if (opts.recipePreview) {
+      const viewRecipeBtn = document.createElement("button");
+      viewRecipeBtn.className = "view-recipe-btn";
+      viewRecipeBtn.textContent = "View Recipe";
+      viewRecipeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const pdfUrl = meal.pdf || meal.url || "";
+        if (pdfUrl) {
+          window.open(pdfUrl, "_blank", "noopener");
+        }
+      });
+      card.appendChild(viewRecipeBtn);
+    }
 
     card.addEventListener("click", (e) => {
       if (locked) return;
+      if (opts.recipePreview) return; // Don't allow selection on preview cards
       if (selected.has(id)) {
         selected.delete(id);
         card.classList.remove("selected");
@@ -153,8 +169,9 @@
       updateTopControls();
     });
 
+    // Remove double-click modal behavior for all cards
     card.addEventListener("dblclick", (e) => {
-      showModalForMeal(meal);
+      e.preventDefault();
     });
 
     card.addEventListener("keydown", (e) => {
