@@ -7,7 +7,7 @@
       "title": "Crispy Buffalo Ranch Chicken",
       "subtitle": "with Honey Roasted Carrots & Mashed Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/crispy-buffalo-ranch-chicken-b31f3ee2-4eb41f5a.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d648ef681e58ed6e5b0e7d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -79,7 +79,7 @@
       "title": "Cheesy Southwest Beef Tacodillas",
       "subtitle": "with Lime Mayo & Pico de Gallo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/664186e0fe8a253ad9a7df6f-42f972a3-87880e65.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b639ed4d6794189d43d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Onion",
@@ -151,7 +151,7 @@
       "title": "Sweet & Spicy Ponzu Pork Meatballs",
       "subtitle": "with Roasted Green Beans & Buttery Rice",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/sweet-ponzu-pork-meatballs-2bb8202e-4a4b8d8e.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\669dcde651d0e2bc179b67ae-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Ponzu Sauce",
@@ -209,7 +209,7 @@
       "title": "Caramelized Onion Patty Melts",
       "subtitle": "with Monterey Jack, Potato Wedges & Special Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64f7d6565bbef7f6e5a1f4d0-6fd0d728-00bc2159.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\688cc2c9733506e6d59b1f7e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
@@ -260,7 +260,7 @@
       "title": "Dijon Butter Steak",
       "subtitle": "with Roasted Asparagus & Rosemary Mashed Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6515eb227f20a932d72b4502-382fc7c9-5939c2dd.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\662502d26bd833edac6cdcaa-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
@@ -311,7 +311,7 @@
       "title": "Crispy Chicken with Honey Dijon Drizzle",
       "subtitle": "plus Sweet Heat Brussels Sprouts",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66c28c425cb721784e636245-8903ed1a-574d0760.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\67c50b1fc7d7f8f46885c616-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
@@ -362,7 +362,7 @@
       "title": "Balsamic BBQ Pork Chops",
       "subtitle": "with Roasted Potatoes & Green Beans",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP3578N_Hero_BalsamicBbqPorkChops_W47_87_2025_Web-05d90a71.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b36d232ff05cfc45aec-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Beans",
@@ -420,7 +420,7 @@
       "title": "Sticky Soy Chicken Stir-Fry & Rice",
       "subtitle": "with Honey, Sesame Seeds & Scallions",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6845b79b95cfe9500ec9f028-93e101c6-9f0d9842.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\6845b79b95cfe9500ec9f028-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Ground Chicken",
@@ -492,7 +492,7 @@
       "title": "Cheeseburger Crunchy Wraps",
       "subtitle": "with Potato Wedges, Pickles & Special Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64e4ba5354b67122d59a9410-8a6269ef-b4695f84.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\6874456d55ee9436234b978a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -557,7 +557,7 @@
       "title": "Tunisian-Style Chicken & Couscous Bowls",
       "subtitle": "with Creamy Lemon Butter Sauce & Zucchini",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2053A_Hero_TunisianStyleChickenAndCouscousBowls_W47_90_2025_Web-cbf3cb47.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a8ed232ff05cfc458a0-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -629,7 +629,7 @@
       "title": "Beefy Stuffed Bell Pepper Soup",
       "subtitle": "with Couscous & Sour Cream",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/652ebbc82a48fd4ce3a7292f-0021dfc5-44c299e5.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\675639de4d01175c884ed055-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Bell Pepper",
@@ -715,7 +715,7 @@
       "title": "Spiced Chickpea Rice Bowls",
       "subtitle": "with Tomato Cucumber Salad & Creamy Lemon Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EP1571A_EP1571APU16_SpicedChickpeaBasmatiBowls_-c93ddd13.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d6492f681e58ed6e5b0ef0-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -808,7 +808,7 @@
       "title": "Soy-Glazed Sweet Chili Salmon",
       "subtitle": "with Sesame Roasted Broccoli & Zucchini",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1810A_Hero_SoyGlazedSweetChiliSalmon_W47_93_2025_Web-287c54a2.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a159ed4d6794189d084-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Apricot Jam",
@@ -866,7 +866,7 @@
       "title": "White Bean Tomato Stew",
       "subtitle": "with Feta & Garlic Toasts",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/RE_EPRC_Hero_EP1656B_WhiteBeanTomatoStew_W50_95_2023_Web-0b9ea469.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d6497b9ed4d6794189cf5b-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -945,7 +945,7 @@
       "title": "Sweet Potato Harvest Salad",
       "subtitle": "with Apple, Cranberries & Creamy Honey Dijon",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP5816C_Hero_SweetPotatoHarvestSalad_W47_95_2025_Web-dd870bc0.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68a1a1dab4feaabe0917a9a8-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1017,7 +1017,7 @@
       "title": "Blackened Chicken & Bacon Tortelloni",
       "subtitle": "with Cajun Cream Sauce & Fresh Tomato",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP3512A_BlackenedChickenAndBaconTortelloni_W09-S97-2023_Web-93fc5554.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b0e9ed4d6794189d33f-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Tortelloni",
@@ -1089,7 +1089,7 @@
       "title": "Memphis-Style BBQ Pulled Pork Sandwiches",
       "subtitle": "with Creamy Coleslaw",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/RE_EPRC_EP6135A_Hero_MemphisStyleBbqPulledPorkSandwiches_W40-98-2024_Web-1450e232.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\688fe261733506e6d59b237c-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "BBQ Sauce",
@@ -1133,7 +1133,7 @@
       "title": "Maple-Pecan Chicken",
       "subtitle": "with Mashed Sweet Potatoes & Roasted Brussels Sprouts",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6211B_Hero_MaplePecanChicken_W47_99_2025_Web-e30a3640.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64c41681e58ed6e5b16bb-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Pecans",
@@ -1191,7 +1191,7 @@
       "title": "Pork Chops in Tomato Cream Sauce",
       "subtitle": "with Zucchini Rounds & Lemon Couscous",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1592M_Hero_HerbyPorkChopsInTomatoCreamSauce_W47_100_2025_Web-9ece0cbd.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64948d232ff05cfc455d3-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Israeli Couscous",
@@ -1270,7 +1270,7 @@
       "title": "Cheesy Zucchini Boats",
       "subtitle": "over Linguine Marinara with Crispy Breadcrumbs",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP1424B_EP1424BPA04_ZucchiniParmesan_W36-S92-2022_Web-67243b79.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64822d232ff05cfc453fd-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -1356,7 +1356,7 @@
       "title": "Thai-Style Spicy Tofu Peanut Noodles",
       "subtitle": "with Scallions, Crispy Fried Onions & Cilantro",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6208D_Hero_ThaiStyleSpicyTofuPeanutNoodles_W47_102_2025_Web-1a19438f.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64c3d9ed4d6794189d687-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Lo Mein Noodles",
@@ -1449,7 +1449,7 @@
       "title": "Crispy Ginger Pork Rolls",
       "subtitle": "with Cabbage, Carrots & Chili Lime Drizzle",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/642d7568269612a896061dfe-03a3ab5b-7cc49e94.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\66c28fbc5cb721784e63629e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Ponzu Sauce",
@@ -1535,7 +1535,7 @@
       "title": "Banh Mi-Style Beef Tacos",
       "subtitle": "with Pickled Veggies & Sweet Chili Mayo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6076E_Hero_BanhMiStyleBeefTacos_W47_104_2025_Web-fc7096e9.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64bf79ed4d6794189d5f9-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Carrots",
@@ -1614,7 +1614,7 @@
       "title": "Mediterranean Steak & Hummus Bowls",
       "subtitle": "with Zesty Rice, Tzatziki & Cucumber Salad",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67a94a914113630c74a32fc9-2ae15a2e-1e3aa21b.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\67a94a914113630c74a32fc9-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1693,7 +1693,7 @@
       "title": "Cheesy Sausage Roll-Ups",
       "subtitle": "with Marinara",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/RE_EPUSRC_EP2062A_Hero_CheesySausageRollUps_W47_106_2025_Web-c809acdc.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a92681e58ed6e5b11e4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Crescent Rolls",
@@ -1758,7 +1758,7 @@
       "title": "Creamy Roasted Garlic & Chicken Linguine",
       "subtitle": "with Bacon & Herby Caramelized Tomato",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/RE_EPRC-HERO_EP3506D_CreamyRoastedGarlicAndBaconLinguineandChicken_W32-Slot-2023_Web-2239c489.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b079ed4d6794189d32b-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Chopped Chicken Breast",
@@ -1830,7 +1830,7 @@
       "title": "Coconut Curry Noodles with Chicken",
       "subtitle": "plus Green Beans & Lime",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6620C_Hero_CoconutCurryNoodlesWithChicken_W47_108_2025_Web-0085aac2.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64c69d232ff05cfc45e7d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Beans",
@@ -1902,7 +1902,7 @@
       "title": "Balsamic BBQ Pork Chops",
       "subtitle": "with Roasted Potatoes & Green Beans",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP3578N_Hero_BalsamicBbqPorkChops_W47_87_2025_Web-05d90a71.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68f7502512f4d83cdc0b44f5-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Beans",
@@ -1960,7 +1960,7 @@
       "title": "Pork Chops in Tomato Cream Sauce",
       "subtitle": "with Zucchini Rounds & Lemon Couscous",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1592M_Hero_HerbyPorkChopsInTomatoCreamSauce_W47_100_2025_Web-9ece0cbd.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68f7538412f4d83cdc0b44f7-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Israeli Couscous",

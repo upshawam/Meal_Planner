@@ -63,6 +63,14 @@ jobs:
         run: |
           cp docs/week_with_pdfs.json docs/week.json
       
+      - name: Archive week and update index
+        run: |
+          python archive_week.py
+      
+      - name: Validate week data
+        run: |
+          python validate_week_data.py
+      
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"

@@ -1,6 +1,32 @@
-{
-    "year":  2025,
-    "week":  44,
-    "path":  "weeks/2025-W44.json",
-    "archived_at":  1763187933
-}
+[
+  {
+    "year": 2025,
+    "week": 48,
+    "path": "weeks/2025-W48.json",
+    "archived_at": 1731628800
+  },
+  {
+    "year": 2025,
+    "week": 47,
+    "path": "weeks/2025-W47.json",
+    "archived_at": 1731628800
+  },
+  {
+    "year": 2025,
+    "week": 46,
+    "path": "weeks/2025-W46.json",
+    "archived_at": 1763216853
+  },
+  {
+    "year": 2025,
+    "week": 45,
+    "path": "weeks/2025-W45.json",
+    "archived_at": 1731628800
+  },
+  {
+    "year": 2025,
+    "week": 44,
+    "path": "weeks/2025-W44.json",
+    "archived_at": 1731628800
+  }
+]

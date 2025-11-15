@@ -7,7 +7,7 @@
       "title": "Honey Dijon Chicken Sandwiches",
       "subtitle": "with Tomato & Crispy Potato Wedges",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/65e55de93251bf1977c048bd-c770ed15-07c97a91-0f90e894.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\65e55de93251bf1977c048bd-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
@@ -65,7 +65,7 @@
       "title": "Beef Banh Mi Bowls",
       "subtitle": "with Carrot, Pickled Cucumber & Sriracha Mayo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/640622bcda780720d7074f44-fe555bc8-25145dac-d295940f.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d646cc681e58ed6e5b0a8a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Carrots",
@@ -137,7 +137,7 @@
       "title": "Greek Taverna Pork Chops",
       "subtitle": "with Cucumber-Tomato Couscous Salad",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/651daa143c5da7b30f30d12d-7853ecba-8aaa3603.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68a19e2bc6b6544f7ed43876-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -202,7 +202,7 @@
       "title": "Spicy Chipotle BBQ-Glazed Beef Meatloaves",
       "subtitle": "with Hot Honey Carrots & Green Beans",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e5060db55e5085d219335f-c1cf0aba-f75ce8b2.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64bb69ed4d6794189d538-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Beans",
@@ -274,7 +274,7 @@
       "title": "Bavette Steak au Poivre",
       "subtitle": "with Roasted Asparagus & Crispy Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/RE_unknown_brand_abbreviationUSRC_EP1010J_Hero_BavettteSteakAuPoivre_W45_85_2025_web-b8bce7c7.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d646089ed4d6794189c865-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -339,7 +339,7 @@
       "title": "Crispy Chicken with Honey Dijon Drizzle",
       "subtitle": "plus Sweet Heat Brussels Sprouts",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66c28c425cb721784e636245-8903ed1a-574d0760.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\67c50b1fc7d7f8f46885c616-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Panko Breadcrumbs",
@@ -390,7 +390,7 @@
       "title": "Smoky Paprika Pork Chops",
       "subtitle": "with Green Beans & Chive Mashed Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/unknown_brand_abbreviationUSRC_EP1007S_Hero_SmokyPaprikaPorkChops_W45_87_2025_Web-c4ead241.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64601d232ff05cfc44f1b-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -462,7 +462,7 @@
       "title": "Beefy Stuffed Bell Pepper Soup",
       "subtitle": "with Couscous & Sour Cream",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/652ebbc82a48fd4ce3a7292f-0021dfc5-44c299e5.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\675639de4d01175c884ed055-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Bell Pepper",
@@ -548,7 +548,7 @@
       "title": "Cheeseburger Crunchy Wraps",
       "subtitle": "with Potato Wedges, Pickles & Special Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64e4ba5354b67122d59a9410-8a6269ef-b4695f84.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\6874456d55ee9436234b978a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -613,7 +613,7 @@
       "title": "Cheesy Chicken & Pepper Fajitas",
       "subtitle": "with Pickled Red Onion & Lime Crema",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/677b6ce85ff0a6ef0e9c584f-b4e92118-e4b2c32e-3dbd40e8.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d646a9681e58ed6e5b0a24-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -678,7 +678,7 @@
       "title": "Umami-Ginger Chicken Lo Mein Soup",
       "subtitle": "with Chicken Thighs, Corn & Scallions",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e5de34653f7d23af28fd1d-84ccbed0-4f47d950.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a88d232ff05cfc45884-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Corn",
@@ -736,7 +736,7 @@
       "title": "Black Bean & Pepper Jack Tostadas",
       "subtitle": "with Southwest Lime Crema & Spicy Pico de Gallo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/652eb98c7a4f5b7a8c5ec7f8-eb907c90-e9ef2060.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\6845b929e3fd4af871aedee8-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -822,7 +822,7 @@
       "title": "Lemon Garlic Shrimp",
       "subtitle": "over Creamy Parmesan Risotto",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6537c20007f58b7bf70983ca-4013697a-17a61734-1b1fdfc7-114c83b9.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d646f2681e58ed6e5b0ad4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Chicken Stock Concentrate",
@@ -880,7 +880,7 @@
       "title": "Creamy Penne Primavera",
       "subtitle": "with Zucchini, Bell Pepper, Peas & Parmesan",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/65e55c393251bf1977c0489c-10d7dd56-bf3e5908.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\65e55c393251bf1977c0489c-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Zucchini",
@@ -952,7 +952,7 @@
       "title": "Green Pepper & Onion Quesadillas",
       "subtitle": "with Pico de Gallo & Sour Cream",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6804a82e02e51f809cc7dca4-62cd6416-a8aa7b9f.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\6804a82e02e51f809cc7dca4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -1038,7 +1038,7 @@
       "title": "Saucy Soy Tofu, Mushroom & Pepper Bowls",
       "subtitle": "with Spicy Mayo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e5e7f3c757de283ce782c5-05adccb1-ed074e58.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64836681e58ed6e5b0d53-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sweet Thai Chili Sauce",
@@ -1117,7 +1117,7 @@
       "title": "Crispy Cheddar Ranch Chicken",
       "subtitle": "with Bacon, Mashed Potatoes & Cheesy Broccoli",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67a011083b75a6f3f15e7a70-afa1b20e-76208090.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68582aded12c14cd4da5f1b3-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Cheddar Cheese",
@@ -1175,7 +1175,7 @@
       "title": "Tortelloni Chicken Sausage Bolognese",
       "subtitle": "plus Scallions",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/tortelloni-chicken-sausage-bolognese-6d97aa85-41b5c0a5-88395a8d-9c8105b6.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b1e681e58ed6e5b13bc-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Tortelloni",
@@ -1233,7 +1233,7 @@
       "title": "Crispy Southwest Chicken",
       "subtitle": "with Seasoned Rice & Zucchini-Carrot Jumble",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e4572f0a8c94ff52b85232-4a24da07.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68e4572f0a8c94ff52b85232-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Carrots",
@@ -1305,7 +1305,7 @@
       "title": "Tex-Mex Marinated Pork Tacos",
       "subtitle": "with Jalapeño, Pico de Gallo & Lime Crema",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/unknown_brand_abbreviationUSRC_EP3530J_Hero_TexMexMarinatedPorkTacos_W45_100_2025_Web-c65610d5.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b19d232ff05cfc45a6a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1384,7 +1384,7 @@
       "title": "Melty Mozz, Tomato & Pesto Panini",
       "subtitle": "with Roasted Red Pepper & Garlicky Potato Wedges",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67a948fd4113630c74a32fa1-82c5614a-9a7ea1a3.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\688fe2f2263d52528b99ff84-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Pesto",
@@ -1449,7 +1449,7 @@
       "title": "Brussels Sprout & Shallot Flatbreads",
       "subtitle": "with Garlic Honey",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP3364A_EP3364APA01_BrusselsSproutsAndShallotFlatbreads_W29-S95-2022_Web-9d76882c.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a9d9ed4d6794189d205-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flatbreads",
@@ -1514,7 +1514,7 @@
       "title": "Pepper Jack Stuffed Pork Burgers",
       "subtitle": "with Pickled Jalapeño, Crema & Southwest Potato Wedges",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64400fd375e258fa5b05a63e-69458ac8-fc6ee598.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\6600cf1c31f9f583b467e1c2-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1586,7 +1586,7 @@
       "title": "Creamy Chicken Curry in a Hurry",
       "subtitle": "over Jasmine Rice",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e5ecc4653f7d23af28fe06-ad3785b1-fd1dcb68.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64b76d232ff05cfc45b98-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Beans",
@@ -1658,7 +1658,7 @@
       "title": "French Onion Chicken & Green Bean Bake",
       "subtitle": "with Chicken Thighs, Mashed Potatoes & Crispy Onions",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/unknown_brand_abbreviationUSRC_EP1899B_Hero_FrenchOnionChickenAndGreenBeanBake_W45_105_2025_Web-3d556470.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a4cd232ff05cfc45817-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1744,7 +1744,7 @@
       "title": "Boneless Wing Sample Platter",
       "subtitle": "with Buffalo Sauce, Parmesan-Garlic Butter & Sweet Soy Glaze",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/unknown_brand_abbreviationUSRC_EP2052A_Hero_BonelessWingSamplerPlatter_W45_106_2025_Web-456261ac-b0434d77.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d64a909ed4d6794189d1af-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Frank's Hot Sauce",
@@ -1823,7 +1823,7 @@
       "title": "Chicken Scallopini & Lemon Garlic Sauce",
       "subtitle": "with Roasted Broccoli & Carrots",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/65a866f1f9e1c820e370e722-8bf1bd82-057090bb.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d6478e9ed4d6794189cbf9-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1888,7 +1888,7 @@
       "title": "Buffalo Chicken Penne",
       "subtitle": "with Spicy Panko & Scallions",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/62cc48651bc7a30283009e78-b291c579-0478803d.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68d6493d9ed4d6794189cef2-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -1967,7 +1967,7 @@
       "title": "Greek Taverna Pork Chops",
       "subtitle": "with Cucumber-Tomato Couscous Salad",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/651daa143c5da7b30f30d12d-7853ecba.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68e47dde653f7d23af28fc50-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Garlic",
@@ -2032,7 +2032,7 @@
       "title": "Smoky Paprika Pork Chops",
       "subtitle": "with Green Beans & Sour Cream Mashed Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e4d0ceb55e5085d2193335-e2cf0fe4.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68e4d0ceb55e5085d2193335-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Pork Chops",
@@ -2104,7 +2104,7 @@
       "title": "Tex-Mex Marinated Pork Tacos",
       "subtitle": "with Pico de Gallo & Lime Crema",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e4d12ec757de283ce7804e-e082ae7d.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68e4d12ec757de283ce7804e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Onion",
