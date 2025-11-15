@@ -93,9 +93,9 @@ def verify_and_enrich_meals(candidates, verbose=True):
                 # cached verified includes ingredients (may be used downstream)
                 meal["ingredients"] = cached.get("ingredients", [])
                 verified.append(meal)
-                print(f"[Verify] ✅ Cached verified ({len(meal['ingredients'])} ingredients)")
+                print(f"[Verify] [CACHED] Verified ({len(meal['ingredients'])} ingredients)")
             else:
-                print("[Verify] ⛔ Cached not a recipe")
+                print("[Verify] [CACHED] Not a recipe")
             continue
 
         # Not cached: run recipe scraper
@@ -108,15 +108,15 @@ def verify_and_enrich_meals(candidates, verbose=True):
         # Polite delay
         time.sleep(REQUEST_DELAY_SECONDS)
 
-        # New rule: require at least 2 ingredients to be considered a recipe
-        if ingredients and isinstance(ingredients, list) and len(ingredients) >= 2:
+        # New rule: require at least 3 ingredients to be considered a recipe
+        if ingredients and isinstance(ingredients, list) and len(ingredients) >= 3:
             meal["ingredients"] = ingredients
             verified.append(meal)
             cache[url] = {"verified": True, "ingredients": ingredients, "checked_at": int(time.time())}
-            print(f"[Verify] ✅ Verified recipe: {title} ({len(ingredients)} ingredients)")
+            print(f"[Verify] [OK] Verified recipe: {title} ({len(ingredients)} ingredients)")
         else:
             cache[url] = {"verified": False, "ingredients": ingredients if isinstance(ingredients, list) else [], "checked_at": int(time.time())}
-            print(f"[Verify] ⛔ Skipping non-recipe / addon: {title} ({url}) — ingredients found: {len(ingredients) if isinstance(ingredients, list) else 0}")
+            print(f"[Verify] [SKIP] Skipping non-recipe / addon: {title} ({url}) -- ingredients found: {len(ingredients) if isinstance(ingredients, list) else 0}")
 
         # Save cache incrementally to survive long runs / CI
         try:
@@ -126,7 +126,7 @@ def verify_and_enrich_meals(candidates, verbose=True):
 
     return verified
 
-def run(force=False, verbose=True):
+def run(force=False, verbose=True, year=None, week=None):
     # 1) gather candidates
     candidates = scrape_weekly_menu()
     print(f"[Main] Collected {len(candidates)} candidate cards")
@@ -136,8 +136,9 @@ def run(force=False, verbose=True):
     print(f"[Main] Verified {len(meals)} recipes after checking recipe pages")
 
     # 3) build payload
-    now = datetime.date.today()
-    year, week, _ = now.isocalendar()
+    if year is None or week is None:
+        now = datetime.date.today()
+        year, week, _ = now.isocalendar()
     payload = {
         "week": week,
         "year": year,
@@ -160,7 +161,7 @@ def run(force=False, verbose=True):
     print(f"[Latest] Writing latest week file to {LATEST_PATH}")
     save_json_atomic(LATEST_PATH, payload)
 
-    print(f"✅ Saved {LATEST_PATH} with {len(payload['meals'])} meals (archived at {archive_relpath})")
+    print(f"[OK] Saved {LATEST_PATH} with {len(payload['meals'])} meals (archived at {archive_relpath})")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scrape weekly menu, verify recipes and archive by week")

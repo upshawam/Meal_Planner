@@ -2,16 +2,87 @@
 (async function() {
   let data;
   let allMeals = [];
-  try {
-    const res = await fetch("./week.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("week.json not found");
-    data = await res.json();
-    allMeals = data.meals || [];
-  } catch (err) {
-    console.error("Failed to load ./week.json:", err);
-    const menu = document.getElementById("menu");
-    if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week.json</div>';
-    return;
+  let currentWeek = 46;
+  let currentYear = 2025;
+  let availableWeeks = [];
+
+  async function loadWeekData(weekNum) {
+    try {
+      const weekFile = `./weeks/2025-W${String(weekNum).padStart(2, '0')}.json`;
+      const res = await fetch(weekFile, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Week ${weekNum} not found`);
+      const weekData = await res.json();
+      data = weekData;
+      allMeals = weekData.meals || [];
+      currentWeek = weekData.week || weekNum;
+      currentYear = weekData.year || 2025;
+      const weekDisplay = document.getElementById("current-week-display");
+      if (weekDisplay) weekDisplay.textContent = currentWeek;
+      
+      // Reset selections when changing weeks
+      selected = new Set();
+      locked = false;
+      isMenuVisible = true;
+      currentChosen = [];
+      
+      renderMenu();
+      updateWeekNavButtons();
+      return true;
+    } catch (err) {
+      console.error(`Failed to load week ${weekNum}:`, err);
+      return false;
+    }
+  }
+
+  async function loadWeeksIndex() {
+    try {
+      const res = await fetch("./weeks_index.json", { cache: "no-store" });
+      if (res.ok) {
+        const index = await res.json();
+        availableWeeks = index.map(w => w.week).sort((a, b) => a - b);
+      }
+    } catch (err) {
+      console.warn("Could not load weeks index", err);
+    }
+  }
+
+  function updateWeekNavButtons() {
+    const prevBtn = document.getElementById("prev-week-btn");
+    const nextBtn = document.getElementById("next-week-btn");
+    if (!prevBtn || !nextBtn) return;
+    
+    const currentIdx = availableWeeks.indexOf(currentWeek);
+    prevBtn.disabled = currentIdx <= 0;
+    nextBtn.disabled = currentIdx >= availableWeeks.length - 1;
+  }
+
+  // Load weeks index and initial week
+  await loadWeeksIndex();
+  
+  // Try to load from weeks archive first, fallback to week_with_pdfs.json
+  let loaded = false;
+  if (availableWeeks.length > 0) {
+    const latestWeek = availableWeeks[availableWeeks.length - 1];
+    loaded = await loadWeekData(latestWeek);
+  }
+  
+  if (!loaded) {
+    // Fallback to week_with_pdfs.json
+    try {
+      const res = await fetch("./week_with_pdfs.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("week_with_pdfs.json not found");
+      data = await res.json();
+      allMeals = data.meals || [];
+      currentWeek = data.week || 46;
+      currentYear = data.year || 2025;
+      const weekDisplay = document.getElementById("current-week-display");
+      if (weekDisplay) weekDisplay.textContent = currentWeek;
+    } catch (err) {
+      console.error("Failed to load any week data:", err);
+      const menu = document.getElementById("menu");
+      if (menu) menu.innerHTML = '<div style="grid-column:1/-1;color:#b91c1c;padding:12px">Error loading week data</div>';
+      return;
+    }
   }
 
   const menu = document.getElementById("menu");
@@ -144,12 +215,32 @@
       viewRecipeBtn.textContent = "View Recipe";
       viewRecipeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
+        // Prefer local PDF if available, otherwise use recipe URL
         const pdfUrl = meal.pdf || meal.url || "";
         if (pdfUrl) {
           window.open(pdfUrl, "_blank", "noopener");
         }
       });
       card.appendChild(viewRecipeBtn);
+
+      // Add Print Recipe button
+      const printRecipeBtn = document.createElement("button");
+      printRecipeBtn.className = "print-recipe-btn";
+      printRecipeBtn.textContent = "Print Recipe";
+      printRecipeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        // Use local PDF if available, otherwise construct from recipe URL
+        let pdfUrl = meal.pdf;
+        if (!pdfUrl) {
+          const recipeIdMatch = meal.url.match(/-([a-zA-Z0-9]+)\?/);
+          const recipeId = recipeIdMatch ? recipeIdMatch[1] : null;
+          pdfUrl = recipeId ? `https://www.everyplate.com/recipecards/card/${recipeId}-en-US.pdf` : null;
+        }
+        if (pdfUrl) {
+          window.open(pdfUrl, "_blank", "noopener");
+        }
+      });
+      card.appendChild(printRecipeBtn);
     }
 
     card.addEventListener("click", (e) => {
@@ -449,5 +540,30 @@
   if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) safeHideModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") safeHideModal(); });
 
+  // Week navigation
+  const prevWeekBtn = document.getElementById("prev-week-btn");
+  const nextWeekBtn = document.getElementById("next-week-btn");
+  
+  if (prevWeekBtn) {
+    prevWeekBtn.addEventListener("click", async () => {
+      const currentIdx = availableWeeks.indexOf(currentWeek);
+      if (currentIdx > 0) {
+        const prevWeek = availableWeeks[currentIdx - 1];
+        await loadWeekData(prevWeek);
+      }
+    });
+  }
+  
+  if (nextWeekBtn) {
+    nextWeekBtn.addEventListener("click", async () => {
+      const currentIdx = availableWeeks.indexOf(currentWeek);
+      if (currentIdx < availableWeeks.length - 1) {
+        const nextWeek = availableWeeks[currentIdx + 1];
+        await loadWeekData(nextWeek);
+      }
+    });
+  }
+
   renderMenu();
+  updateWeekNavButtons();
 })();

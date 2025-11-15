@@ -9,6 +9,12 @@
   <div class="top-action" role="region" aria-label="Selection controls" id="top-action">
     <div class="top-left" style="display:flex;align-items:center;gap:18px;">
       <strong class="top-title">Weekly Menu</strong>
+      <div class="week-selector" style="display:flex;align-items:center;gap:8px;">
+        <button id="prev-week-btn" class="week-nav-btn" title="Previous week">←</button>
+        <span style="color:#fff;font-weight:600;">Week:</span>
+        <span id="current-week-display" style="color:#fff;font-weight:700;">46</span>
+        <button id="next-week-btn" class="week-nav-btn" title="Next week">→</button>
+      </div>
       <div class="filter-toggle" style="display:flex;align-items:center;gap:14px;">
         <label style="font-weight:600;cursor:pointer;">
           <input type="checkbox" id="filter-pdf-toggle" style="margin-right:6px;">

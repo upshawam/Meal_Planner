@@ -60,6 +60,29 @@ body{
   color: #111827;
 }
 
+/* Week navigation buttons */
+.week-nav-btn {
+  background: #fff;
+  color: var(--orange);
+  border: 2px solid #fff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 32px;
+}
+.week-nav-btn:hover:not(:disabled) {
+  background: var(--orange-dark);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.week-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 /* Menu grid */
 .grid{
   display:grid;
@@ -145,6 +168,27 @@ body{
   background: #15803d;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.print-recipe-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px 12px;
+  background: #007885;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 120, 133, 0.2);
+}
+
+.print-recipe-btn:hover {
+  background: #005f63;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 120, 133, 0.3);
 }
 
 .selector{

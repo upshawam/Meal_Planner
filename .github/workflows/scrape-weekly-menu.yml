@@ -1,0 +1,71 @@
+name: Scrape Weekly Menu
+
+on:
+  schedule:
+    # Run every Monday at 6 AM UTC (when new EveryPlate menus typically post)
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # Allow manual trigger
+    inputs:
+      week:
+        description: 'Specific week number to scrape (leave empty for current week)'
+        required: false
+        type: number
+      force:
+        description: 'Force overwrite existing week data'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Scrape current week menu
+        if: ${{ !inputs.week }}
+        run: |
+          python scrape_week.py ${{ inputs.force && '--force' || '' }}
+      
+      - name: Scrape specific week
+        if: ${{ inputs.week }}
+        run: |
+          python scrape_specific_week.py ${{ inputs.week }}
+      
+      - name: Download and enrich with PDFs
+        run: |
+          python enrich_and_download_pdfs.py --input docs/week.json --output docs/week_with_pdfs.json --delay 0.5
+      
+      - name: Copy to week.json for frontend
+        run: |
+          cp docs/week_with_pdfs.json docs/week.json
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/week*.json docs/weeks/*.json docs/weeks_index.json docs/pdfs/*.pdf
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🍽️ Auto-update weekly menu and PDFs [skip ci]" && git push)
