@@ -94,21 +94,46 @@ def scrape_weekly_menu():
         print(f"[Weekly] Warning: recipe element wait timed out: {e}")
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
-    
-    # Extract year and week from final URL after redirect
     final_url = driver.current_url
-    driver.quit()
     
+    # Extract year and week from multiple sources
     year, week = None, None
+    
+    # Try 1: URL pattern
     match = re.search(r'/weekly-menu/(\d{4})-W(\d{2})', final_url)
     if match:
         year, week = int(match.group(1)), int(match.group(2))
-        print(f"[Weekly] Detected week: {year}-W{week:02d}")
-    else:
-        # Fallback to current ISO week
+        print(f"[Weekly] Detected week from URL: {year}-W{week:02d}")
+    
+    # Try 2: Recipe URLs contain ?week= parameter
+    if not year or not week:
+        recipe_links = soup.select("a[href*='?week=']")
+        for link in recipe_links[:5]:  # Check first 5
+            href = link.get('href', '')
+            week_match = re.search(r'\?week=(\d{4})-W(\d{2})', href)
+            if week_match:
+                year, week = int(week_match.group(1)), int(week_match.group(2))
+                print(f"[Weekly] Detected week from recipe URL: {year}-W{week:02d}")
+                break
+    
+    # Try 3: Look for week text in page
+    if not year or not week:
+        for h in soup.find_all(['h1', 'h2', 'h3']):
+            text = h.get_text()
+            week_match = re.search(r'Week\s+(\d+)', text, re.IGNORECASE)
+            if week_match:
+                week = int(week_match.group(1))
+                year = datetime.date.today().year
+                print(f"[Weekly] Detected week from heading: {year}-W{week:02d}")
+                break
+    
+    # Fallback to current ISO week
+    if not year or not week:
         today = datetime.date.today()
         year, week, _ = today.isocalendar()
-        print(f"[Weekly] Could not detect week from URL, using ISO week: {year}-W{week:02d}")
+        print(f"[Weekly] Could not detect week, using ISO week: {year}-W{week:02d}")
+    
+    driver.quit()
 
     recipes = []
     seen = set()
