@@ -128,17 +128,18 @@ def verify_and_enrich_meals(candidates, verbose=True):
 
 def run(force=False, verbose=True, year=None, week=None):
     # 1) gather candidates
-    candidates = scrape_weekly_menu()
+    scraped_year, scraped_week, candidates = scrape_weekly_menu()
     print(f"[Main] Collected {len(candidates)} candidate cards")
 
     # 2) verify candidates by scraping recipe pages
     meals = verify_and_enrich_meals(candidates, verbose=verbose)
     print(f"[Main] Verified {len(meals)} recipes after checking recipe pages")
 
-    # 3) build payload
+    # 3) build payload - use scraped week info if not explicitly provided
     if year is None or week is None:
-        now = datetime.date.today()
-        year, week, _ = now.isocalendar()
+        year = scraped_year
+        week = scraped_week
+        print(f"[Main] Using detected week: {year}-W{week:02d}")
     payload = {
         "week": week,
         "year": year,

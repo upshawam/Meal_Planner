@@ -57,15 +57,18 @@ jobs:
       
       - name: Download and enrich with PDFs
         run: |
-          python enrich_and_download_pdfs.py --input docs/week.json --output docs/week_with_pdfs.json --delay 0.5
+          # Find the most recent week file in docs/weeks/
+          LATEST_WEEK=$(ls -t docs/weeks/*.json | head -1)
+          echo "Processing week file: $LATEST_WEEK"
+          python enrich_and_download_pdfs.py --input "$LATEST_WEEK" --output docs/week_with_pdfs.json --delay 0.5
       
-      - name: Copy to week.json for frontend
+      - name: Copy enriched data back to archive and week.json
         run: |
+          # Update the archive with PDFs
+          LATEST_WEEK=$(ls -t docs/weeks/*.json | head -1)
+          cp docs/week_with_pdfs.json "$LATEST_WEEK"
+          # Update week.json for frontend
           cp docs/week_with_pdfs.json docs/week.json
-      
-      - name: Archive week and update index
-        run: |
-          python archive_week.py
       
       - name: Validate week data
         run: |

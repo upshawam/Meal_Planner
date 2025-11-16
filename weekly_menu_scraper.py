@@ -9,10 +9,8 @@ import time
 import re
 
 def current_week_url():
-    """Build the URL for the current ISO week."""
-    today = datetime.date.today()
-    year, week, _ = today.isocalendar()
-    return f"https://www.everyplate.com/weekly-menu/{year}-W{week:02d}"
+    """Return the base weekly menu URL which redirects to the actual current week."""
+    return "https://www.everyplate.com/weekly-menu"
 
 def _make_driver():
     options = Options()
@@ -64,8 +62,8 @@ def looks_like_price_or_badge(text):
 
 def scrape_weekly_menu():
     """
-    Return a list of candidate recipe cards from the weekly menu page.
-    Each item is a dict: {"url","title","subtitle","image","pdf"}
+    Return a tuple: (year, week, list_of_candidate_recipes)
+    Each recipe is a dict: {"url","title","subtitle","image","pdf"}
     This function tries to be permissive on candidate collection (keeps hrefs with ?week=)
     and uses image alt/aria as title fallback.
     """
@@ -96,7 +94,21 @@ def scrape_weekly_menu():
         print(f"[Weekly] Warning: recipe element wait timed out: {e}")
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
+    
+    # Extract year and week from final URL after redirect
+    final_url = driver.current_url
     driver.quit()
+    
+    year, week = None, None
+    match = re.search(r'/weekly-menu/(\d{4})-W(\d{2})', final_url)
+    if match:
+        year, week = int(match.group(1)), int(match.group(2))
+        print(f"[Weekly] Detected week: {year}-W{week:02d}")
+    else:
+        # Fallback to current ISO week
+        today = datetime.date.today()
+        year, week, _ = today.isocalendar()
+        print(f"[Weekly] Could not detect week from URL, using ISO week: {year}-W{week:02d}")
 
     recipes = []
     seen = set()
@@ -189,7 +201,7 @@ def scrape_weekly_menu():
         })
 
     print(f"[Weekly] Found {len(recipes)} candidate cards (unverified)")
-    return recipes
+    return year, week, recipes
 
 if __name__ == "__main__":
     data = scrape_weekly_menu()
