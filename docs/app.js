@@ -5,6 +5,8 @@
   let currentWeek = 46;
   let currentYear = 2025;
   let availableWeeks = [];
+  let unitConversions = {};
+  let spiceBlends = {};
 
   async function loadWeekData(weekNum) {
     try {
@@ -13,7 +15,18 @@
       if (!res.ok) throw new Error(`Week ${weekNum} not found`);
       const weekData = await res.json();
       data = weekData;
-      allMeals = weekData.meals || [];
+      const totalMeals = (weekData.meals || []).length;
+      // Filter out add-on items that don't have PDFs (not actual recipes)
+      const mealsWithoutPdf = (weekData.meals || []).filter(m => !m.pdf || typeof m.pdf !== "string" || !m.pdf.trim());
+      allMeals = (weekData.meals || []).filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+      
+      // Console warnings for filtered recipes
+      if (mealsWithoutPdf.length > 0) {
+        console.warn(`⚠️ Week ${weekNum}: ${mealsWithoutPdf.length} recipe(s) filtered out (no PDF):`);
+        mealsWithoutPdf.forEach(m => console.warn(`  - "${m.title || 'Unknown'}"`));
+        console.warn(`Total meals in data: ${totalMeals}, Showing: ${allMeals.length}`);
+      }
+      
       currentWeek = weekData.week || weekNum;
       currentYear = weekData.year || 2025;
       const weekDisplay = document.getElementById("current-week-display");
@@ -46,6 +59,30 @@
     }
   }
 
+  async function loadUnitConversions() {
+    try {
+      const res = await fetch("./unit_conversions.json", { cache: "no-store" });
+      if (res.ok) {
+        unitConversions = await res.json();
+      }
+    } catch (err) {
+      console.warn("Could not load unit conversions", err);
+      unitConversions = {}; // Fallback to empty object
+    }
+  }
+
+  async function loadSpiceBlends() {
+    try {
+      const res = await fetch("./spice_blends.json", { cache: "no-store" });
+      if (res.ok) {
+        spiceBlends = await res.json();
+      }
+    } catch (err) {
+      console.warn("Could not load spice blends", err);
+      spiceBlends = {}; // Fallback to empty object
+    }
+  }
+
   function updateWeekNavButtons() {
     const prevBtn = document.getElementById("prev-week-btn");
     const nextBtn = document.getElementById("next-week-btn");
@@ -56,8 +93,8 @@
     nextBtn.disabled = currentIdx >= availableWeeks.length - 1;
   }
 
-  // Load weeks index and initial week
-  await loadWeeksIndex();
+  // Load weeks index, unit conversions, spice blends, and initial week
+  await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends()]);
   
   // Try to load from weeks archive first, fallback to week_with_pdfs.json
   let loaded = false;
@@ -72,7 +109,18 @@
       const res = await fetch("./week_with_pdfs.json", { cache: "no-store" });
       if (!res.ok) throw new Error("week_with_pdfs.json not found");
       data = await res.json();
-      allMeals = data.meals || [];
+      const totalMeals = (data.meals || []).length;
+      // Filter out add-on items that don't have PDFs (not actual recipes)
+      const mealsWithoutPdf = (data.meals || []).filter(m => !m.pdf || typeof m.pdf !== "string" || !m.pdf.trim());
+      allMeals = (data.meals || []).filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+      
+      // Console warnings for filtered recipes
+      if (mealsWithoutPdf.length > 0) {
+        console.warn(`⚠️ Fallback data: ${mealsWithoutPdf.length} recipe(s) filtered out (no PDF):`);
+        mealsWithoutPdf.forEach(m => console.warn(`  - "${m.title || 'Unknown'}"`));
+        console.warn(`Total meals in data: ${totalMeals}, Showing: ${allMeals.length}`);
+      }
+      
       currentWeek = data.week || 46;
       currentYear = data.year || 2025;
       const weekDisplay = document.getElementById("current-week-display");
@@ -90,7 +138,6 @@
   const topBack = document.getElementById("top-back");
   const topCount = document.getElementById("top-selected-count");
   const selectedDiv = document.getElementById("selected");
-  const pdfToggle = document.getElementById("filter-pdf-toggle");
   const clearBtnInline = document.getElementById("clear-btn-inline");
 
   // Modal elements
@@ -468,6 +515,145 @@
     updateTopControls();
   }
 
+  function findSpiceBlend(ingredientName) {
+    if (!ingredientName || !spiceBlends) return null;
+    
+    // Try exact match first
+    if (spiceBlends[ingredientName]) {
+      return spiceBlends[ingredientName];
+    }
+    
+    // Try case-insensitive match
+    const lowerName = ingredientName.toLowerCase();
+    for (const [blendName, recipe] of Object.entries(spiceBlends)) {
+      if (blendName.toLowerCase() === lowerName) {
+        return recipe;
+      }
+    }
+    
+    // Try partial match (e.g., "Southwest Spice" matches "Southwest Spice Blend")
+    for (const [blendName, recipe] of Object.entries(spiceBlends)) {
+      if (blendName.toLowerCase().includes(lowerName) || lowerName.includes(blendName.toLowerCase())) {
+        return recipe;
+      }
+    }
+    
+    return null;
+  }
+
+  function showSpiceBlendModal(blendName, recipe) {
+    const modalOverlay = document.createElement("div");
+    modalOverlay.className = "spice-blend-modal-overlay";
+    modalOverlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    `;
+    
+    const modalContent = document.createElement("div");
+    modalContent.className = "spice-blend-modal-content";
+    modalContent.style.cssText = `
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    `;
+    
+    const title = document.createElement("h2");
+    title.textContent = blendName;
+    title.style.cssText = `
+      margin: 0 0 20px 0;
+      color: #cd596b;
+      font-size: 24px;
+    `;
+    
+    const subtitle = document.createElement("p");
+    subtitle.textContent = "Make your own with:";
+    subtitle.style.cssText = `
+      margin: 0 0 15px 0;
+      color: #666;
+      font-style: italic;
+    `;
+    
+    const list = document.createElement("ul");
+    list.style.cssText = `
+      list-style: disc;
+      padding-left: 25px;
+      line-height: 1.8;
+    `;
+    
+    recipe.forEach(ingredient => {
+      const li = document.createElement("li");
+      li.textContent = ingredient;
+      list.appendChild(li);
+    });
+    
+    const note = document.createElement("p");
+    note.textContent = '"Parts" means you can use any equal measurement (e.g., 1 part = 1 tsp).';
+    note.style.cssText = `
+      margin: 20px 0 15px 0;
+      padding: 10px;
+      background: #f8f0e3;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #666;
+    `;
+    
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "Close";
+    closeBtn.style.cssText = `
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: #cd596b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    `;
+    closeBtn.addEventListener("click", () => document.body.removeChild(modalOverlay));
+    
+    modalContent.appendChild(title);
+    modalContent.appendChild(subtitle);
+    modalContent.appendChild(list);
+    
+    // Only show the "parts" note if the recipe uses "parts"
+    if (recipe.some(ing => ing.toLowerCase().includes("part"))) {
+      modalContent.appendChild(note);
+    }
+    
+    modalContent.appendChild(closeBtn);
+    modalOverlay.appendChild(modalContent);
+    
+    // Close on overlay click
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) {
+        document.body.removeChild(modalOverlay);
+      }
+    });
+    
+    // Close on Escape key
+    const escapeHandler = (e) => {
+      if (e.key === "Escape" && document.body.contains(modalOverlay)) {
+        document.body.removeChild(modalOverlay);
+        document.removeEventListener("keydown", escapeHandler);
+      }
+    };
+    document.addEventListener("keydown", escapeHandler);
+    
+    document.body.appendChild(modalOverlay);
+  }
+
   function buildIngredients() {
     if (!currentChosen || !currentChosen.length) return;
     currentChosen.forEach(({id}) => {
@@ -481,7 +667,27 @@
       const portion = portions[id] || 2;
       (meal.ingredients || []).forEach(ing => {
         const copy = Object.assign({}, ing);
-        if (copy.quantity != null) {
+        
+        // Convert "unit" to specific measurement if available
+        if (copy.unit && copy.unit.toLowerCase() === "unit" && copy.ingredient) {
+          const ingredientKey = copy.ingredient.toLowerCase();
+          const conversion = unitConversions[ingredientKey];
+          if (conversion) {
+            if (copy.quantity != null) {
+              copy.quantity = copy.quantity * conversion.quantity * (portion / 2);
+            } else {
+              copy.quantity = conversion.quantity * (portion / 2);
+            }
+            copy.unit = conversion.unit;
+            copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
+          } else {
+            // Keep "unit" if no conversion available
+            if (copy.quantity != null) {
+              copy.quantity = copy.quantity * (portion / 2);
+              copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
+            }
+          }
+        } else if (copy.quantity != null) {
           copy.quantity = copy.quantity * (portion / 2);
           copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
         }
@@ -505,7 +711,25 @@
       Object.values(grouped).forEach(ing => {
         const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
         const li = document.createElement("li");
-        li.textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+        const textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+        
+        // Check if this ingredient is a spice blend
+        const spiceRecipe = findSpiceBlend(ing.ingredient);
+        if (spiceRecipe) {
+          // Create clickable link for spice blends
+          const span = document.createElement("span");
+          span.textContent = textContent;
+          span.className = "spice-blend-link";
+          span.title = "Click to see recipe";
+          span.style.cursor = "pointer";
+          span.style.color = "#cd596b";
+          span.style.textDecoration = "underline";
+          span.addEventListener("click", () => showSpiceBlendModal(ing.ingredient, spiceRecipe));
+          li.appendChild(span);
+        } else {
+          li.textContent = textContent;
+        }
+        
         ul.appendChild(li);
       });
       if (ul.childElementCount < 10) {
@@ -521,14 +745,6 @@
     else buildIngredients();
   });
   if (topBack) topBack.addEventListener("click", () => backToSelection());
-  if (pdfToggle) {
-    pdfToggle.checked = filterPdfOnly;
-    pdfToggle.addEventListener("change", function() {
-      filterPdfOnly = pdfToggle.checked;
-      selected = new Set();
-      renderMenu();
-    });
-  }
   if (clearBtnInline) {
     clearBtnInline.addEventListener("click", function() {
       selected = new Set();
