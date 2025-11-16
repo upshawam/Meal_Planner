@@ -92,6 +92,46 @@ body{
   cursor: not-allowed;
 }
 
+/* Search bar */
+.search-bar {
+  padding: 8px 14px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  min-width: 280px;
+  outline: none;
+  transition: all 0.2s;
+}
+.search-bar:focus {
+  border-color: var(--orange-dark);
+  box-shadow: 0 0 0 3px rgba(255,140,66,0.2);
+}
+.search-bar::placeholder {
+  color: #9ca3af;
+}
+.clear-search-btn {
+  background: #fff;
+  color: var(--orange);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+.clear-search-btn:hover {
+  background: var(--orange-dark);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
 /* Menu grid */
 .grid{
   display:grid;
@@ -103,14 +143,14 @@ body{
   display: flex;
   flex-wrap: wrap; /* Ensure cards wrap to the next line */
   gap: 16px; /* Add spacing between cards */
-  justify-content: center; /* Center the cards */
+  justify-content: flex-start; /* Align cards to the left, no stretching */
 }
 
 /* Ensure individual cards are responsive */
 .card {
-  flex: 1 1 calc(25% - 16px); /* Adjust for 4 cards per row */
+  flex: 0 0 280px; /* Fixed width, no growing or shrinking */
   box-sizing: border-box;
-  max-width: 100%; /* Prevent cards from exceeding their container */
+  width: 280px; /* Fixed width for all cards */
 }
 
 .card, .myweek-card {

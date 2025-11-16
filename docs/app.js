@@ -7,6 +7,8 @@
   let availableWeeks = [];
   let unitConversions = {};
   let spiceBlends = {};
+  let isSearchActive = false;
+  let searchResults = [];
 
   async function loadWeekData(weekNum) {
     try {
@@ -31,6 +33,14 @@
       currentYear = weekData.year || 2025;
       const weekDisplay = document.getElementById("current-week-display");
       if (weekDisplay) weekDisplay.textContent = currentWeek;
+      
+      // Clear search when changing weeks manually
+      isSearchActive = false;
+      searchResults = [];
+      const searchBar = document.getElementById("search-bar");
+      const clearSearchBtn = document.getElementById("clear-search-btn");
+      if (searchBar) searchBar.value = "";
+      if (clearSearchBtn) clearSearchBtn.style.display = "none";
       
       // Reset selections when changing weeks
       selected = new Set();
@@ -331,6 +341,12 @@
 
   function renderMenu() {
     if (!menu) return;
+    
+    // If search is active, don't render the normal menu
+    if (isSearchActive) {
+      return;
+    }
+    
     menu.innerHTML = "";
     const displayMeals = getDisplayMeals();
     if (!displayMeals.length) {
@@ -777,6 +793,163 @@
         const nextWeek = availableWeeks[currentIdx + 1];
         await loadWeekData(nextWeek);
       }
+    });
+  }
+
+  // Search functionality
+  const searchBar = document.getElementById("search-bar");
+  const clearSearchBtn = document.getElementById("clear-search-btn");
+
+  async function searchAllWeeks(query) {
+    if (!query || query.trim().length === 0) {
+      isSearchActive = false;
+      searchResults = [];
+      clearSearchBtn.style.display = "none";
+      await loadWeekData(currentWeek);
+      return;
+    }
+
+    isSearchActive = true;
+    clearSearchBtn.style.display = "flex";
+    searchResults = [];
+    const lowerQuery = query.toLowerCase();
+
+    // Search across all available weeks
+    for (const weekNum of availableWeeks) {
+      try {
+        const weekFile = `./weeks/2025-W${String(weekNum).padStart(2, '0')}.json`;
+        const res = await fetch(weekFile, { cache: "no-store" });
+        if (!res.ok) continue;
+        
+        const weekData = await res.json();
+        const meals = (weekData.meals || []).filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+        
+        for (const meal of meals) {
+          // Search in title
+          const titleMatch = (meal.title || "").toLowerCase().includes(lowerQuery);
+          
+          // Search in ingredients
+          const ingredientMatch = (meal.ingredients || []).some(ing => 
+            (ing.ingredient || "").toLowerCase().includes(lowerQuery)
+          );
+          
+          if (titleMatch || ingredientMatch) {
+            searchResults.push({
+              meal: meal,
+              week: weekNum,
+              matchType: titleMatch ? 'title' : 'ingredient'
+            });
+          }
+        }
+      } catch (err) {
+        console.warn(`Could not search week ${weekNum}:`, err);
+      }
+    }
+
+    renderSearchResults();
+  }
+
+  function renderSearchResults() {
+    const menu = document.getElementById("menu");
+    if (!menu) return;
+
+    menu.innerHTML = "";
+    
+    if (searchResults.length === 0) {
+      const noResults = document.createElement("div");
+      noResults.style.cssText = "grid-column: 1 / -1; text-align: center; padding: 40px; color: #6b7280; font-size: 1.1rem;";
+      noResults.textContent = "No recipes found matching your search.";
+      menu.appendChild(noResults);
+      return;
+    }
+
+    // Render all results without grouping
+    searchResults.forEach((result, idx) => {
+      const card = createSearchResultCard(result.meal, idx, result.week);
+      menu.appendChild(card);
+    });
+  }
+
+  function createSearchResultCard(meal, idx, weekNum) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.cssText = "cursor: pointer; flex: 0 0 280px; width: 280px; max-width: 280px;";
+
+    const img = document.createElement("img");
+    img.className = "card-img";
+    img.src = meal.image || "https://via.placeholder.com/300x200?text=No+Image";
+    img.alt = meal.title || "Recipe";
+    img.loading = "lazy";
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    const title = document.createElement("h3");
+    title.className = "card-title";
+    title.textContent = meal.title || "Untitled";
+
+    const subtitle = document.createElement("p");
+    subtitle.className = "card-subtitle";
+    subtitle.textContent = meal.subtitle || "";
+
+    body.appendChild(title);
+    body.appendChild(subtitle);
+    card.appendChild(img);
+    card.appendChild(body);
+
+    // Open modal on click
+    card.addEventListener("click", () => {
+      safeText(modalTitle, meal.title);
+      safeText(modalSubtitle, meal.subtitle);
+      safeText(modalDesc, meal.description);
+      
+      const ingText = (meal.ingredients || [])
+        .map(i => `${i.quantity_display || i.quantity || ""} ${i.unit || ""} ${i.ingredient || ""}`.trim())
+        .join(", ");
+      safeText(modalIngredients, ingText ? `Ingredients: ${ingText}` : "");
+      
+      if (modalLink && meal.url) {
+        modalLink.href = meal.url;
+        modalLink.style.display = "";
+      } else if (modalLink) {
+        modalLink.style.display = "none";
+      }
+
+      if (meal.pdf && typeof meal.pdf === "string" && meal.pdf.trim()) {
+        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "";
+        if (modalDownloadLink) {
+          modalDownloadLink.href = meal.pdf;
+          modalDownloadLink.download = `${(meal.title || "recipe").replace(/[^a-z0-9]/gi, "_")}.pdf`;
+          modalDownloadLink.style.display = "";
+        }
+      } else {
+        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "none";
+        if (modalDownloadLink) modalDownloadLink.style.display = "none";
+      }
+
+      safeShowModal();
+    });
+
+    return card;
+  }
+
+  if (searchBar) {
+    let searchTimeout;
+    searchBar.addEventListener("input", (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchAllWeeks(e.target.value);
+      }, 300); // Debounce search by 300ms
+    });
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener("click", () => {
+      if (searchBar) searchBar.value = "";
+      isSearchActive = false;
+      searchResults = [];
+      clearSearchBtn.style.display = "none";
+      loadWeekData(currentWeek);
     });
   }
 
