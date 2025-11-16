@@ -434,8 +434,14 @@
     locked = true;
     isMenuVisible = false;
     const chosenIds = Array.from(selected);
+    
+    // Get meals from search results or regular display meals
+    const mealsToSearch = isSearchActive 
+      ? searchResults.map(r => r.meal)
+      : getDisplayMeals();
+    
     currentChosen = chosenIds.map(id => {
-      const m = getDisplayMeals().find((mm, idx) => mealIdFor(mm, idx) === id);
+      const m = mealsToSearch.find((mm, idx) => mealIdFor(mm, idx) === id);
       return m ? { id, meal: m } : null;
     }).filter(x => x && x.meal);
 
@@ -764,8 +770,22 @@
   if (clearBtnInline) {
     clearBtnInline.addEventListener("click", function() {
       selected = new Set();
+      locked = false;
+      isMenuVisible = true;
+      currentChosen = [];
+      
+      // Show menu, hide selected div
+      if (menu) menu.classList.remove("hidden");
+      if (selectedDiv) selectedDiv.innerHTML = "";
+      
       updateTopControls();
-      renderMenu();
+      
+      // If search is active, re-render search results; otherwise render normal menu
+      if (isSearchActive) {
+        renderSearchResults();
+      } else {
+        renderMenu();
+      }
     });
   }
   if (modalClose) modalClose.addEventListener("click", safeHideModal);
@@ -871,65 +891,12 @@
   }
 
   function createSearchResultCard(meal, idx, weekNum) {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.style.cssText = "cursor: pointer; flex: 0 0 280px; width: 280px; max-width: 280px;";
-
-    const img = document.createElement("img");
-    img.className = "card-img";
-    img.src = meal.image || "https://via.placeholder.com/300x200?text=No+Image";
-    img.alt = meal.title || "Recipe";
-    img.loading = "lazy";
-
-    const body = document.createElement("div");
-    body.className = "card-body";
-
-    const title = document.createElement("h3");
-    title.className = "card-title";
-    title.textContent = meal.title || "Untitled";
-
-    const subtitle = document.createElement("p");
-    subtitle.className = "card-subtitle";
-    subtitle.textContent = meal.subtitle || "";
-
-    body.appendChild(title);
-    body.appendChild(subtitle);
-    card.appendChild(img);
-    card.appendChild(body);
-
-    // Open modal on click
-    card.addEventListener("click", () => {
-      safeText(modalTitle, meal.title);
-      safeText(modalSubtitle, meal.subtitle);
-      safeText(modalDesc, meal.description);
-      
-      const ingText = (meal.ingredients || [])
-        .map(i => `${i.quantity_display || i.quantity || ""} ${i.unit || ""} ${i.ingredient || ""}`.trim())
-        .join(", ");
-      safeText(modalIngredients, ingText ? `Ingredients: ${ingText}` : "");
-      
-      if (modalLink && meal.url) {
-        modalLink.href = meal.url;
-        modalLink.style.display = "";
-      } else if (modalLink) {
-        modalLink.style.display = "none";
-      }
-
-      if (meal.pdf && typeof meal.pdf === "string" && meal.pdf.trim()) {
-        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "";
-        if (modalDownloadLink) {
-          modalDownloadLink.href = meal.pdf;
-          modalDownloadLink.download = `${(meal.title || "recipe").replace(/[^a-z0-9]/gi, "_")}.pdf`;
-          modalDownloadLink.style.display = "";
-        }
-      } else {
-        if (modalViewPdfBtn) modalViewPdfBtn.style.display = "none";
-        if (modalDownloadLink) modalDownloadLink.style.display = "none";
-      }
-
-      safeShowModal();
-    });
-
+    // Use the existing createCard function with showSelector enabled
+    const card = createCard(meal, idx, { showSelector: true, recipePreview: false });
+    
+    // Add explicit styling to prevent stretching
+    card.style.cssText = (card.style.cssText || "") + " flex: 0 0 280px; width: 280px; max-width: 280px;";
+    
     return card;
   }
 
