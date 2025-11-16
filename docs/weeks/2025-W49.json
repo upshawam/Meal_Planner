@@ -7,7 +7,7 @@
       "title": "Sweet Chili Chicken",
       "subtitle": "with Scallion Rice & Zesty Carrots",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/654a483dcfbffe92530dde49-639acf60-bb478a8d.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\67fd2a71e22258bf02840658-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sweet Thai Chili Sauce",
@@ -72,7 +72,7 @@
       "title": "Cheeseburger Crunchy Wraps",
       "subtitle": "with Potato Wedges, Pickles & Special Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64e4ba5354b67122d59a9410-8a6269ef-b4695f84.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\6874456d55ee9436234b978a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -137,7 +137,7 @@
       "title": "Tomato & Pork Sausage Spaghetti",
       "subtitle": "with Garlic Bread",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66c28cb95cb721784e636254-483aea33-95c1e980.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\66c28cb95cb721784e636254-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Ciabatta",
@@ -332,7 +332,7 @@
       "title": "Crispy Chicken & Charred Zucchini Bowls",
       "subtitle": "with Couscous & Creamy Pesto Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/684f58f0c347698598326f9e-4f4b011b-736e2ea6.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\684f58f0c347698598326f9e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Pesto",
@@ -585,7 +585,7 @@
       "title": "Cheesy BBQ Bacon & Sweet Potato Hash",
       "subtitle": "with Sour Cream",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/688fe193263d52528b99ff7e-3937192c-6cf8b459.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\688fe193263d52528b99ff7e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Bell Pepper",
@@ -952,7 +952,7 @@
       "title": "Roasted Bell Pepper Flatbreads",
       "subtitle": "with Creamy Tomato Sauce & Mozzarella",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6653f5498a4eed4f27b5204f-0fe1eeac-c2755730.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68991940ca9e1ccee13caedf-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Tomato Paste",
@@ -1096,7 +1096,7 @@
       "title": "Palermo Chicken & Bacon Pasta",
       "subtitle": "with Peas & Parmesan",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64b5b03f469d0baeacf675cc-bfa16750-32e9b8c4.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\68a1a163c6b6544f7ed4387a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Fry Seasoning",
@@ -1349,7 +1349,7 @@
       "title": "Broccoli Cheddar Bisque",
       "subtitle": "with Garlic Bread",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1467D_Hero_BroccoliCheddarBisque_W49_101_2025_Web-f8470fd1.jpg",
-      "pdf": "",
+      "pdf": "./pdfs\\68178999bc3f1ac28dd66600-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -1644,7 +1644,7 @@
       "title": "Cantina-Style Steak Taco Bar",
       "subtitle": "with Fajita Veggies, Pico de Gallo & Creamy Guacamole",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67c50ffef4b525c8eb5da8c4-7df4f306-86a6f0f9.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs\\67c50ffef4b525c8eb5da8c4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Bell Pepper",
