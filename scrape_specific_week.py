@@ -33,4 +33,4 @@ weekly_menu_scraper.current_week_url = lambda: f"https://www.everyplate.com/week
 run(force=True, verbose=True, year=target_year, week=target_week)
 
 print(f"\n[OK] Week {target_week} scraped successfully!")
-print(f"Run the PDF download: python enrich_and_download_pdfs.py")
+print(f"Note: Run PDF enrichment manually if needed: python enrich_and_download_pdfs.py --input docs/weeks/2025-W{target_week:02d}.json --output docs/weeks/2025-W{target_week:02d}.json")

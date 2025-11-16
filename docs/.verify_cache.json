@@ -14723,5 +14723,820 @@
       }
     ],
     "checked_at": 1763326401
+  },
+  "https://www.everyplate.com/recipes/caprese-panini-and-tomato-soup-combo-68d64a78681e58ed6e5b117b?week=2025-W49": {
+    "verified": true,
+    "ingredients": [
+      {
+        "ingredient": "Veggie Stock Concentrate",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Croutons",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Pesto",
+        "amount": "4 tablespoon",
+        "quantity_display": "4",
+        "quantity": 4.0,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "Ciabatta",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Balsamic Vinegar",
+        "amount": "5 teaspoon",
+        "quantity_display": "5",
+        "quantity": 5.0,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "Crushed Tomatoes",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Cream Cheese",
+        "amount": "2 tablespoon",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "Italian Seasoning",
+        "amount": "1 tablespoon",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "Parmesan Cheese Block",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Tomato",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Garlic Powder",
+        "amount": "1 teaspoon",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "Fresh Mozzarella",
+        "amount": "4 ounce",
+        "quantity_display": "4",
+        "quantity": 4.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326473
+  },
+  "https://www.everyplate.com/recipes/orange-chicken-and-broccoli-bowls-68d64a919ed4d6794189d1b8?week=2025-W49": {
+    "verified": true,
+    "ingredients": [
+      {
+        "ingredient": "Soy Sauce",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Orange Sauce",
+        "amount": "3 ounce",
+        "quantity_display": "3",
+        "quantity": 3.0,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Broccoli",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Sesame Seeds",
+        "amount": "1 tablespoon",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "Chicken Cutlets",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Scallions",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "White Rice",
+        "amount": "¾ cup",
+        "quantity_display": "¾",
+        "quantity": 0.75,
+        "unit": "cup"
+      }
+    ],
+    "checked_at": 1763326484
+  },
+  "https://www.everyplate.com/recipes/sesame-garlic-chicken-68d64c3e681e58ed6e5b16b8?week=2025-W49": {
+    "verified": true,
+    "ingredients": [
+      {
+        "ingredient": "Zucchini",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Sesame Dressing",
+        "amount": "1.5 ounce",
+        "quantity_display": "1.5",
+        "quantity": 1.5,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Chicken Stock Concentrate",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Broccoli",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Sesame Seeds",
+        "amount": "1 tablespoon",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "Garlic",
+        "amount": "1 clove",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "clove"
+      },
+      {
+        "ingredient": "Chicken Cutlets",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Scallions",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326495
+  },
+  "https://www.everyplate.com/recipes/jammin-fig-pork-chops-6909c429576ac393c1e68b59?week=2025-W49": {
+    "verified": true,
+    "ingredients": [
+      {
+        "ingredient": "Potatoes",
+        "amount": "12 ounce",
+        "quantity_display": "12",
+        "quantity": 12.0,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Chicken Stock Concentrate",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Fig Jam",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Broccoli",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Pork Chops",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Garlic",
+        "amount": "2 clove",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "clove"
+      }
+    ],
+    "checked_at": 1763326507
+  },
+  "https://www.everyplate.com/recipes/chicken-breast-62e94b575ec26528210816a5?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Chicken Breasts",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326518
+  },
+  "https://www.everyplate.com/recipes/boneless-pork-chops-65c5447ecc88a3ade40e6428?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Pork Chops",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326529
+  },
+  "https://www.everyplate.com/recipes/boneless-pork-chops-65c544c3e273ea7bff704558?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Pork Chops",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326539
+  },
+  "https://www.everyplate.com/recipes/ranch-steak-67adf8106c5e42a426d8c7bf?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Ranch Steak",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326550
+  },
+  "https://www.everyplate.com/recipes/chopped-chicken-breast-65b8008ef6debb5c45b69650?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Chopped Chicken Breast",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326561
+  },
+  "https://www.everyplate.com/recipes/diced-skinless-dark-meat-chicken-690dd1150bfbbce3299e2dec?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Diced Skinless Dark Meat Chicken",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326571
+  },
+  "https://www.everyplate.com/recipes/bacon-65fb0c2dac4b9b4816461849?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Bacon",
+        "amount": "4 ounce",
+        "quantity_display": "4",
+        "quantity": 4.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326582
+  },
+  "https://www.everyplate.com/recipes/ground-beef-65ce8848b3001828bde56db2?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Ground Beef",
+        "amount": "8 ounce",
+        "quantity_display": "8",
+        "quantity": 8.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326592
+  },
+  "https://www.everyplate.com/recipes/ground-beef-684c42c4f7f97a12fcfe5a5a?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Ground Beef",
+        "amount": "10 ounce",
+        "quantity_display": "10",
+        "quantity": 10.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326603
+  },
+  "https://www.everyplate.com/recipes/green-beans-65bbab42f6debb5c45b6d088?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Green Beans",
+        "amount": "6 ounce",
+        "quantity_display": "6",
+        "quantity": 6.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326613
+  },
+  "https://www.everyplate.com/recipes/broccoli-65c546f4cc88a3ade40e642e?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Broccoli",
+        "amount": "12 ounce",
+        "quantity_display": "12",
+        "quantity": 12.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326624
+  },
+  "https://www.everyplate.com/recipes/zucchini-6855d6f8f905687c5788c7ac?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Zucchini",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326634
+  },
+  "https://www.everyplate.com/recipes/green-peas-6729860b12c65aa1eb3f471c?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Peas",
+        "amount": "4 ounce",
+        "quantity_display": "4",
+        "quantity": 4.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326645
+  },
+  "https://www.everyplate.com/recipes/carrots-64b813fa5311d06ae91466bd?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Carrots",
+        "amount": "12 ounce",
+        "quantity_display": "12",
+        "quantity": 12.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326655
+  },
+  "https://www.everyplate.com/recipes/mini-cucumber-674de153f546e01c8f27717c?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Mini Cucumber",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326667
+  },
+  "https://www.everyplate.com/recipes/sweet-potato-65babaefc4a3d7e858227f46?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Sweet Potato",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326678
+  },
+  "https://www.everyplate.com/recipes/russet-potatoes-670d38b1dc533226ca91355d?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Russet Potato",
+        "amount": "12 ounce",
+        "quantity_display": "12",
+        "quantity": 12.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326688
+  },
+  "https://www.everyplate.com/recipes/white-rice-687aa909876f62ca100b9a7c?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Rice",
+        "amount": "¾ cup",
+        "quantity_display": "¾",
+        "quantity": 0.75,
+        "unit": "cup"
+      }
+    ],
+    "checked_at": 1763326699
+  },
+  "https://www.everyplate.com/recipes/jasmine-rice-67adf3fb6c5e42a426d8c7b9?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Jasmine Rice",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326710
+  },
+  "https://www.everyplate.com/recipes/penne-670d3b65dc533226ca91361d?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Penne Pasta",
+        "amount": "6 ounce",
+        "quantity_display": "6",
+        "quantity": 6.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326720
+  },
+  "https://www.everyplate.com/recipes/10-inch-flour-tortillas-65bac038f6debb5c45b6c066?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Flour Tortillas",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326731
+  },
+  "https://www.everyplate.com/recipes/6-inch-flour-tortillas-65c65572e273ea7bff7055b2?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Flour Tortillas",
+        "amount": "6 piece",
+        "quantity_display": "6",
+        "quantity": 6.0,
+        "unit": "piece"
+      }
+    ],
+    "checked_at": 1763326742
+  },
+  "https://www.everyplate.com/recipes/ciabatta-bread-670d3a75dc533226ca9135e5?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Ciabatta Roll",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326753
+  },
+  "https://www.everyplate.com/recipes/potato-buns-684c4359600ad5b2e3ee732c?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Potato Buns",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326764
+  },
+  "https://www.everyplate.com/recipes/parmesan-cheese-block-690e445e85d44a1dd429b685?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Parmesan Cheese Block",
+        "amount": "2 unit",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326775
+  },
+  "https://www.everyplate.com/recipes/parmesan-cheese-670d3434dc533226ca91352e?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Parmesan Cheese",
+        "amount": "1.5 ounce",
+        "quantity_display": "1.5",
+        "quantity": 1.5,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326786
+  },
+  "https://www.everyplate.com/recipes/shredded-monterey-jack-cheese-670d35283b0f0624956a195a?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Shredded Monterey Jack",
+        "amount": "2 ounce",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326797
+  },
+  "https://www.everyplate.com/recipes/shredded-cheddar-cheese-684c438bb7c080bea12e2a5b?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Shredded Cheddar",
+        "amount": "2 ounce",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326807
+  },
+  "https://www.everyplate.com/recipes/shredded-mexican-cheese-blend-673f97ffc272efc8e0155d32?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Shredded Mexican Cheese",
+        "amount": "2 ounce",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326818
+  },
+  "https://www.everyplate.com/recipes/shredded-mozzarella-670d37c2dc533226ca91354e?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Shredded Mozzarella",
+        "amount": "2 ounce",
+        "quantity_display": "2",
+        "quantity": 2.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326829
+  },
+  "https://www.everyplate.com/recipes/tex-mex-paste-65ce97d9c25e9b4e0125631a?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Tex-Mex Paste",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326840
+  },
+  "https://www.everyplate.com/recipes/sweet-thai-chili-sauce-65e5da33e0f6df055447f34b?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Sweet Thai Chili Sauce",
+        "amount": "1 ounce",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326850
+  },
+  "https://www.everyplate.com/recipes/fry-seasoning-65d50d9355fb9bf6391b715f?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Fry Seasoning",
+        "amount": "1 tablespoon",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "tablespoon"
+      }
+    ],
+    "checked_at": 1763326861
+  },
+  "https://www.everyplate.com/recipes/garlic-bread-690ddac4e64b84452eb44848?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Garlic Bread",
+        "amount": "6 ounce",
+        "quantity_display": "6",
+        "quantity": 6.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326872
+  },
+  "https://www.everyplate.com/recipes/mushroom-and-swiss-egg-white-bites-690ddb660b8fe6d56f7b2980?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Mushroom and Swiss Egg White Bites",
+        "amount": "8 ounce",
+        "quantity_display": "8",
+        "quantity": 8.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326883
+  },
+  "https://www.everyplate.com/recipes/creamy-tomato-soup-690ddecb08de74ee911d94cb?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Creamy Tomato Soup",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326894
+  },
+  "https://www.everyplate.com/recipes/creamy-tomato-soup-and-garlic-bread-68fa574d35b036e48af8c44c?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Creamy Tomato Soup",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      },
+      {
+        "ingredient": "Garlic Bread",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326905
+  },
+  "https://www.everyplate.com/recipes/beef-bagel-dogs-690de07de64b84452eb44851?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Beef Bagel Dogs",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326917
+  },
+  "https://www.everyplate.com/recipes/apple-pie-rolls-690de14408de74ee911d94e8?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Apple Pie Spring Rolls",
+        "amount": "6 piece",
+        "quantity_display": "6",
+        "quantity": 6.0,
+        "unit": "piece"
+      }
+    ],
+    "checked_at": 1763326927
+  },
+  "https://www.everyplate.com/recipes/white-cheddar-mac-and-cheese-690de2b3e64b84452eb44852?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "White Cheddar Mac and Cheese",
+        "amount": "30 ounce",
+        "quantity_display": "30",
+        "quantity": 30.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326938
+  },
+  "https://www.everyplate.com/recipes/mac-and-cheese-garlic-bread-690de3a708de74ee911d94e9?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "White Cheddar Mac & Cheese",
+        "amount": "30 ounce",
+        "quantity_display": "30",
+        "quantity": 30.0,
+        "unit": "ounce"
+      },
+      {
+        "ingredient": "Garlic Bread",
+        "amount": "6 ounce",
+        "quantity_display": "6",
+        "quantity": 6.0,
+        "unit": "ounce"
+      }
+    ],
+    "checked_at": 1763326948
+  },
+  "https://www.everyplate.com/recipes/sesame-ginger-chicken-gyoza-690de40b576ac393c1e68fa5?week=2025-W49": {
+    "verified": false,
+    "ingredients": [
+      {
+        "ingredient": "Sesame Ginger Chicken Gyoza",
+        "amount": "1 unit",
+        "quantity_display": "1",
+        "quantity": 1.0,
+        "unit": "unit"
+      }
+    ],
+    "checked_at": 1763326959
   }
 }
