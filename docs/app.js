@@ -137,11 +137,12 @@
     if (topCount) topCount.textContent = `${count} selected`;
     if (!topNext) return;
     if (isMenuVisible) {
+      topNext.style.display = ""; // Restore button visibility when on menu
       topNext.disabled = count === 0;
       topNext.textContent = "Next";
     } else {
-      topNext.disabled = currentChosen.length === 0;
-      topNext.textContent = "Rebuild Ingredients";
+      // Hide the top Next button when viewing ingredients since rebuild is automatic
+      topNext.style.display = "none";
     }
     if (topBack) topBack.classList.toggle("hidden", isMenuVisible);
   }
@@ -203,6 +204,10 @@
       }
       const prev = portions[id];
       if (prev) select.value = String(prev);
+      // Auto-update ingredients when portion changes
+      select.addEventListener("change", () => {
+        buildIngredients();
+      });
       portionLabel.innerHTML = "Portions: ";
       portionLabel.appendChild(select);
       card.appendChild(portionLabel); // below subtitle, will never overlap
@@ -223,24 +228,28 @@
       });
       card.appendChild(viewRecipeBtn);
 
-      // Add Print Recipe button
-      const printRecipeBtn = document.createElement("button");
-      printRecipeBtn.className = "print-recipe-btn";
-      printRecipeBtn.textContent = "Print Recipe";
-      printRecipeBtn.addEventListener("click", (e) => {
+      // Add X button at top left to remove this card from selection
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "remove-card-btn";
+      removeBtn.innerHTML = "×";
+      removeBtn.title = "Remove this recipe";
+      removeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        // Use local PDF if available, otherwise construct from recipe URL
-        let pdfUrl = meal.pdf;
-        if (!pdfUrl) {
-          const recipeIdMatch = meal.url.match(/-([a-zA-Z0-9]+)\?/);
-          const recipeId = recipeIdMatch ? recipeIdMatch[1] : null;
-          pdfUrl = recipeId ? `https://www.everyplate.com/recipecards/card/${recipeId}-en-US.pdf` : null;
-        }
-        if (pdfUrl) {
-          window.open(pdfUrl, "_blank", "noopener");
+        // Remove from currentChosen array by matching the id
+        currentChosen = currentChosen.filter(item => item.id !== id);
+        // Also remove from selected set
+        selected.delete(id);
+        // Remove from portions tracking
+        delete portions[id];
+        // If no recipes left, go back to selection
+        if (currentChosen.length === 0) {
+          backToSelection();
+        } else {
+          // Re-render the ingredients page
+          nextHandler();
         }
       });
-      card.appendChild(printRecipeBtn);
+      card.appendChild(removeBtn);
     }
 
     card.addEventListener("click", (e) => {
@@ -390,17 +399,8 @@
       rightCol.className = "myweek-controls-col";
       const controlsList = document.createElement("div");
       controlsList.className = "myweek-controls-list";
-      const portionTitle = document.createElement("div");
-      portionTitle.className = "portion-title";
-      portionTitle.textContent = "Adjust Portions?";
-      portionTitle.style.paddingTop="2px";
-      controlsList.appendChild(portionTitle);
-
-      const buildBtn = document.createElement("button");
-      buildBtn.className = "build-btn-big";
-      buildBtn.textContent = "Rebuild Ingredients";
-      buildBtn.addEventListener("click", buildIngredients);
-      controlsList.appendChild(buildBtn);
+      
+      // Portion title and rebuild button removed - ingredients auto-update on portion change
 
       rightCol.appendChild(controlsList);
 
