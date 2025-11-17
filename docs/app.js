@@ -7,6 +7,7 @@
   let availableWeeks = [];
   let unitConversions = {};
   let spiceBlends = {};
+  let ingredientCategories = {};
   let isSearchActive = false;
   let searchResults = [];
 
@@ -93,6 +94,18 @@
     }
   }
 
+  async function loadIngredientCategories() {
+    try {
+      const res = await fetch("./ingredient_categories.json", { cache: "no-store" });
+      if (res.ok) {
+        ingredientCategories = await res.json();
+      }
+    } catch (err) {
+      console.warn("Could not load ingredient categories", err);
+      ingredientCategories = {}; // Fallback to empty object
+    }
+  }
+
   function updateWeekNavButtons() {
     const prevBtn = document.getElementById("prev-week-btn");
     const nextBtn = document.getElementById("next-week-btn");
@@ -103,8 +116,8 @@
     nextBtn.disabled = currentIdx >= availableWeeks.length - 1;
   }
 
-  // Load weeks index, unit conversions, spice blends, and initial week
-  await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends()]);
+  // Load weeks index, unit conversions, spice blends, ingredient categories, and initial week
+  await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends(), loadIngredientCategories()]);
   
   // Try to load from weeks archive first, fallback to week_with_pdfs.json
   let loaded = false;
@@ -168,6 +181,65 @@
   function safeHtml(el, html) { if (el) el.innerHTML = html || ""; }
   function safeShowModal() { if (modal) modal.classList.remove("hidden"); }
   function safeHideModal() { if (modal) modal.classList.add("hidden"); }
+
+  // Normalize text for ingredient categorization (lowercase, strip accents)
+  function normalizeIngredient(text) {
+    if (!text) return "";
+    // Normalize unicode and remove accent marks
+    let normalized = text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    return normalized.toLowerCase().trim();
+  }
+
+  // Categorize an ingredient based on keyword matching
+  function categorizeIngredient(ingredientName) {
+    const normalized = normalizeIngredient(ingredientName);
+    
+    // Check if it's a known spice blend first
+    if (findSpiceBlend(ingredientName)) {
+      return "Spices";
+    }
+    
+    // Map category keys to display names (perimeter-first shopping order)
+    const categoryMap = {
+      "produce": "Produce",
+      "meat": "Meat", 
+      "dairy": "Dairy",
+      "bakery": "Bakery",
+      "dry_goods": "Pantry",
+      "condiments": "Condiments",
+      "spices": "Spices",
+      "packaged": "Pantry",
+      "snacks": "Pantry"
+    };
+    
+    // Priority order for categories (check specific categories first to avoid false matches)
+    const categoryPriority = [
+      "spices",      // Check spices first (garlic powder, not garlic)
+      "bakery",      // Check bakery (potato buns, not potato)
+      "dry_goods",   // Check pantry items (agnolotti, tortelloni)
+      "condiments",
+      "dairy",
+      "meat",
+      "packaged",
+      "produce",     // Check produce last (most generic matches)
+      "snacks"
+    ];
+    
+    // Try to match against each category in priority order
+    for (const catKey of categoryPriority) {
+      const keywords = ingredientCategories[catKey];
+      if (!Array.isArray(keywords)) continue;
+      
+      for (const keyword of keywords) {
+        const normalizedKeyword = normalizeIngredient(keyword);
+        if (normalized.includes(normalizedKeyword)) {
+          return categoryMap[catKey] || "Other";
+        }
+      }
+    }
+    
+    return "Other";
+  }
 
   safeHideModal();
 
@@ -856,35 +928,65 @@
     const ul = document.getElementById("grocery-notepad-list");
     if (ul) {
       ul.innerHTML = "";
+      
+      // Group ingredients by category
+      const categoryGroups = {};
       Object.values(grouped).forEach(ing => {
-        const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
-        const li = document.createElement("li");
-        const textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
-        
-        // Check if this ingredient is a spice blend
-        const spiceRecipe = findSpiceBlend(ing.ingredient);
-        if (spiceRecipe) {
-          // Create clickable link for spice blends
-          const span = document.createElement("span");
-          span.textContent = textContent;
-          span.className = "spice-blend-link";
-          span.title = "Click to see recipe";
-          span.style.cursor = "pointer";
-          span.style.color = "#cd596b";
-          span.style.textDecoration = "underline";
-          span.addEventListener("click", () => showSpiceBlendModal(ing.ingredient, spiceRecipe));
-          li.appendChild(span);
-        } else {
-          li.textContent = textContent;
+        const category = categorizeIngredient(ing.ingredient);
+        if (!categoryGroups[category]) {
+          categoryGroups[category] = [];
         }
-        
-        ul.appendChild(li);
+        categoryGroups[category].push(ing);
       });
-      if (ul.childElementCount < 10) {
-        ul.classList.add("one-col");
-      } else {
-        ul.classList.remove("one-col");
-      }
+      
+      // Define category order (perimeter-first shopping)
+      const categoryOrder = ["Produce", "Meat", "Dairy", "Bakery", "Pantry", "Condiments", "Spices", "Other"];
+      
+      // Render each category section
+      categoryOrder.forEach(category => {
+        if (!categoryGroups[category] || categoryGroups[category].length === 0) return;
+        
+        // Create category header
+        const categoryHeader = document.createElement("li");
+        categoryHeader.className = "grocery-category-header";
+        categoryHeader.textContent = category.toUpperCase();
+        ul.appendChild(categoryHeader);
+        
+        // Sort ingredients alphabetically within category
+        categoryGroups[category].sort((a, b) => 
+          (a.ingredient || "").localeCompare(b.ingredient || "")
+        );
+        
+        // Add ingredients for this category
+        categoryGroups[category].forEach(ing => {
+          const qty = ing.quantity ? (Number.isInteger(ing.quantity) ? ing.quantity : ing.quantity.toFixed(2)) : (ing.quantity_display || "");
+          const li = document.createElement("li");
+          li.className = "grocery-item";
+          const textContent = `${qty} ${ing.unit || ""} ${ing.ingredient}`.trim();
+          
+          // Check if this ingredient is a spice blend
+          const spiceRecipe = findSpiceBlend(ing.ingredient);
+          if (spiceRecipe) {
+            // Create clickable link for spice blends
+            const span = document.createElement("span");
+            span.textContent = textContent;
+            span.className = "spice-blend-link";
+            span.title = "Click to see recipe";
+            span.style.cursor = "pointer";
+            span.style.color = "#cd596b";
+            span.style.textDecoration = "underline";
+            span.addEventListener("click", () => showSpiceBlendModal(ing.ingredient, spiceRecipe));
+            li.appendChild(span);
+          } else {
+            li.textContent = textContent;
+          }
+          
+          ul.appendChild(li);
+        });
+      });
+      
+      // Always use single column for categorized lists
+      ul.classList.add("one-col");
     }
   }
 

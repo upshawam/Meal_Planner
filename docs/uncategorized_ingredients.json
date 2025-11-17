@@ -1,0 +1,15 @@
+{
+  "_README": "This file tracks ingredients that don't match any category. To fix: open docs/ingredient_categories.json and add the ingredient name (or a keyword from it) to the appropriate category array.",
+  "_INSTRUCTIONS": {
+    "step_1": "Review the 'items' list below - these ingredients show up in 'Other' category on your site",
+    "step_2": "Open docs/ingredient_categories.json in your editor",
+    "step_3": "For each ingredient, add a relevant keyword to the appropriate category (produce, meat, dairy, bakery, dry_goods, condiments, or spices)",
+    "step_4": "Example: For 'Sweet Chili Lime Sauce', add 'chili lime sauce' to the 'condiments' array",
+    "step_5": "Commit the changes to ingredient_categories.json - this report will auto-update next week"
+  },
+  "last_updated": "2025-11-16",
+  "total_ingredients": 183,
+  "total_uncategorized": 0,
+  "uncategorized_percentage": 0.0,
+  "items": []
+}

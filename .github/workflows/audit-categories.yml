@@ -1,0 +1,33 @@
+name: Audit Ingredient Categories
+
+on:
+  schedule:
+    # Run every 2 weeks on Monday at 7 AM UTC (1 hour after scraping)
+    - cron: '0 7 1,15 * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Run categorization audit
+        run: |
+          python audit_categorization.py
+      
+      - name: Commit report if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/uncategorized_ingredients.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📊 Update ingredient categorization report [skip ci]" && git push)
