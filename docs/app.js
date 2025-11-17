@@ -235,6 +235,19 @@
       selector.className = "selector";
       selector.textContent = selected.has(id) ? "Selected" : "Select";
       card.appendChild(selector);
+      
+      // Add magnifying glass icon for PDF preview on selection cards
+      if (meal.pdf && typeof meal.pdf === "string" && meal.pdf.trim()) {
+        const previewIcon = document.createElement("div");
+        previewIcon.className = "pdf-preview-icon";
+        previewIcon.innerHTML = "🔍";
+        previewIcon.title = "Quick preview";
+        previewIcon.addEventListener("click", (e) => {
+          e.stopPropagation();
+          showPdfPreviewModal(meal.pdf, meal.title);
+        });
+        card.appendChild(previewIcon);
+      }
     }
     // Portion select: only on build page!
     if (opts.recipePreview) {
@@ -561,6 +574,119 @@
     }
     
     return null;
+  }
+
+  function showPdfPreviewModal(pdfUrl, title) {
+    const modalOverlay = document.createElement("div");
+    modalOverlay.className = "pdf-preview-modal-overlay";
+    modalOverlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    `;
+    
+    const modalContent = document.createElement("div");
+    modalContent.className = "pdf-preview-modal-content";
+    modalContent.style.cssText = `
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+    `;
+    
+    const header = document.createElement("div");
+    header.style.cssText = `
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    `;
+    
+    const titleEl = document.createElement("h3");
+    titleEl.textContent = title || "Recipe Preview";
+    titleEl.style.cssText = `
+      margin: 0;
+      color: #cd596b;
+      font-size: 20px;
+    `;
+    
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.style.cssText = `
+      background: none;
+      border: none;
+      font-size: 32px;
+      cursor: pointer;
+      color: #666;
+      line-height: 1;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+    `;
+    closeBtn.addEventListener("click", () => document.body.removeChild(modalOverlay));
+    
+    header.appendChild(titleEl);
+    header.appendChild(closeBtn);
+    
+    const imageContainer = document.createElement("div");
+    imageContainer.style.cssText = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    `;
+    
+    const loadingMsg = document.createElement("p");
+    loadingMsg.textContent = "Loading preview...";
+    loadingMsg.style.cssText = "color: #666;";
+    imageContainer.appendChild(loadingMsg);
+    
+    modalContent.appendChild(header);
+    modalContent.appendChild(imageContainer);
+    modalOverlay.appendChild(modalContent);
+    
+    // Close on overlay click
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) {
+        document.body.removeChild(modalOverlay);
+      }
+    });
+    
+    // Close on Escape key
+    const escapeHandler = (e) => {
+      if (e.key === "Escape" && document.body.contains(modalOverlay)) {
+        document.body.removeChild(modalOverlay);
+        document.removeEventListener("keydown", escapeHandler);
+      }
+    };
+    document.addEventListener("keydown", escapeHandler);
+    
+    document.body.appendChild(modalOverlay);
+    
+    // Use iframe with #view=FitH to show full width without controls
+    const iframe = document.createElement("iframe");
+    iframe.src = pdfUrl + "#view=FitH&toolbar=0&navpanes=0&scrollbar=0";
+    iframe.style.cssText = `
+      width: 800px;
+      height: 1000px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    `;
+    
+    imageContainer.innerHTML = "";
+    imageContainer.appendChild(iframe);
   }
 
   function showSpiceBlendModal(blendName, recipe) {
