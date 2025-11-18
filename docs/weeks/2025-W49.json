@@ -7,7 +7,7 @@
       "title": "Sweet Chili Chicken",
       "subtitle": "with Scallion Rice & Zesty Carrots",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/654a483dcfbffe92530dde49-639acf60-bb478a8d.jpeg",
-      "pdf": "./pdfs\\67fd2a71e22258bf02840658-en-US.pdf",
+      "pdf": "./pdfs/67fd2a71e22258bf02840658-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sweet Thai Chili Sauce",
@@ -72,7 +72,7 @@
       "title": "Cheeseburger Crunchy Wraps",
       "subtitle": "with Potato Wedges, Pickles & Special Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64e4ba5354b67122d59a9410-8a6269ef-b4695f84.jpeg",
-      "pdf": "./pdfs\\6874456d55ee9436234b978a-en-US.pdf",
+      "pdf": "./pdfs/6874456d55ee9436234b978a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -137,7 +137,7 @@
       "title": "Tomato & Pork Sausage Spaghetti",
       "subtitle": "with Garlic Bread",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66c28cb95cb721784e636254-483aea33-95c1e980.jpeg",
-      "pdf": "./pdfs\\66c28cb95cb721784e636254-en-US.pdf",
+      "pdf": "./pdfs/66c28cb95cb721784e636254-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Ciabatta",
@@ -209,7 +209,7 @@
       "title": "Jammin’ Fig Pork Chops",
       "subtitle": "with Broccoli & Crispy Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68b3bd2c0ba370d492f3eef7-f27d3aa4-137fe30f.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs/68d646c4681e58ed6e5b0a7d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
@@ -260,7 +260,7 @@
       "title": "Chimichurri Sirloin Steak & Paprika Potatoes",
       "subtitle": "with Roasted Broccoli",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1836D_Hero_ChimichurriSirloinSteakAndPaprikaPotatoes_W49_85_2025_Web-37df930f.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a21681e58ed6e5b10d2-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sirloin Steak",
@@ -332,7 +332,7 @@
       "title": "Crispy Chicken & Charred Zucchini Bowls",
       "subtitle": "with Couscous & Creamy Pesto Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/684f58f0c347698598326f9e-4f4b011b-736e2ea6.jpeg",
-      "pdf": "./pdfs\\684f58f0c347698598326f9e-en-US.pdf",
+      "pdf": "./pdfs/684f58f0c347698598326f9e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Pesto",
@@ -369,7 +369,7 @@
       "title": "Balsamic-Glazed Meatballs",
       "subtitle": "with Roasted Green Beans & Garlic Bread",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6509b1436dac61c0739b78af-07eff83d-fd968e85.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs/68d649f7d232ff05cfc45776-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Beans",
@@ -434,7 +434,7 @@
       "title": "Homestyle Caramelized Onion Meatloaves",
       "subtitle": "with Roasted Broccoli & Sweet Potato Wedges",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1562F_Hero_HomestyleCaramelizedOnionMeatloaves_W49_88_2025_Web-e2c33503.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d6491bd232ff05cfc45593-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Fry Seasoning",
@@ -513,7 +513,7 @@
       "title": "Italian Meatball Subs",
       "subtitle": "with Marinara, Fresh Mozzarella & Roasted Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2089A_Hero_ItalianMeatballSubs_W49_89_2025_Web-ec0cacf5.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a93d232ff05cfc458ca-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
@@ -585,7 +585,7 @@
       "title": "Cheesy BBQ Bacon & Sweet Potato Hash",
       "subtitle": "with Sour Cream",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/688fe193263d52528b99ff7e-3937192c-6cf8b459.jpeg",
-      "pdf": "./pdfs\\688fe193263d52528b99ff7e-en-US.pdf",
+      "pdf": "./pdfs/688fe193263d52528b99ff7e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Bell Pepper",
@@ -650,7 +650,7 @@
       "title": "One-Pan Paprika Chicken & Couscous",
       "subtitle": "with Dark Meat Chicken & Scallions",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67440f92553aed654be47257-4ab4fd7f-74fd41d2.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64c76d232ff05cfc45ead-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Israeli Couscous",
@@ -715,7 +715,7 @@
       "title": "Tofu, Sweet Potato & Bell Pepper Curry",
       "subtitle": "over Garlic Basmati Rice",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1669D_Hero_TofuSweetPotatoAndBellPepperCurry_W49_92_2025_Web-ade18622.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d6498a9ed4d6794189cf77-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -815,7 +815,7 @@
       "title": "Crispy Fish & Chips with Buttered Peas",
       "subtitle": "plus Tartar Sauce & Curry Mayo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2094A_Hero_CrispyFishAndChipsWithButteredPeas_W49_93_2025_Web-77d461a8.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a94681e58ed6e5b11f2-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
@@ -887,7 +887,7 @@
       "title": "Creamy Pesto Spaghetti",
       "subtitle": "with Blistered Tomatoes & Herb Butter Baguette",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6113C_Hero_CreamyPestoSpaghetti_W49_94_2025_Web-5c8a3cd3.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64c12681e58ed6e5b166e-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Pesto",
@@ -952,7 +952,7 @@
       "title": "Roasted Bell Pepper Flatbreads",
       "subtitle": "with Creamy Tomato Sauce & Mozzarella",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6653f5498a4eed4f27b5204f-0fe1eeac-c2755730.jpeg",
-      "pdf": "./pdfs\\68991940ca9e1ccee13caedf-en-US.pdf",
+      "pdf": "./pdfs/68991940ca9e1ccee13caedf-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Tomato Paste",
@@ -1017,7 +1017,7 @@
       "title": "Jalapeño Popper Quesadillas",
       "subtitle": "with Corn Salsa & Lime Crema",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1924B_Hero_JalapenoPopperQuesadillas_W49_96_2025_Web-a0f1eb4e.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a59681e58ed6e5b1134-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -1096,7 +1096,7 @@
       "title": "Palermo Chicken & Bacon Pasta",
       "subtitle": "with Peas & Parmesan",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64b5b03f469d0baeacf675cc-bfa16750-32e9b8c4.jpeg",
-      "pdf": "./pdfs\\68a1a163c6b6544f7ed4387a-en-US.pdf",
+      "pdf": "./pdfs/68a1a163c6b6544f7ed4387a-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Fry Seasoning",
@@ -1182,7 +1182,7 @@
       "title": "Chicken Lo Mein & Orange-Ginger Sauce",
       "subtitle": "with Bok Choy & Cabbage",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2054A_Hero_ChickenLoMeinAndOrangeGingerSauce_W49_98_2025_Web-c06991cf.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a8ed232ff05cfc458a6-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Chopped Chicken Breast",
@@ -1240,7 +1240,7 @@
       "title": "Sweet & Smoky BBQ Chicken Sandwiches",
       "subtitle": "with BBQ Caramelized Onion & Roasted Potato Wedges",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66b95c4acfcd26be0741fde1-f8cdbc66-9febe3ee.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64bf3d232ff05cfc45d3d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
@@ -1291,7 +1291,7 @@
       "title": "Sesame Pork Rice Bowls",
       "subtitle": "with Tangy Slaw & Spicy Mayo",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1720M_Hero_SesamePorkRiceBowls_W49_100_2025_Web-c91a3038.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d649b39ed4d6794189cfc6-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sesame Dressing",
@@ -1348,8 +1348,8 @@
       "url": "https://www.everyplate.com/recipes/broccoli-cheddar-bisque-68178999bc3f1ac28dd66600?week=2025-W49",
       "title": "Broccoli Cheddar Bisque",
       "subtitle": "with Garlic Bread",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1467D_Hero_BroccoliCheddarBisque_W49_101_2025_Web-f8470fd1.jpg",
-      "pdf": "./pdfs\\68178999bc3f1ac28dd66600-en-US.pdf",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1467D_Hero_BroccoliCheddarBisque_W51_95_2025_Web-50dacf3f.jpg",
+      "pdf": "./pdfs/68178999bc3f1ac28dd66600-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -1414,7 +1414,7 @@
       "title": "Charred Zucchini & Tomato Melts",
       "subtitle": "with Fresh Mozzarella & Sweet Potato Wedges",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1300F_Hero_CharredZucchiniAndTomatoMelts_W49_102_2025_Web-9689508f.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64779681e58ed6e5b0bef-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Zucchini",
@@ -1486,7 +1486,7 @@
       "title": "Chicken Flautas",
       "subtitle": "with Pickled Onion & Creamy Ranchero Sauce",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1710C_Hero_ChickenFlautas_W49_103_2025_Web-d7220bff.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d649a3d232ff05cfc456b4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Red Onion",
@@ -1558,7 +1558,7 @@
       "title": "Tex-Mex Chicken & Corn Quesadillas",
       "subtitle": "with Tomato-Corn Salsa & Smoky Red Pepper Crema",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1926B_Hero_TexMexChickenAndCornQuesadillas_W49_104_2025_Web-74b16fc0.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a5bd232ff05cfc4582d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Flour Tortillas",
@@ -1644,7 +1644,7 @@
       "title": "Cantina-Style Steak Taco Bar",
       "subtitle": "with Fajita Veggies, Pico de Gallo & Creamy Guacamole",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67c50ffef4b525c8eb5da8c4-7df4f306-86a6f0f9.jpeg",
-      "pdf": "./pdfs\\67c50ffef4b525c8eb5da8c4-en-US.pdf",
+      "pdf": "./pdfs/67c50ffef4b525c8eb5da8c4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Green Bell Pepper",
@@ -1737,7 +1737,7 @@
       "title": "Caprese Panini & Tomato Soup Combo",
       "subtitle": "with Fresh Mozzarella, Croutons & Parmesan",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1979A_Hero_CapresePaniniAndTomatoSoupCombo_W49_106_2025_Web-4fa591c6.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a78681e58ed6e5b117b-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Veggie Stock Concentrate",
@@ -1830,7 +1830,7 @@
       "title": "Orange Chicken & Broccoli Bowls",
       "subtitle": "with Rice & Sesame Seeds",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2060A_Hero_OrangeChickenAndBroccoliBowls_W49_107_2025_Web-a5ea8bc6.jpg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64a919ed4d6794189d1b8-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Soy Sauce",
@@ -1888,7 +1888,7 @@
       "title": "Sesame-Garlic Chicken",
       "subtitle": "with Roasted Zucchini & Broccoli",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68d08e8b4e46d3e38d0bf776-6202e9ac-4e5b1036.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs/68d64c3e681e58ed6e5b16b8-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Zucchini",
@@ -1953,7 +1953,7 @@
       "title": "Jammin’ Fig Pork Chops",
       "subtitle": "with Broccoli & Crispy Potatoes",
       "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68b3bd2c0ba370d492f3eef7-f27d3aa4-137fe30f.jpeg",
-      "pdf": "",
+      "pdf": "./pdfs/6909c429576ac393c1e68b59-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
