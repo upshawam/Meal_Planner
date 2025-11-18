@@ -893,11 +893,9 @@
           const ingredientKey = copy.ingredient.toLowerCase();
           const conversion = unitConversions[ingredientKey];
           if (conversion) {
-            if (copy.quantity != null) {
-              copy.quantity = copy.quantity * conversion.quantity * (portion / 2);
-            } else {
-              copy.quantity = conversion.quantity * (portion / 2);
-            }
+            // Use conversion quantity as base, scaled by portion only
+            // Don't multiply by copy.quantity since conversion.quantity already defines the amount per unit
+            copy.quantity = conversion.quantity * (portion / 2);
             copy.unit = conversion.unit;
             copy.quantity_display = (copy.quantity % 1 === 0) ? String(copy.quantity) : copy.quantity.toFixed(2);
           } else {
