@@ -34,5 +34,11 @@
     "week": 44,
     "path": "weeks/2025-W44.json",
     "archived_at": 1731628800
+  },
+  {
+    "year": 2025,
+    "week": 43,
+    "path": "weeks/2025-W43.json",
+    "archived_at": 1763493975
   }
 ]
