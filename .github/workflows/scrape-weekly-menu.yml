@@ -19,6 +19,8 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # Allow pushing commits back to the repo
     
     steps:
       - name: Checkout repository
