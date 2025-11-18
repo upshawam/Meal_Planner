@@ -98,5 +98,13 @@ jobs:
           echo "📋 Adding files to git..."
           git add docs/week*.json docs/weeks/*.json docs/weeks_index.json docs/pdfs/*.pdf
           echo "💾 Checking for changes..."
-          git diff --quiet && git diff --staged --quiet || (echo "📤 Pushing to GitHub..." && git commit -m "🍽️ Auto-update weekly menu and PDFs [skip ci]" && git push)
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "ℹ️  No changes to commit"
+          else
+            echo "📤 Committing and pushing to GitHub..."
+            git commit -m "🍽️ Auto-update weekly menu and PDFs [skip ci]"
+            # Pull any remote changes before pushing
+            git pull --rebase origin main
+            git push
+          fi
           echo "✅ All done! Check your repository for updates."
