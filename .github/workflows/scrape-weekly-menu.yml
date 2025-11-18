@@ -50,35 +50,53 @@ jobs:
       - name: Scrape current week menu
         if: ${{ !inputs.week }}
         run: |
+          echo "🍽️ Starting current week scrape..."
+          echo "Force mode: ${{ inputs.force }}"
           python scrape_week.py ${{ inputs.force && '--force' || '' }}
+          echo "✅ Scrape complete"
       
       - name: Scrape specific week
         if: ${{ inputs.week }}
         run: |
+          echo "🍽️ Starting scrape for week ${{ inputs.week }}..."
           python scrape_specific_week.py ${{ inputs.week }}
+          echo "✅ Scrape complete"
       
       - name: Download and enrich with PDFs
         run: |
-          echo "Enriching docs/week.json with PDFs..."
+          echo "📥 Step 2: Downloading and enriching with PDFs..."
+          echo "Input: docs/week.json"
+          echo "Output: docs/week_with_pdfs.json"
           python enrich_and_download_pdfs.py --input docs/week.json --output docs/week_with_pdfs.json --delay 0.5
+          echo "✅ PDF enrichment complete"
       
       - name: Update archive and week.json with PDFs
         run: |
+          echo "💾 Step 3: Archiving enriched data..."
           # Get week info from the enriched file
           WEEK_NUM=$(python -c "import json; data=json.load(open('docs/week_with_pdfs.json')); print(f\"{data['year']}-W{str(data['week']).zfill(2)}\")")
-          echo "Updating archive for $WEEK_NUM"
+          echo "📅 Week identifier: $WEEK_NUM"
+          echo "📂 Copying to archive: docs/weeks/$WEEK_NUM.json"
           # Copy enriched data to archive
           cp docs/week_with_pdfs.json "docs/weeks/$WEEK_NUM.json"
+          echo "📂 Updating current week: docs/week.json"
           # Copy to week.json for frontend
           cp docs/week_with_pdfs.json docs/week.json
+          echo "✅ Archive updated"
       
       - name: Validate week data
         run: |
+          echo "✓ Step 4: Validating scraped data..."
           python validate_week_data.py
+          echo "✅ Validation complete"
       
       - name: Commit and push changes
         run: |
+          echo "📝 Step 5: Committing changes to repository..."
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          echo "📋 Adding files to git..."
           git add docs/week*.json docs/weeks/*.json docs/weeks_index.json docs/pdfs/*.pdf
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🍽️ Auto-update weekly menu and PDFs [skip ci]" && git push)
+          echo "💾 Checking for changes..."
+          git diff --quiet && git diff --staged --quiet || (echo "📤 Pushing to GitHub..." && git commit -m "🍽️ Auto-update weekly menu and PDFs [skip ci]" && git push)
+          echo "✅ All done! Check your repository for updates."
