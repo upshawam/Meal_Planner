@@ -118,18 +118,41 @@
     if (!prevBtn || !nextBtn) return;
     
     const currentIdx = availableWeeks.findIndex(w => w.year === currentYear && w.week === currentWeek);
-    prevBtn.disabled = currentIdx <= 0;
-    nextBtn.disabled = currentIdx >= availableWeeks.length - 1;
+    // Array is sorted newest-first
+    prevBtn.disabled = currentIdx >= availableWeeks.length - 1; // Can't go older than last
+    nextBtn.disabled = currentIdx <= 0; // Can't go newer than first
   }
 
   // Load weeks index, unit conversions, spice blends, ingredient categories, and initial week
   await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends(), loadIngredientCategories()]);
   
-  // Try to load from weeks archive first, fallback to week_with_pdfs.json
+  // Function to calculate the current ISO week number
+  function getCurrentISOWeek() {
+    const today = new Date();
+    const d = new Date(today);
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    const yearStart = new Date(d.getFullYear(), 0, 1);
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  }
+  
+  // Try to load current week (based on today's date), fallback to newest week, then fallback to week_with_pdfs.json
   let loaded = false;
   if (availableWeeks.length > 0) {
-    const latestWeek = availableWeeks[0]; // Already sorted newest first
-    loaded = await loadWeekData(latestWeek.week, latestWeek.year);
+    // Get actual current week from today's date
+    const today = new Date();
+    const currentYearNow = today.getFullYear();
+    const currentWeekNow = getCurrentISOWeek();
+    
+    // Try to find current week in available weeks
+    const currentWeekData = availableWeeks.find(w => w.year === currentYearNow && w.week === currentWeekNow);
+    if (currentWeekData) {
+      loaded = await loadWeekData(currentWeekData.week, currentWeekData.year);
+    } else {
+      // Fall back to newest week if current week not available
+      const latestWeek = availableWeeks[0]; // Already sorted newest first
+      loaded = await loadWeekData(latestWeek.week, latestWeek.year);
+    }
   }
   
   if (!loaded) {
@@ -1031,8 +1054,9 @@
   if (prevWeekBtn) {
     prevWeekBtn.addEventListener("click", async () => {
       const currentIdx = availableWeeks.findIndex(w => w.year === currentYear && w.week === currentWeek);
-      if (currentIdx > 0) {
-        const prevWeek = availableWeeks[currentIdx - 1];
+      // Array is sorted newest-first, so previous (older) is index+1
+      if (currentIdx < availableWeeks.length - 1) {
+        const prevWeek = availableWeeks[currentIdx + 1];
         await loadWeekData(prevWeek.week, prevWeek.year);
       }
     });
@@ -1041,8 +1065,9 @@
   if (nextWeekBtn) {
     nextWeekBtn.addEventListener("click", async () => {
       const currentIdx = availableWeeks.findIndex(w => w.year === currentYear && w.week === currentWeek);
-      if (currentIdx < availableWeeks.length - 1) {
-        const nextWeek = availableWeeks[currentIdx + 1];
+      // Array is sorted newest-first, so next (newer) is index-1
+      if (currentIdx > 0) {
+        const nextWeek = availableWeeks[currentIdx - 1];
         await loadWeekData(nextWeek.week, nextWeek.year);
       }
     });
@@ -1064,7 +1089,8 @@
     isSearchActive = true;
     clearSearchBtn.style.display = "flex";
     searchResults = [];
-    const lowerQuery = query.toLowerCase();
+    // Split query into terms and trim each one
+    const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
 
     // Search across all available weeks
     for (const weekObj of availableWeeks) {
@@ -1072,29 +1098,32 @@
         const weekFile = `./weeks/${weekObj.year}-W${String(weekObj.week).padStart(2, '0')}.json`;
         const res = await fetch(weekFile, { cache: "no-store" });
         if (!res.ok) continue;
-        
+
         const weekData = await res.json();
         const meals = (weekData.meals || []).filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
-        
+
         for (const meal of meals) {
-          // Search in title
-          const titleMatch = (meal.title || "").toLowerCase().includes(lowerQuery);
-          
-          // Search in ingredients
-          const ingredientMatch = (meal.ingredients || []).some(ing => 
-            (ing.ingredient || "").toLowerCase().includes(lowerQuery)
+          // Check if any search term matches in title or ingredients
+          const titleText = (meal.title || "").toLowerCase();
+          const ingredientTexts = (meal.ingredients || []).map(ing => (ing.ingredient || "").toLowerCase());
+
+          // Check if ALL search terms match (AND logic within title/ingredients)
+          const titleMatch = searchTerms.every(term => titleText.includes(term));
+          const ingredientMatch = searchTerms.every(term =>
+            ingredientTexts.some(ingText => ingText.includes(term))
           );
-          
+
           if (titleMatch || ingredientMatch) {
             searchResults.push({
               meal: meal,
-              week: weekNum,
+              week: weekObj.week,
+              year: weekObj.year,
               matchType: titleMatch ? 'title' : 'ingredient'
             });
           }
         }
       } catch (err) {
-        console.warn(`Could not search week ${weekNum}:`, err);
+        console.warn(`Could not search week ${weekObj.week}:`, err);
       }
     }
 
@@ -1115,8 +1144,20 @@
       return;
     }
 
-    // Render all results without grouping
-    searchResults.forEach((result, idx) => {
+    // Deduplicate by meal title (case-insensitive) - keep first occurrence
+    const uniqueResults = [];
+    const seenTitles = new Set();
+    
+    for (const result of searchResults) {
+      const normalizedTitle = (result.meal.title || "").toLowerCase().trim();
+      if (!seenTitles.has(normalizedTitle)) {
+        seenTitles.add(normalizedTitle);
+        uniqueResults.push(result);
+      }
+    }
+
+    // Render deduplicated results
+    uniqueResults.forEach((result, idx) => {
       const card = createSearchResultCard(result.meal, idx, result.week);
       menu.appendChild(card);
     });
