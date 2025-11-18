@@ -4,16 +4,18 @@
   let allMeals = [];
   let currentWeek = 46;
   let currentYear = 2025;
-  let availableWeeks = [];
+  let availableWeeks = []; // Array of {year, week} objects
   let unitConversions = {};
   let spiceBlends = {};
   let ingredientCategories = {};
   let isSearchActive = false;
   let searchResults = [];
 
-  async function loadWeekData(weekNum) {
+  async function loadWeekData(weekNum, yearNum = null) {
     try {
-      const weekFile = `./weeks/2025-W${String(weekNum).padStart(2, '0')}.json`;
+      // If year not provided, try to find it in availableWeeks or use currentYear
+      const year = yearNum || availableWeeks.find(w => w.week === weekNum)?.year || currentYear;
+      const weekFile = `./weeks/${year}-W${String(weekNum).padStart(2, '0')}.json`;
       const res = await fetch(weekFile, { cache: "no-store" });
       if (!res.ok) throw new Error(`Week ${weekNum} not found`);
       const weekData = await res.json();
@@ -31,7 +33,7 @@
       }
       
       currentWeek = weekData.week || weekNum;
-      currentYear = weekData.year || 2025;
+      currentYear = weekData.year || year;
       const weekDisplay = document.getElementById("current-week-display");
       if (weekDisplay) weekDisplay.textContent = currentWeek;
       
@@ -63,7 +65,11 @@
       const res = await fetch("./weeks_index.json", { cache: "no-store" });
       if (res.ok) {
         const index = await res.json();
-        availableWeeks = index.map(w => w.week).sort((a, b) => a - b);
+        // Store full {year, week} objects, sorted by year then week (newest first)
+        availableWeeks = index.sort((a, b) => {
+          if (a.year !== b.year) return b.year - a.year;
+          return b.week - a.week;
+        });
       }
     } catch (err) {
       console.warn("Could not load weeks index", err);
@@ -111,7 +117,7 @@
     const nextBtn = document.getElementById("next-week-btn");
     if (!prevBtn || !nextBtn) return;
     
-    const currentIdx = availableWeeks.indexOf(currentWeek);
+    const currentIdx = availableWeeks.findIndex(w => w.year === currentYear && w.week === currentWeek);
     prevBtn.disabled = currentIdx <= 0;
     nextBtn.disabled = currentIdx >= availableWeeks.length - 1;
   }
@@ -122,8 +128,8 @@
   // Try to load from weeks archive first, fallback to week_with_pdfs.json
   let loaded = false;
   if (availableWeeks.length > 0) {
-    const latestWeek = availableWeeks[availableWeeks.length - 1];
-    loaded = await loadWeekData(latestWeek);
+    const latestWeek = availableWeeks[0]; // Already sorted newest first
+    loaded = await loadWeekData(latestWeek.week, latestWeek.year);
   }
   
   if (!loaded) {
@@ -1024,20 +1030,20 @@
   
   if (prevWeekBtn) {
     prevWeekBtn.addEventListener("click", async () => {
-      const currentIdx = availableWeeks.indexOf(currentWeek);
+      const currentIdx = availableWeeks.findIndex(w => w.year === currentYear && w.week === currentWeek);
       if (currentIdx > 0) {
         const prevWeek = availableWeeks[currentIdx - 1];
-        await loadWeekData(prevWeek);
+        await loadWeekData(prevWeek.week, prevWeek.year);
       }
     });
   }
   
   if (nextWeekBtn) {
     nextWeekBtn.addEventListener("click", async () => {
-      const currentIdx = availableWeeks.indexOf(currentWeek);
+      const currentIdx = availableWeeks.findIndex(w => w.year === currentYear && w.week === currentWeek);
       if (currentIdx < availableWeeks.length - 1) {
         const nextWeek = availableWeeks[currentIdx + 1];
-        await loadWeekData(nextWeek);
+        await loadWeekData(nextWeek.week, nextWeek.year);
       }
     });
   }
@@ -1051,7 +1057,7 @@
       isSearchActive = false;
       searchResults = [];
       clearSearchBtn.style.display = "none";
-      await loadWeekData(currentWeek);
+      await loadWeekData(currentWeek, currentYear);
       return;
     }
 
@@ -1061,9 +1067,9 @@
     const lowerQuery = query.toLowerCase();
 
     // Search across all available weeks
-    for (const weekNum of availableWeeks) {
+    for (const weekObj of availableWeeks) {
       try {
-        const weekFile = `./weeks/2025-W${String(weekNum).padStart(2, '0')}.json`;
+        const weekFile = `./weeks/${weekObj.year}-W${String(weekObj.week).padStart(2, '0')}.json`;
         const res = await fetch(weekFile, { cache: "no-store" });
         if (!res.ok) continue;
         
