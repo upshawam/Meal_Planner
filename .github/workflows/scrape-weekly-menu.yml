@@ -1,95 +1,129 @@
 name: Scrape Weekly Menu
+
 on:
   schedule:
-    - cron: '0 5 * * 1' # run every Monday at 05:00 UTC (adjust as needed)
-  workflow_dispatch:
-
-permissions:
-  contents: write  # allow the workflow to push changes
+    # Run every Monday at 6 AM UTC (when new EveryPlate menus typically post)
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # Allow manual trigger
+    inputs:
+      week:
+        description: 'Specific week number to scrape (leave empty for current week)'
+        required: false
+        type: number
+      force:
+        description: 'Force overwrite existing week data'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # Allow pushing commits back to the repo
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0         # full history so git operations work reliably
-          persist-credentials: true  # allow pushing with the provided token
-
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0               # full history so git operations work reliably
+          persist-credentials: true    # allow pushing with the provided token
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
+          cache: 'pip'
+      
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Ensure branch is in sync with remote main (safe starting point)
-        # this ensures the working copy starts exactly at origin/main,
-        # which avoids push rejections caused by local divergence
-        run: |
-          git fetch origin main
-          git checkout main
-          git reset --hard origin/main
-
-      - name: (Optional) Install Chrome / ChromeDriver
-        # keep whatever was necessary in your original workflow for scraping
-        run: echo "Install Chrome & ChromeDriver steps if required by your scraper"
-
+      
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
       - name: Scrape current week menu
+        if: ${{ !inputs.week }}
         run: |
-          # run your scraping script; replace with the actual command(s)
-          python scripts/scrape_menu.py
-
-      - name: Show git status and diff (debug)
+          echo "🍽️ Starting current week scrape..."
+          echo "Force mode: ${{ inputs.force }}"
+          python scrape_week.py ${{ inputs.force && '--force' || '' }}
+          echo "✅ Scrape complete"
+      
+      - name: Scrape specific week
+        if: ${{ inputs.week }}
         run: |
-          git status --porcelain
-          git --no-pager diff --staged || true
-          git --no-pager diff || true
-
-      - name: Commit changes
+          echo "🍽️ Starting scrape for week ${{ inputs.week }}..."
+          python scrape_specific_week.py ${{ inputs.week }}
+          echo "✅ Scrape complete"
+      
+      - name: Download and enrich with PDFs
         run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          # add new/changed files only; adjust paths if needed
-          git add docs/weeks docs/pdfs || true
-          # Only commit if there are staged changes
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "CI: update scraped weekly menu and PDFs [skip ci]"
-          fi
-
-      - name: Pull remote changes (rebase) and push
+          echo "📥 Step 2: Downloading and enriching with PDFs..."
+          echo "Input: docs/week.json"
+          echo "Output: docs/week_with_pdfs.json"
+          python enrich_and_download_pdfs.py --input docs/week.json --output docs/week_with_pdfs.json --delay 0.5
+          echo "✅ PDF enrichment complete"
+      
+      - name: Update archive and week.json with PDFs
+        run: |
+          echo "💾 Step 3: Archiving enriched data..."
+          # Get week info from the enriched file
+          WEEK_NUM=$(python -c "import json; data=json.load(open('docs/week_with_pdfs.json')); print(f\"{data['year']}-W{str(data['week']).zfill(2)}\")")
+          echo "📅 Week identifier: $WEEK_NUM"
+          echo "📂 Copying to archive: docs/weeks/$WEEK_NUM.json"
+          # Copy enriched data to archive
+          cp docs/week_with_pdfs.json "docs/weeks/$WEEK_NUM.json"
+          echo "📂 Updating current week: docs/week.json"
+          # Copy to week.json for frontend
+          cp docs/week_with_pdfs.json docs/week.json
+          echo "✅ Archive updated"
+      
+      - name: Validate week data
+        run: |
+          echo "✓ Step 4: Validating scraped data..."
+          python validate_week_data.py
+          echo "✅ Validation complete"
+      
+      - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # If there were no commits made above, exit early (no push needed)
-          if git rev-parse --verify --quiet HEAD >/dev/null 2>&1; then
-            # Check if there are any commits on local not yet pushed
-            LOCAL_UNPUSHED=$(git log --branches --not --remotes --oneline | wc -l)
-          else
-            LOCAL_UNPUSHED=0
-          fi
+          set -euo pipefail
+          echo "📝 Step 5: Committing changes to repository..."
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          echo "📋 Adding files to git..."
+          git add docs/week*.json docs/weeks/*.json docs/weeks_index.json docs/pdfs/*.pdf || true
 
-          if [ "$LOCAL_UNPUSHED" -eq 0 ]; then
-            echo "No local commits to push. Exiting."
+          echo "💾 Checking for changes..."
+          # If there are no staged or unstaged changes, skip push
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "ℹ️  No changes to commit"
             exit 0
           fi
 
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
+          echo "📤 Preparing commit..."
+          git commit -m "🍽️ Auto-update weekly menu and PDFs [skip ci]" || {
+            echo "⚠️ Nothing to commit (possibly staged changes changed); continuing"
+          }
 
-          # Make sure we have latest refs
-          git fetch origin main
+          # Ensure we have the latest remote main
+          echo "🔄 Fetching latest origin/main..."
+          git fetch origin main --tags
 
-          # Rebase local commits on top of the current origin/main to avoid non-fast-forward errors
-          # If rebase fails due to conflicts, abort and fail the job so it can be investigated.
-          if ! git rebase origin/main; then
-            echo "Rebase failed — aborting and printing info to help debugging"
+          # Rebase our changes on top of origin/main to avoid non-fast-forward errors.
+          # Use autostash to preserve any local uncommitted changes (shouldn't be any).
+          echo "🔁 Rebasing local commits onto origin/main..."
+          if ! git rebase --autostash origin/main; then
+            echo "❌ Rebase failed — aborting rebase and failing workflow for manual intervention."
             git rebase --abort || true
             echo "---- git status ----"
             git status --porcelain=2 --branch
@@ -98,6 +132,10 @@ jobs:
             exit 1
           fi
 
-          # Push the rebased commits. Using standard push should succeed after rebase.
-          # If a concurrent push occurs, this will fail; you can rerun the workflow.
-          git push origin main
+          # Push the rebased commits to origin/main. Using HEAD:main ensures we push current branch to main.
+          # Because we rebased, a normal push should succeed; if someone pushed concurrently, push will fail and the
+          # workflow can be re-run.
+          echo "📦 Pushing changes to origin/main..."
+          git push origin HEAD:main
+
+          echo "✅ All done! Check your repository for updates."
