@@ -52,20 +52,16 @@ def scrape_week_by_number(year, week, force=False, verbose=True):
         start_time = time.time()
         result = subprocess.run(
             [sys.executable, "scrape_specific_week.py", str(week)],
-            capture_output=True,
             text=True,
             timeout=300  # 5 minute timeout per week
         )
         elapsed = time.time() - start_time
         
         if result.returncode != 0:
-            print(f"[Week {week}] ❌ Scraping failed after {elapsed:.1f}s:")
-            print(result.stderr)
+            print(f"[Week {week}] ❌ Scraping failed after {elapsed:.1f}s")
             return None
         
         print(f"[Week {week}] ✓  Menu data scraped in {elapsed:.1f}s")
-        if verbose:
-            print(result.stdout)
         
         # Step 2: Enrich with PDFs
         print(f"[Week {week}] 📥 Step 2/3: Downloading recipe PDFs...")
@@ -77,21 +73,16 @@ def scrape_week_by_number(year, week, force=False, verbose=True):
              "--input", temp_week_file,
              "--output", WEEK_WITH_PDFS,
              "--delay", "0.5"],
-            capture_output=True,
             text=True,
             timeout=600  # 10 minute timeout for PDFs
         )
         elapsed = time.time() - start_time
         
         if result.returncode != 0:
-            print(f"[Week {week}] ⚠️  PDF download had issues after {elapsed:.1f}s:")
-            print(result.stderr)
+            print(f"[Week {week}] ⚠️  PDF download had issues after {elapsed:.1f}s")
             # Continue anyway - we have the recipe data
         else:
             print(f"[Week {week}] ✓  PDFs downloaded in {elapsed:.1f}s")
-        
-        if verbose:
-            print(result.stdout)
         
         # Step 3: Copy enriched data to archive
         print(f"[Week {week}] 💾 Step 3/3: Archiving enriched data...")
