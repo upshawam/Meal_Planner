@@ -6,6 +6,52 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Left Filter Sidebar -->
+  <div id="filter-sidebar" class="filter-sidebar">
+    <!-- Search bar moved to sidebar -->
+    <div class="sidebar-search-container">
+      <div class="sidebar-search-input-container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search recipes or ingredients..." />
+        <button id="clear-search-btn" class="clear-search-btn" title="Clear search" style="display:none;">×</button>
+      </div>
+    </div>
+    
+    <div class="filter-actions" style="margin-bottom: 20px;">
+      <button id="clear-filters-btn-top" class="clear-filters-btn">Clear All Filters</button>
+    </div>
+    
+    <div class="filter-section">
+      <h4>Cuisine</h4>
+      <div class="filter-options" id="cuisine-filters"></div>
+    </div>
+    
+    <div class="filter-section">
+      <h4>Protein</h4>
+      <div class="filter-options" id="protein-filters"></div>
+    </div>
+    
+    <div class="filter-section">
+      <h4>Meal Type</h4>
+      <div class="filter-options" id="meal-type-filters"></div>
+    </div>
+    
+    <div class="filter-section">
+      <h4>Dietary</h4>
+      <div class="filter-options" id="dietary-filters"></div>
+    </div>
+    
+    <div class="filter-actions">
+      <button id="clear-filters-btn" class="clear-filters-btn">Clear All Filters</button>
+    </div>
+  </div>
+  
+  <!-- Sidebar toggle button -->
+  <button id="sidebar-toggle" class="sidebar-toggle" title="Toggle filters">
+    <span class="toggle-icon">☰</span>
+    <span class="toggle-text">Filters</span>
+  </button>
+  
+  <div class="main-container">
   <div class="top-action" role="region" aria-label="Selection controls" id="top-action">
     <div class="top-left" style="display:flex;align-items:center;gap:18px;">
       <strong class="top-title">Weekly Menu</strong>
@@ -14,10 +60,6 @@
         <span style="color:#fff;font-weight:600;">Week:</span>
         <span id="current-week-display" style="color:#fff;font-weight:700;">46</span>
         <button id="next-week-btn" class="week-nav-btn" title="Next week">→</button>
-      </div>
-      <div class="search-container" style="display:flex;align-items:center;gap:8px;">
-        <input type="text" id="search-bar" class="search-bar" placeholder="Search recipes or ingredients..." />
-        <button id="clear-search-btn" class="clear-search-btn" title="Clear search" style="display:none;">×</button>
       </div>
       <div class="filter-toggle" style="display:flex;align-items:center;gap:14px;">
         <button id="clear-btn-inline" class="clear-btn-inline" type="button">Clear All</button>
@@ -58,6 +100,8 @@
         </div>
       </div>
     </div>
+    </div>
+  </div>
   </div>
   <script src="app.js"></script>
 </body>

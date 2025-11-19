@@ -16,6 +16,16 @@ body{
   color:#0f172a;
   min-height: 100vh;
   overflow-x: hidden; /* Prevent horizontal scrolling */
+  display: flex;
+  position: relative;
+}
+
+/* Main container to hold content (with permanent left sidebar) */
+.main-container {
+  flex: 1;
+  margin-left: 280px; /* Permanent offset for sidebar */
+  min-width: 0;
+  padding-left: 40px; /* Increased left padding for better spacing from sidebar */
 }
 
 /* Ensure the top-action bar sets the max width */
@@ -144,6 +154,7 @@ body{
   flex-wrap: wrap; /* Ensure cards wrap to the next line */
   gap: 16px; /* Add spacing between cards */
   justify-content: flex-start; /* Align cards to the left, no stretching */
+  padding-left: 0; /* Remove left padding since main-container now has it */
 }
 
 /* Ensure individual cards are responsive */
@@ -555,4 +566,180 @@ button:disabled{opacity:0.45; cursor:not-allowed}
   .grocery-notepad {padding:11px 6vw;}
   .grocery-notepad ul, .grocery-notepad ul.one-col { column-count:1;}
   .myweek-controls-col { min-width:auto;}
+}
+
+/* Filter Sidebar Styles */
+.filter-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+  z-index: 1500;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar-close {
+  display: none; /* Hide close button for permanent sidebar */
+}
+
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  color: #374151;
+  font-weight: 600;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.filter-option:hover {
+  background: #f3f4f6;
+}
+
+.filter-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--orange);
+}
+
+.filter-option label {
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #374151;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-count {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.filter-actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.clear-filters-btn {
+  width: 100%;
+  padding: 10px 16px;
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-filters-btn:hover {
+  background: var(--orange);
+  color: #fff;
+}
+
+/* Sidebar toggle button - hidden when sidebar is permanent */
+.sidebar-toggle {
+  display: none;
+}
+
+/* Active filter indicator */
+.filter-option.active {
+  background: rgba(255, 140, 66, 0.1);
+  border-left: 3px solid var(--orange);
+}
+
+.filter-option.active label {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+/* Sidebar search container */
+.sidebar-search-container {
+  margin-bottom: 20px;
+  padding: 20px 20px 16px 20px;
+  border-bottom: 2px solid var(--orange);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar-search-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 240px; /* Explicitly limit to sidebar content width */
+}
+
+.sidebar-search-container .search-bar {
+  flex: 1;
+  min-width: 0; /* Allow flex shrinking */
+  box-sizing: border-box;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.sidebar-search-container .search-bar:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,140,66,0.2);
+}
+
+.sidebar-search-container .search-bar::placeholder {
+  color: #9ca3af;
+}
+
+.sidebar-search-container .clear-search-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sidebar-search-container .clear-search-btn:hover {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+  transform: rotate(90deg);
 }

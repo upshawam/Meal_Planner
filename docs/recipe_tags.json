@@ -1,0 +1,3087 @@
+{
+  "https://www.everyplate.com/recipes/crispy-chicken-with-honey-dijon-drizzle-68d08d5fa2beaf49ba8ee17b?week=2025-W43": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheeseburger-crunchy-wraps-68d08d7dd74ec3d4b57aa7b1?week=2025-W43": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-egg-roll-in-a-bowl-68d08d984e46d3e38d0bf775?week=2025-W43": {
+    "cuisine": [
+      "Asian",
+      "Chinese"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/spaghetti-with-beefy-tomato-sauce-68d08dafd74ec3d4b57aa7b2?week=2025-W43": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/chimichurri-bavette-steak-68d08dd9d74ec3d4b57aa7b3?week=2025-W43": {
+    "cuisine": [
+      "Latin American"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sesame-garlic-chicken-68d08e8b4e46d3e38d0bf776?week=2025-W43": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-chops-in-dijon-pan-sauce-68d09015a2beaf49ba8ee17c?week=2025-W43": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/ghostly-potato-turkey-skillet-68d090abd74ec3d4b57aa7b4?week=2025-W43": {
+    "cuisine": [],
+    "protein": [
+      "Chicken",
+      "Turkey"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Quick"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/shawarma-rama-beef-tacos-68d09148a2beaf49ba8ee17d?week=2025-W43": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/banh-mi-style-pork-burgers-68d0919fa2beaf49ba8ee17e?week=2025-W43": {
+    "cuisine": [
+      "Asian",
+      "American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/chicken-thighs-with-bruschetta-topping-68d091ba4e46d3e38d0bf777?week=2025-W43": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sticky-sweet-donburi-with-tofu-68d09238a2beaf49ba8ee17f?week=2025-W43": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegan",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/miso-ginger-salmon-bowls-68d0925e4e46d3e38d0bf778?week=2025-W43": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Seafood"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/herbed-mushroom-spaghetti-bolognese-68d09273d74ec3d4b57aa7b5?week=2025-W43": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/saucy-black-bean-fajita-burrito-bowls-68d0928ca2beaf49ba8ee180?week=2025-W43": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/cheesy-black-bean-enchiladas-68d092a2d74ec3d4b57aa7b6?week=2025-W43": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/bacon-and-gouda-smothered-chicken-68d092b9d74ec3d4b57aa7b7?week=2025-W43": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/snappy-sesame-chicken-and-udon-stir-fry-68d092d2a2beaf49ba8ee181?week=2025-W43": {
+    "cuisine": [
+      "Asian",
+      "American"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-and-smoky-bbq-chicken-sandwiches-68d09300d74ec3d4b57aa7b8?week=2025-W43": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/honey-ginger-pork-chops-68d0931f4e46d3e38d0bf779?week=2025-W43": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/asparagus-and-tomato-spaghetti-68d0934ea2beaf49ba8ee182?week=2025-W43": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/charred-zucchini-sandos-with-feta-sauce-68d093654e46d3e38d0bf77a?week=2025-W43": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/beefy-stuffed-bell-pepper-soup-68d0937fd74ec3d4b57aa7b9?week=2025-W43": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/chicken-and-green-bell-pepper-fajitas-68d093c2a2beaf49ba8ee183?week=2025-W43": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/witchs-cauldron-beef-chili-68d093f34e46d3e38d0bf77b?week=2025-W43": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/garlic-goblin-chicken-sausage-cavatappi-68d0946d4e46d3e38d0bf77c?week=2025-W43": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/asparagus-and-chickpea-couscous-bowls-68d0948ad74ec3d4b57aa7ba?week=2025-W43": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/bbq-pineapple-pulled-pork-fried-rice-68d094a24e46d3e38d0bf77d?week=2025-W43": {
+    "cuisine": [
+      "Asian",
+      "Southern",
+      "American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/pork-egg-roll-salad-68d0eaf1d74ec3d4b57aa7bc?week=2025-W43": {
+    "cuisine": [
+      "Asian",
+      "Chinese"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/chicken-fajita-lettuce-fajitas-68d0eb28a2beaf49ba8ee187?week=2025-W43": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/pork-chops-in-dijon-pan-sauce-68d162cea2beaf49ba8ee1eb?week=2025-W43": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/honey-ginger-pork-chops-68d21554d74ec3d4b57aaa97?week=2025-W43": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/french-onion-chicken-67ce3070c2f2c4b379aaeac5?week=2025-W44": {
+    "cuisine": [
+      "French",
+      "Italian"
+    ],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/smothered-and-stuffed-meatloaves-6845b66e95cfe9500ec9f024?week=2025-W44": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/gingery-pork-egg-roll-in-a-bowl-67e8c83bc20009e6f04f8c79?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "Chinese"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [
+      "Pasta",
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sriracha-apricot-pork-chops-68d64627d232ff05cfc44f91?week=2025-W44": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/cantina-style-bavette-steak-taco-bar-68d64af7681e58ed6e5b1372?week=2025-W44": {
+    "cuisine": [
+      "Mexican",
+      "Italian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-lemon-herb-chicken-68d64641681e58ed6e5b092a?week=2025-W44": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-schnitzel-with-gravy-68d64c649ed4d6794189d6de?week=2025-W44": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/smashed-chicken-dumpling-tacos-68d64c409ed4d6794189d68b?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "Mexican",
+      "American",
+      "Chinese",
+      "Thai"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-soy-glazed-meatballs-68744553249cc147aea83178?week=2025-W44": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/spicy-tex-mex-chicken-and-rice-bowls-68d64b7c9ed4d6794189d492?week=2025-W44": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/general-tsos-chicken-bowls-68d64a889ed4d6794189d175?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-mushroom-and-pea-cavatappi-68a1a109b4feaabe0917a9a7?week=2025-W44": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sweet-chili-shrimp-udon-68d64a8b681e58ed6e5b11b2?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [
+      "Seafood"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/chili-crisp-tofu-bowls-and-brussels-sprouts-68d590b5681e58ed6e5afd51?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "Southern",
+      "American"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegan",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sweet-potato-and-pepper-quesadillas-68d647249ed4d6794189caf0?week=2025-W44": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/jack-o-lantern-mushroom-pot-pie-66f0bfb888e18f7212d3e640?week=2025-W44": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/pesto-chicken-and-bacon-spaghetti-68d64a8c9ed4d6794189d186?week=2025-W44": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-chili-chicken-banh-mi-monsters-68d64b4a681e58ed6e5b144f?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/crispy-chicken-milanese-6886b898276dc736295799f9?week=2025-W44": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/honey-chipotle-pork-chops-68d646309ed4d6794189c8aa?week=2025-W44": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/chunky-tomato-soup-and-grilled-cheese-68d64a65d232ff05cfc4583e?week=2025-W44": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/swicy-broccoli-and-sweet-potato-tacos-68d64a85681e58ed6e5b119c?week=2025-W44": {
+    "cuisine": [
+      "Asian",
+      "Thai",
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegan",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/creamy-pork-sausage-and-potato-soup-68d64c82d232ff05cfc45ece?week=2025-W44": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/slawsome-honey-dijon-chicken-sandos-68d64babd232ff05cfc45c99?week=2025-W44": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/big-batch-creamy-pesto-chicken-68d64a72d232ff05cfc45855?week=2025-W44": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/haunted-hotel-butter-ranch-steak-68d64652681e58ed6e5b0950?week=2025-W44": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/chicken-parm-and-bacon-burgers-68d64a9ad232ff05cfc45911?week=2025-W44": {
+    "cuisine": [
+      "American",
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/broccoli-cheddar-soup-with-tortelloni-68d64ac0d232ff05cfc45954?week=2025-W44": {
+    "cuisine": [],
+    "protein": [],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sriracha-apricot-pork-chops-68dc7055653f7d23af28f316?week=2025-W44": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/pork-schnitzel-with-gravy-68dc707d0a8c94ff52b84d29?week=2025-W44": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/honey-chipotle-pork-chops-68dc709b4e46d3e38d0c03ec?week=2025-W44": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/honey-dijon-chicken-sandwiches-65e55de93251bf1977c048bd?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/beef-banh-mi-bowls-68d646cc681e58ed6e5b0a8a?week=2025-W45": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/greek-taverna-pork-chops-68a19e2bc6b6544f7ed43876?week=2025-W45": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/spicy-chipotle-bbq-glazed-beef-meatloaves-68d64bb69ed4d6794189d538?week=2025-W45": {
+    "cuisine": [
+      "Southern",
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/bavette-steak-au-poivre-68d646089ed4d6794189c865?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/crispy-chicken-with-honey-dijon-drizzle-67c50b1fc7d7f8f46885c616?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/smoky-paprika-pork-chops-68d64601d232ff05cfc44f1b?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/beefy-stuffed-bell-pepper-soup-675639de4d01175c884ed055?week=2025-W45": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheeseburger-crunchy-wraps-6874456d55ee9436234b978a?week=2025-W45": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheesy-chicken-and-pepper-fajitas-68d646a9681e58ed6e5b0a24?week=2025-W45": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/umami-ginger-chicken-lo-mein-soup-68d64a88d232ff05cfc45884?week=2025-W45": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta",
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/black-bean-and-pepper-jack-tostadas-6845b929e3fd4af871aedee8?week=2025-W45": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/lemon-garlic-shrimp-68d646f2681e58ed6e5b0ad4?week=2025-W45": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken",
+      "Seafood"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-penne-primavera-65e55c393251bf1977c0489c?week=2025-W45": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/green-pepper-and-onion-quesadillas-6804a82e02e51f809cc7dca4?week=2025-W45": {
+    "cuisine": [
+      "Mexican",
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/saucy-soy-tofu-mushroom-and-pepper-bowls-68d64836681e58ed6e5b0d53?week=2025-W45": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegan",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/crispy-cheddar-ranch-chicken-68582aded12c14cd4da5f1b3?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tortelloni-chicken-sausage-bolognese-68d64b1e681e58ed6e5b13bc?week=2025-W45": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/crispy-southwest-chicken-68e4572f0a8c94ff52b85232?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tex-mex-marinated-pork-tacos-68d64b19d232ff05cfc45a6a?week=2025-W45": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/melty-mozz-tomato-and-pesto-panini-688fe2f2263d52528b99ff84?week=2025-W45": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/brussels-sprouts-and-shallot-flatbreads-68d64a9d9ed4d6794189d205?week=2025-W45": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/pepper-jack-stuffed-pork-burgers-6600cf1c31f9f583b467e1c2?week=2025-W45": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/creamy-chicken-curry-in-a-hurry-68d64b76d232ff05cfc45b98?week=2025-W45": {
+    "cuisine": [
+      "Thai",
+      "Indian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/french-onion-chicken-and-green-bean-bake-68d64a4cd232ff05cfc45817?week=2025-W45": {
+    "cuisine": [
+      "Southern",
+      "Italian",
+      "French"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/boneless-wing-sample-platter-68d64a909ed4d6794189d1af?week=2025-W45": {
+    "cuisine": [
+      "American",
+      "Thai",
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/chicken-scallopini-and-lemon-garlic-sauce-68d6478e9ed4d6794189cbf9?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Chicken",
+      "Seafood"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/buffalo-chicken-penne-68d6493d9ed4d6794189cef2?week=2025-W45": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/greek-taverna-pork-chops-68e47dde653f7d23af28fc50?week=2025-W45": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/smoky-paprika-pork-chops-68e4d0ceb55e5085d2193335?week=2025-W45": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tex-mex-marinated-pork-tacos-68e4d12ec757de283ce7804e?week=2025-W45": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sweet-and-saucy-soy-garlic-chicken-68d64acad232ff05cfc4596f?week=2025-W46": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/caramelized-onion-burgers-688fdfa9733506e6d59b2375?week=2025-W46": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-schnitzel-with-gravy-68d64c649ed4d6794189d6de?week=2025-W46": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/bbq-beef-meatloaves-68d649dfd232ff05cfc4572b?week=2025-W46": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/roasted-garlic-dijon-butter-steak-687444d6095a7af977b0122b?week=2025-W46": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-lemon-herb-chicken-68d64641681e58ed6e5b092a?week=2025-W46": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/southern-style-pork-chops-and-gravy-68d64aa4681e58ed6e5b121f?week=2025-W46": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tex-mex-beefy-loaded-potato-wedges-67315628ba08659748633686?week=2025-W46": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/bbq-beef-quesadillas-681787d334c41957efda3e9f?week=2025-W46": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/herb-chicken-with-zucchini-and-pea-risotto-68d64a2dd232ff05cfc457ee?week=2025-W46": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/speedy-turkey-and-black-bean-chili-66129e85d0360c342f049907?week=2025-W46": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Chicken",
+      "Turkey"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-lemon-and-zucchini-fettuccine-68d64c46681e58ed6e5b16c1?week=2025-W46": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/baja-shrimp-tacos-687445f417c07728bfe45c85?week=2025-W46": {
+    "cuisine": [
+      "Asian",
+      "Mexican"
+    ],
+    "protein": [
+      "Seafood"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/easy-peasy-lemon-squeezy-feta-pasta-67f29abda741f53bf5cb7aa2?week=2025-W46": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Quick"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sweet-potato-and-pepper-quesadillas-68d647249ed4d6794189caf0?week=2025-W46": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/tofu-and-broccoli-donburi-with-fried-eggs-68d64881d232ff05cfc4549e?week=2025-W46": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Southern",
+      "Thai"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegan",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/lemon-herb-risotto-with-chicken-687d7104876f62ca100b9bbe?week=2025-W46": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/saucy-lemon-rosemary-chicken-68ec43f7e9047423a2cd56d7?week=2025-W46": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/brown-sugar-soy-chicken-67a0115c9e3e3f5847289856?week=2025-W46": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-umami-pork-lo-mein-68d64a43681e58ed6e5b110d?week=2025-W46": {
+    "cuisine": [
+      "Asian",
+      "American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/smoky-black-bean-and-rice-skillet-68a1a0cac6b6544f7ed43878?week=2025-W46": {
+    "cuisine": [
+      "Southern",
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Quick"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/mediterranean-roasted-veggie-sandos-68d64931d232ff05cfc455b1?week=2025-W46": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sweet-and-savory-pork-stir-fry-68d64a76681e58ed6e5b1171?week=2025-W46": {
+    "cuisine": [],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/banh-mi-style-chicken-bowls-6833b537e522d783f37f24fe?week=2025-W46": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/miami-style-pulled-pork-cubanos-685f94955e6b2bfce953a54a?week=2025-W46": {
+    "cuisine": [
+      "American",
+      "Latin American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/big-queso-beef-and-black-bean-nachos-68d5b2e8681e58ed6e5aff75?week=2025-W46": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/herby-parmesan-crusted-chicken-67845dc8f2efe8ce60991544?week=2025-W46": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/classic-fried-chicken-sandwiches-68d5b50c9ed4d6794189bf71?week=2025-W46": {
+    "cuisine": [
+      "Southern",
+      "American"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-schnitzel-with-gravy-68ef727c5784c49f8beca0fe?week=2025-W46": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/southern-style-pork-chops-and-gravy-68ef74b4e9047423a2cd588e?week=2025-W46": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-umami-pork-lo-mein-68ef74eca25c20b2c3d53718?week=2025-W46": {
+    "cuisine": [
+      "Asian",
+      "American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/crispy-buffalo-ranch-chicken-68d648ef681e58ed6e5b0e7d?week=2025-W47": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheesy-southwest-beef-tacodillas-68d64b639ed4d6794189d43d?week=2025-W47": {
+    "cuisine": [
+      "Mexican",
+      "Italian"
+    ],
+    "protein": [
+      "Beef",
+      "Seafood"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-and-spicy-ponzu-pork-meatballs-669dcde651d0e2bc179b67ae?week=2025-W47": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Beef",
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/caramelized-onion-patty-melts-688cc2c9733506e6d59b1f7e?week=2025-W47": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/dijon-butter-steak-662502d26bd833edac6cdcaa?week=2025-W47": {
+    "cuisine": [],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/crispy-chicken-with-honey-dijon-drizzle-67c50b1fc7d7f8f46885c616?week=2025-W47": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/balsamic-bbq-pork-chops-68d64b36d232ff05cfc45aec?week=2025-W47": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sticky-soy-chicken-stir-fry-and-rice-6845b79b95cfe9500ec9f028?week=2025-W47": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheeseburger-crunchy-wraps-6874456d55ee9436234b978a?week=2025-W47": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tunisian-style-chicken-and-couscous-bowls-68d64a8ed232ff05cfc458a0?week=2025-W47": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/beefy-stuffed-bell-pepper-soup-675639de4d01175c884ed055?week=2025-W47": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/spiced-chickpea-rice-bowls-68d6492f681e58ed6e5b0ef0?week=2025-W47": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Salad",
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/soy-glazed-sweet-chili-salmon-68d64a159ed4d6794189d084?week=2025-W47": {
+    "cuisine": [
+      "Asian",
+      "American"
+    ],
+    "protein": [
+      "Seafood"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/white-bean-tomato-stew-68d6497b9ed4d6794189cf5b?week=2025-W47": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sweet-potato-harvest-salad-68a1a1dab4feaabe0917a9a8?week=2025-W47": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/blackened-chicken-and-bacon-tortelloni-68d64b0e9ed4d6794189d33f?week=2025-W47": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/memphis-style-bbq-pulled-pork-sandwiches-688fe261733506e6d59b237c?week=2025-W47": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/maple-pecan-chicken-68d64c41681e58ed6e5b16bb?week=2025-W47": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-chops-in-tomato-cream-sauce-68d64948d232ff05cfc455d3?week=2025-W47": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheesy-zucchini-boats-68d64822d232ff05cfc453fd?week=2025-W47": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/thai-style-spicy-tofu-peanut-noodles-68d64c3d9ed4d6794189d687?week=2025-W47": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Southern",
+      "Thai"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/crispy-ginger-pork-rolls-66c28fbc5cb721784e63629e?week=2025-W47": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai",
+      "Mexican"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/banh-mi-style-beef-tacos-68d64bf79ed4d6794189d5f9?week=2025-W47": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/mediterranean-steak-and-hummus-bowls-67a94a914113630c74a32fc9?week=2025-W47": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Salad",
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheesy-sausage-roll-ups-68d64a92681e58ed6e5b11e4?week=2025-W47": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-roasted-garlic-and-bacon-linguine-68d64b079ed4d6794189d32b?week=2025-W47": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/coconut-curry-noodles-with-chicken-68d64c69d232ff05cfc45e7d?week=2025-W47": {
+    "cuisine": [
+      "Asian",
+      "Thai",
+      "Indian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/balsamic-bbq-pork-chops-68f7502512f4d83cdc0b44f5?week=2025-W47": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/pork-chops-in-tomato-cream-sauce-68f7538412f4d83cdc0b44f7?week=2025-W47": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/crispy-chicken-with-honey-dijon-drizzle-67c50b1fc7d7f8f46885c616?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/super-smashed-burgers-68d646a7d232ff05cfc450f7?week=2025-W48": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/southwest-pork-flautas-685f9127c222605386c5d3d9?week=2025-W48": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/gravy-lovers-meatballs-680e3a83830edca04f563b0c?week=2025-W48": {
+    "cuisine": [
+      "Southern"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/herb-butter-steak-690517239140c7b54fefa942?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-soy-chicken-and-rice-bowls-68d5898b9ed4d6794189bd2f?week=2025-W48": {
+    "cuisine": [
+      "Asian",
+      "Chinese"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-shallot-thyme-pork-chops-68d64c6cd232ff05cfc45e87?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/meatloaf-sandwiches-68d58afa9ed4d6794189bd3b?week=2025-W48": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/shawarma-rama-beef-tacos-684f5974c347698598326fa0?week=2025-W48": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Salad"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/honey-sriracha-fried-chicken-68d64ab19ed4d6794189d246?week=2025-W48": {
+    "cuisine": [
+      "Asian",
+      "Southern",
+      "American"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sriracha-turkey-stir-fry-68d6486d681e58ed6e5b0dbb?week=2025-W48": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [
+      "Turkey"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/maple-dijon-sweet-potato-harvest-bowls-69051762ff7c91e2f5e16a6f?week=2025-W48": {
+    "cuisine": [],
+    "protein": [],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegan",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/spaghetti-alfredo-with-shrimp-68d64996681e58ed6e5b0f8c?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken",
+      "Seafood"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheese-tastic-southwestern-hash-64d2733ea577100bb5e5f0ab?week=2025-W48": {
+    "cuisine": [
+      "Southern",
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/creamy-penne-al-limone-with-green-beans-6905179f9140c7b54fefa954?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/zucchini-bell-pepper-and-halloumi-penne-68d64886681e58ed6e5b0e13?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/maple-bacon-chicken-68d64a28681e58ed6e5b10e6?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/honey-pecan-butternut-squash-agnolotti-68178a625572596c77cc26d9?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/sizzlin-tex-mex-beef-tacos-6833b2f8e522d783f37f24fa?week=2025-W48": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheesy-buffalo-chicken-melts-68d64be59ed4d6794189d5c6?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/black-bean-stew-68582b6ed12c14cd4da5f1b4?week=2025-W48": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/caramelized-onion-grilled-cheese-68d64a8fd232ff05cfc458aa?week=2025-W48": {
+    "cuisine": [],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/zucchini-and-pork-sausage-penne-686bb1425ba155634794fa76?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/spicy-tex-mex-chicken-and-rice-bowls-68d64b7b9ed4d6794189d486?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/soy-hoisin-marinated-steak-bowls-68d64a1ed232ff05cfc457d6?week=2025-W48": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Salad",
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/kickin-buffalo-chicken-crescent-ring-659eb3f0f9e1c820e370ae64?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/figgy-thyme-chicken-68d648dfd232ff05cfc4554d?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/caramelized-zucchini-and-chicken-spaghetti-68d58e529ed4d6794189bd69?week=2025-W48": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-shallot-thyme-pork-chops-6900933f83b10d0bbebe0b5f?week=2025-W48": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-chili-chicken-67fd2a71e22258bf02840658?week=2025-W49": {
+    "cuisine": [
+      "Asian",
+      "American",
+      "Thai"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheeseburger-crunchy-wraps-6874456d55ee9436234b978a?week=2025-W49": {
+    "cuisine": [
+      "American",
+      "Mexican"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tomato-and-pork-sausage-spaghetti-66c28cb95cb721784e636254?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/jammin-fig-pork-chops-68d646c4681e58ed6e5b0a7d?week=2025-W49": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/chimichurri-sirloin-steak-and-paprika-potatoes-68d64a21681e58ed6e5b10d2?week=2025-W49": {
+    "cuisine": [
+      "Latin American"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/crispy-chicken-and-charred-zucchini-bowls-684f58f0c347698598326f9e?week=2025-W49": {
+    "cuisine": [
+      "Italian",
+      "Mediterranean"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/balsamic-glazed-meatballs-68d649f7d232ff05cfc45776?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/homestyle-caramelized-onion-meatloaves-68d6491bd232ff05cfc45593?week=2025-W49": {
+    "cuisine": [],
+    "protein": [
+      "Beef",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/italian-meatball-subs-68d64a93d232ff05cfc458ca?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cheesy-bbq-bacon-and-sweet-potato-hash-688fe193263d52528b99ff7e?week=2025-W49": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/one-pan-paprika-chicken-and-couscous-68d64c76d232ff05cfc45ead?week=2025-W49": {
+    "cuisine": [
+      "Mediterranean"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tofu-sweet-potato-and-bell-pepper-curry-68d6498a9ed4d6794189cf77?week=2025-W49": {
+    "cuisine": [
+      "Thai",
+      "Indian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/crispy-fish-and-chips-with-buttered-peas-68d64a94681e58ed6e5b11f2?week=2025-W49": {
+    "cuisine": [
+      "Thai",
+      "Indian"
+    ],
+    "protein": [
+      "Seafood"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/creamy-pesto-spaghetti-68d64c12681e58ed6e5b166e?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/roasted-bell-pepper-flatbreads-68991940ca9e1ccee13caedf?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/jalapeno-popper-quesadillas-68d64a59681e58ed6e5b1134?week=2025-W49": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy",
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/palermo-chicken-and-bacon-pasta-68a1a163c6b6544f7ed4387a?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/chicken-lo-mein-and-orange-ginger-sauce-68d64a8ed232ff05cfc458a6?week=2025-W49": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Pasta"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sweet-and-smoky-bbq-chicken-sandwiches-68d64bf3d232ff05cfc45d3d?week=2025-W49": {
+    "cuisine": [
+      "American"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Lunch",
+      "Sandwich"
+    ],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sesame-pork-rice-bowls-68d649b39ed4d6794189cfc6?week=2025-W49": {
+    "cuisine": [
+      "Asian",
+      "Thai"
+    ],
+    "protein": [
+      "Pork"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Spicy"
+    ]
+  },
+  "https://www.everyplate.com/recipes/broccoli-cheddar-bisque-68178999bc3f1ac28dd66600?week=2025-W49": {
+    "cuisine": [],
+    "protein": [],
+    "meal_type": [
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/charred-zucchini-and-tomato-melts-68d64779681e58ed6e5b0bef?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/chicken-flautas-68d649a3d232ff05cfc456b4?week=2025-W49": {
+    "cuisine": [
+      "Mexican"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/tex-mex-chicken-and-corn-quesadillas-68d64a5bd232ff05cfc4582d?week=2025-W49": {
+    "cuisine": [
+      "Mexican",
+      "Italian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/cantina-style-steak-taco-bar-67c50ffef4b525c8eb5da8c4?week=2025-W49": {
+    "cuisine": [
+      "Mexican",
+      "Italian"
+    ],
+    "protein": [
+      "Beef"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/caprese-panini-and-tomato-soup-combo-68d64a78681e58ed6e5b117b?week=2025-W49": {
+    "cuisine": [
+      "Italian"
+    ],
+    "protein": [],
+    "meal_type": [
+      "Sandwich",
+      "Soup"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": [
+      "Vegetarian"
+    ]
+  },
+  "https://www.everyplate.com/recipes/orange-chicken-and-broccoli-bowls-68d64a919ed4d6794189d1b8?week=2025-W49": {
+    "cuisine": [
+      "Asian",
+      "Chinese"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [
+      "Rice Bowl"
+    ],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/sesame-garlic-chicken-68d64c3e681e58ed6e5b16b8?week=2025-W49": {
+    "cuisine": [
+      "Asian"
+    ],
+    "protein": [
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Long"
+    ],
+    "dietary": []
+  },
+  "https://www.everyplate.com/recipes/jammin-fig-pork-chops-6909c429576ac393c1e68b59?week=2025-W49": {
+    "cuisine": [],
+    "protein": [
+      "Pork",
+      "Chicken"
+    ],
+    "meal_type": [],
+    "prep_time": [
+      "Medium"
+    ],
+    "dietary": []
+  }
+}

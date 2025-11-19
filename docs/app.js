@@ -10,6 +10,13 @@
   let ingredientCategories = {};
   let isSearchActive = false;
   let searchResults = [];
+  let recipeTags = {}; // Recipe tags loaded from recipe_tags.json
+  let activeFilters = {
+    cuisine: new Set(),
+    protein: new Set(),
+    meal_type: new Set(),
+    dietary: new Set()
+  };
 
   // Function to calculate the current ISO week number
   function getCurrentISOWeek() {
@@ -129,6 +136,174 @@
     }
   }
 
+  async function loadRecipeTags() {
+    try {
+      const res = await fetch("./recipe_tags.json", { cache: "no-store" });
+      if (res.ok) {
+        recipeTags = await res.json();
+        initializeFilters();
+      }
+    } catch (err) {
+      console.warn("Could not load recipe tags", err);
+      recipeTags = {}; // Fallback to empty object
+    }
+  }
+
+  function initializeFilters() {
+    // Collect all unique tags and their counts
+    const tagCounts = {
+      cuisine: {},
+      protein: {},
+      meal_type: {},
+      dietary: {}
+    };
+
+    Object.values(recipeTags).forEach(tags => {
+      Object.keys(tagCounts).forEach(category => {
+        const categoryTags = tags[category] || [];
+        categoryTags.forEach(tag => {
+          tagCounts[category][tag] = (tagCounts[category][tag] || 0) + 1;
+        });
+      });
+    });
+
+    // Render filter checkboxes
+    renderFilterSection('cuisine', tagCounts.cuisine, 'cuisine-filters');
+    renderFilterSection('protein', tagCounts.protein, 'protein-filters');
+    renderFilterSection('meal_type', tagCounts.meal_type, 'meal-type-filters');
+    renderFilterSection('dietary', tagCounts.dietary, 'dietary-filters');
+
+    // Setup clear filters buttons (top and bottom)
+    const clearFiltersBtnTop = document.getElementById('clear-filters-btn-top');
+    const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+    const clearFilters = async () => {
+      // Clear all active filters
+      Object.keys(activeFilters).forEach(category => {
+        activeFilters[category].clear();
+      });
+      // Uncheck all checkboxes
+      document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+        cb.closest('.filter-option').classList.remove('active');
+      });
+      // Re-render current view
+      if (isSearchActive) {
+        await renderSearchResults();
+      } else {
+        await renderMenu();
+      }
+    };
+
+    if (clearFiltersBtnTop) {
+      clearFiltersBtnTop.addEventListener('click', clearFilters);
+    }
+
+    if (clearFiltersBtn) {
+      clearFiltersBtn.addEventListener('click', clearFilters);
+    }
+  }
+
+  function renderFilterSection(category, tagCounts, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Sort tags by count (descending) then alphabetically
+    const sortedTags = Object.entries(tagCounts).sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
+      return a[0].localeCompare(b[0]);
+    });
+
+    sortedTags.forEach(([tag, count]) => {
+      const option = document.createElement('div');
+      option.className = 'filter-option';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `filter-${category}-${tag.replace(/\s+/g, '-')}`;
+      checkbox.value = tag;
+
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.id;
+      label.innerHTML = `<span>${tag}</span><span class="filter-count">${count}</span>`;
+
+      checkbox.addEventListener('change', async (e) => {
+        if (e.target.checked) {
+          activeFilters[category].add(tag);
+          option.classList.add('active');
+        } else {
+          activeFilters[category].delete(tag);
+          option.classList.remove('active');
+        }
+        // Re-render current view with filters
+        if (isSearchActive) {
+          await renderSearchResults();
+        } else {
+          await renderMenu();
+        }
+      });
+
+      option.appendChild(checkbox);
+      option.appendChild(label);
+      container.appendChild(option);
+    });
+  }
+
+  async function filterMeals(meals) {
+    // Check if any filters are active
+    const hasActiveFilters = Object.values(activeFilters).some(set => set.size > 0);
+    if (!hasActiveFilters) return meals;
+
+    // If filters are active, search across ALL weeks
+    const allWeekMeals = [];
+    for (const weekObj of availableWeeks) {
+      try {
+        const weekFile = `./weeks/${weekObj.year}-W${String(weekObj.week).padStart(2, '0')}.json`;
+        const res = await fetch(weekFile, { cache: "no-store" });
+        if (!res.ok) continue;
+
+        const weekData = await res.json();
+        const mealsWithPdf = (weekData.meals || []).filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+        allWeekMeals.push(...mealsWithPdf);
+      } catch (err) {
+        console.warn(`Could not load week ${weekObj.week} for filtering:`, err);
+      }
+    }
+
+    // Deduplicate by meal URL
+    const uniqueMeals = [];
+    const seenUrls = new Set();
+    for (const meal of allWeekMeals) {
+      if (!seenUrls.has(meal.url)) {
+        seenUrls.add(meal.url);
+        uniqueMeals.push(meal);
+      }
+    }
+
+    // Filter by active tags
+    return uniqueMeals.filter(meal => {
+      const mealId = meal.url;
+      const tags = recipeTags[mealId];
+      if (!tags) return false;
+
+      // Check each filter category (AND logic between categories, OR logic within)
+      for (const [category, selectedTags] of Object.entries(activeFilters)) {
+        if (selectedTags.size === 0) continue; // Skip empty categories
+
+        const mealTags = tags[category] || [];
+        const hasMatch = Array.from(selectedTags).some(selectedTag => 
+          mealTags.includes(selectedTag)
+        );
+
+        if (!hasMatch) return false; // Meal doesn't match this category
+      }
+
+      return true; // Meal matches all active filter categories
+    });
+  }
+
   function updateWeekNavButtons() {
     const prevBtn = document.getElementById("prev-week-btn");
     const nextBtn = document.getElementById("next-week-btn");
@@ -140,8 +315,8 @@
     nextBtn.disabled = currentIdx <= 0; // Can't go newer than first
   }
 
-  // Load weeks index, unit conversions, spice blends, ingredient categories, and initial week
-  await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends(), loadIngredientCategories()]);
+  // Load weeks index, unit conversions, spice blends, ingredient categories, recipe tags, and initial week
+  await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends(), loadIngredientCategories(), loadRecipeTags()]);
   
   // Try to load current week (based on today's date), fallback to newest week, then fallback to week_with_pdfs.json
   let loaded = false;
@@ -286,11 +461,23 @@
   const portions = {};
   let currentChosen = [];
 
-  function getDisplayMeals() {
+  async function getDisplayMeals() {
     if (!allMeals) return [];
+    
+    // Check if any filters are active
+    const hasActiveFilters = Object.values(activeFilters).some(set => set.size > 0);
+    
+    if (hasActiveFilters) {
+      // If filters active, get meals from all weeks
+      return await filterMeals([]);
+    }
+    
+    // No filters: show current week meals
+    let meals = allMeals;
     if (filterPdfOnly)
-      return allMeals.filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
-    return allMeals;
+      meals = meals.filter(m => m.pdf && typeof m.pdf === "string" && m.pdf.trim());
+    
+    return meals;
   }
 
   function updateTopControls() {
@@ -454,7 +641,7 @@
     return card;
   }
 
-  function renderMenu() {
+  async function renderMenu() {
     if (!menu) return;
     
     // If search is active, don't render the normal menu
@@ -463,7 +650,7 @@
     }
     
     menu.innerHTML = "";
-    const displayMeals = getDisplayMeals();
+    const displayMeals = await getDisplayMeals();
     if (!displayMeals.length) {
       menu.innerHTML = `<div style="grid-column:1/-1;color:#374151;padding:12px">
         ${filterPdfOnly ? "No meals with PDF in week.json" : "No meals found in week.json"}
@@ -635,10 +822,10 @@
     updateTopControls();
   }
 
-  function backToSelection() {
+  async function backToSelection() {
     locked = false;
     isMenuVisible = true;
-    renderMenu();
+    await renderMenu();
     if (selectedDiv) selectedDiv.innerHTML = "";
     updateTopControls();
   }
@@ -1015,7 +1202,7 @@
   });
   if (topBack) topBack.addEventListener("click", () => backToSelection());
   if (clearBtnInline) {
-    clearBtnInline.addEventListener("click", function() {
+    clearBtnInline.addEventListener("click", async function() {
       cart = new Map();
       locked = false;
       isMenuVisible = true;
@@ -1029,9 +1216,9 @@
       
       // If search is active, re-render search results; otherwise render normal menu
       if (isSearchActive) {
-        renderSearchResults();
+        await renderSearchResults();
       } else {
-        renderMenu();
+        await renderMenu();
       }
     });
   }
@@ -1126,7 +1313,7 @@
     renderSearchResults();
   }
 
-  function renderSearchResults() {
+  async function renderSearchResults() {
     const menu = document.getElementById("menu");
     if (!menu) return;
 
@@ -1152,8 +1339,20 @@
       }
     }
 
-    // Render deduplicated results
-    uniqueResults.forEach((result, idx) => {
+    // Apply filters to results
+    const filteredResults = await filterMeals(uniqueResults.map(r => r.meal));
+    const filteredResultsWithWeek = uniqueResults.filter(r => filteredResults.includes(r.meal));
+    
+    if (filteredResultsWithWeek.length === 0) {
+      const noResults = document.createElement("div");
+      noResults.style.cssText = "grid-column: 1 / -1; text-align: center; padding: 40px; color: #6b7280; font-size: 1.1rem;";
+      noResults.textContent = "No recipes match your search and filters.";
+      menu.appendChild(noResults);
+      return;
+    }
+
+    // Render filtered results
+    filteredResultsWithWeek.forEach((result, idx) => {
       const card = createSearchResultCard(result.meal, idx, result.week);
       menu.appendChild(card);
     });
@@ -1187,7 +1386,7 @@
   }
 
   if (clearSearchBtn) {
-    clearSearchBtn.addEventListener("click", () => {
+    clearSearchBtn.addEventListener("click", async () => {
       if (searchBar) searchBar.value = "";
       isSearchActive = false;
       searchResults = [];
@@ -1195,11 +1394,11 @@
       if (cart.size > 0) {
         nextHandler();
       } else {
-        loadWeekData(currentWeek);
+        await loadWeekData(currentWeek);
       }
     });
   }
 
-  renderMenu();
+  await renderMenu();
   updateWeekNavButtons();
 })();
