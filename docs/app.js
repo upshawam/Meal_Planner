@@ -11,6 +11,23 @@
   let isSearchActive = false;
   let searchResults = [];
 
+  // Function to calculate the current ISO week number
+  function getCurrentISOWeek() {
+    const today = new Date();
+    const d = new Date(today);
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    const yearStart = new Date(d.getFullYear(), 0, 1);
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  }
+
+  // Calculate current week and year
+  const today = new Date();
+  const currentYearNow = today.getFullYear();
+  const currentWeekNow = getCurrentISOWeek();
+  currentWeek = currentWeekNow;
+  currentYear = currentYearNow;
+
   async function loadWeekData(weekNum, yearNum = null) {
     try {
       // If year not provided, try to find it in availableWeeks or use currentYear
@@ -126,24 +143,9 @@
   // Load weeks index, unit conversions, spice blends, ingredient categories, and initial week
   await Promise.all([loadWeeksIndex(), loadUnitConversions(), loadSpiceBlends(), loadIngredientCategories()]);
   
-  // Function to calculate the current ISO week number
-  function getCurrentISOWeek() {
-    const today = new Date();
-    const d = new Date(today);
-    d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-    const yearStart = new Date(d.getFullYear(), 0, 1);
-    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-  }
-  
   // Try to load current week (based on today's date), fallback to newest week, then fallback to week_with_pdfs.json
   let loaded = false;
   if (availableWeeks.length > 0) {
-    // Get actual current week from today's date
-    const today = new Date();
-    const currentYearNow = today.getFullYear();
-    const currentWeekNow = getCurrentISOWeek();
-    
     // Try to find current week in available weeks
     const currentWeekData = availableWeeks.find(w => w.year === currentYearNow && w.week === currentWeekNow);
     if (currentWeekData) {
@@ -173,8 +175,8 @@
         console.warn(`Total meals in data: ${totalMeals}, Showing: ${allMeals.length}`);
       }
       
-      currentWeek = data.week || 46;
-      currentYear = data.year || 2025;
+      currentWeek = currentWeekNow;
+      currentYear = currentYearNow;
       const weekDisplay = document.getElementById("current-week-display");
       if (weekDisplay) weekDisplay.textContent = currentWeek;
     } catch (err) {
@@ -277,7 +279,8 @@
   }
 
   let filterPdfOnly = false;
-  let selected = new Set();
+  let selected = new Set(); // Current view selections
+  let cart = new Map(); // Persistent cart: id -> meal object
   let locked = false;
   let isMenuVisible = true;
   const portions = {};
@@ -291,13 +294,13 @@
   }
 
   function updateTopControls() {
-    const count = selected.size;
+    const count = cart.size;
     if (topCount) topCount.textContent = `${count} selected`;
     if (!topNext) return;
     if (isMenuVisible) {
       topNext.style.display = ""; // Restore button visibility when on menu
       topNext.disabled = count === 0;
-      topNext.textContent = "Next";
+      topNext.textContent = "View Cart";
     } else {
       // Hide the top Next button when viewing ingredients since rebuild is automatic
       topNext.style.display = "none";
@@ -328,13 +331,13 @@
     card.appendChild(title);
     card.appendChild(subtitle);
 
-    if (selected.has(id)) {
+    if (cart.has(id)) {
       card.classList.add("selected");
     }
     if (opts.showSelector !== false) {
       const selector = document.createElement("div");
       selector.className = "selector";
-      selector.textContent = selected.has(id) ? "Selected" : "Select";
+      selector.textContent = cart.has(id) ? "Selected" : "Select";
       card.appendChild(selector);
       
       // Add magnifying glass icon for PDF preview on selection cards
@@ -408,10 +411,8 @@
         e.stopPropagation();
         // Remove from currentChosen array by matching the id
         currentChosen = currentChosen.filter(item => item.id !== id);
-        // Also remove from selected set
-        selected.delete(id);
-        // Remove from portions tracking
-        delete portions[id];
+        // Also remove from cart
+        cart.delete(id);
         // If no recipes left, go back to selection
         if (currentChosen.length === 0) {
           backToSelection();
@@ -426,13 +427,13 @@
     card.addEventListener("click", (e) => {
       if (locked) return;
       if (opts.recipePreview) return; // Don't allow selection on preview cards
-      if (selected.has(id)) {
-        selected.delete(id);
+      if (cart.has(id)) {
+        cart.delete(id);
         card.classList.remove("selected");
         const sel = card.querySelector(".selector");
         if (sel) sel.textContent = "Select";
       } else {
-        selected.add(id);
+        cart.set(id, meal);
         card.classList.add("selected");
         const sel = card.querySelector(".selector");
         if (sel) sel.textContent = "Selected";
@@ -544,21 +545,12 @@
   }
 
   function nextHandler() {
-    if (!selected.size) return;
+    if (!cart.size) return;
     locked = true;
     isMenuVisible = false;
-    const chosenIds = Array.from(selected);
+    // currentChosen = Array.from(cart.values()).map(meal => ({id: meal.url, meal}));
+    currentChosen = Array.from(cart.entries()).map(([id, meal]) => ({id, meal}));
     
-    // Get meals from search results or regular display meals
-    const mealsToSearch = isSearchActive 
-      ? searchResults.map(r => r.meal)
-      : getDisplayMeals();
-    
-    currentChosen = chosenIds.map(id => {
-      const m = mealsToSearch.find((mm, idx) => mealIdFor(mm, idx) === id);
-      return m ? { id, meal: m } : null;
-    }).filter(x => x && x.meal);
-
     if (menu) menu.classList.add("hidden");
     if (selectedDiv) {
       selectedDiv.classList.remove("hidden");
@@ -1024,7 +1016,7 @@
   if (topBack) topBack.addEventListener("click", () => backToSelection());
   if (clearBtnInline) {
     clearBtnInline.addEventListener("click", function() {
-      selected = new Set();
+      cart = new Map();
       locked = false;
       isMenuVisible = true;
       currentChosen = [];
@@ -1082,7 +1074,11 @@
       isSearchActive = false;
       searchResults = [];
       clearSearchBtn.style.display = "none";
-      await loadWeekData(currentWeek, currentYear);
+      if (cart.size > 0) {
+        nextHandler();
+      } else {
+        await loadWeekData(currentWeek, currentYear);
+      }
       return;
     }
 
@@ -1161,6 +1157,13 @@
       const card = createSearchResultCard(result.meal, idx, result.week);
       menu.appendChild(card);
     });
+
+    // Show menu, hide cart view
+    if (selectedDiv) selectedDiv.classList.add("hidden");
+    if (menu) menu.classList.remove("hidden");
+    isMenuVisible = true;
+    locked = false;
+    updateTopControls();
   }
 
   function createSearchResultCard(meal, idx, weekNum) {
@@ -1189,7 +1192,11 @@
       isSearchActive = false;
       searchResults = [];
       clearSearchBtn.style.display = "none";
-      loadWeekData(currentWeek);
+      if (cart.size > 0) {
+        nextHandler();
+      } else {
+        loadWeekData(currentWeek);
+      }
     });
   }
 
