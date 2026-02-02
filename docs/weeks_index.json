@@ -1,6 +1,12 @@
 [
   {
     "year": 2026,
+    "week": 7,
+    "path": "weeks/2026-W07.json",
+    "archived_at": 1770015966
+  },
+  {
+    "year": 2026,
     "week": 6,
     "path": "weeks/2026-W06.json",
     "archived_at": 1769409484
