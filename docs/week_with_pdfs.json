@@ -1,27 +1,20 @@
 {
-  "week": 10,
+  "week": 11,
   "year": 2026,
   "meals": [
     {
-      "url": "https://www.everyplate.com/recipes/herby-parmesan-crusted-chicken-67845dc8f2efe8ce60991544?week=2026-W10",
-      "title": "Herby Parmesan-Crusted Chicken",
-      "subtitle": "with Garlic Mashed Potatoes & Roasted Green Beans",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67845dc8f2efe8ce60991544-8ff6db3a-476e0873.jpeg",
-      "pdf": "./pdfs/67845dc8f2efe8ce60991544-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/crispy-buffalo-ranch-chicken-68d648ef681e58ed6e5b0e7d?week=2026-W11",
+      "title": "Crispy Buffalo Ranch Chicken",
+      "subtitle": "with Honey Roasted Carrots & Mashed Potatoes",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/crispy-buffalo-ranch-chicken-b31f3ee2-4eb41f5a.jpg",
+      "pdf": "./pdfs/68d648ef681e58ed6e5b0e7d-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Sour Cream",
-          "amount": "3 tablespoon",
-          "quantity_display": "3",
-          "quantity": 3.0,
+          "amount": "1.5 tablespoon",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
           "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Green Beans",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
         },
         {
           "ingredient": "Panko Breadcrumbs",
@@ -38,18 +31,25 @@
           "unit": "ounce"
         },
         {
-          "ingredient": "Italian Seasoning",
-          "amount": "⅔ tablespoon",
-          "quantity_display": "⅔",
-          "quantity": 0.6666666666666666,
-          "unit": "tablespoon"
+          "ingredient": "Carrot",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
+          "unit": "ounce"
         },
         {
-          "ingredient": "Parmesan Cheese Block",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
+          "ingredient": "Honey",
+          "amount": "2 teaspoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Frank's Seasoning Blend",
+          "amount": "¼ ounce",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "ounce"
         },
         {
           "ingredient": "Garlic",
@@ -64,36 +64,36 @@
           "quantity_display": "10",
           "quantity": 10.0,
           "unit": "ounce"
+        },
+        {
+          "ingredient": "Buttermilk Ranch Dressing",
+          "amount": "1.5 ounce",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "ounce"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/cheeseburger-crunchy-wraps-6874456d55ee9436234b978a?week=2026-W10",
-      "title": "Cheeseburger Crunchy Wraps",
-      "subtitle": "with Potato Wedges, Pickles & Special Sauce",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64e4ba5354b67122d59a9410-8a6269ef-b4695f84.jpeg",
-      "pdf": "./pdfs/6874456d55ee9436234b978a-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/ponzu-chili-beef-bowls-67b28180a27a53fcaa21e90d?week=2026-W11",
+      "title": "Ponzu Chili Beef Bowls",
+      "subtitle": "with Snap Peas, Garlic Ginger Rice & Chili Mayo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/65a86481f9e1c820e370e704-8897fc28-56b50088.jpeg",
+      "pdf": "./pdfs/67b28180a27a53fcaa21e90d-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Flour Tortillas",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
+          "ingredient": "Ponzu Sauce",
+          "amount": "12 milliliters",
           "quantity_display": "12",
           "quantity": 12.0,
-          "unit": "ounce"
+          "unit": "milliliter"
         },
         {
-          "ingredient": "Onion",
-          "amount": "1 unit",
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "1 ounce",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "unit"
+          "unit": "ounce"
         },
         {
           "ingredient": "Ground Beef",
@@ -103,55 +103,48 @@
           "unit": "ounce"
         },
         {
-          "ingredient": "White Wine Vinegar",
-          "amount": "5 teaspoon",
-          "quantity_display": "5",
-          "quantity": 5.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Mini Cucumber",
-          "amount": "1 unit",
+          "ingredient": "Garlic",
+          "amount": "1 clove",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "unit"
+          "unit": "clove"
         },
         {
-          "ingredient": "Monterey Jack Cheese",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
+          "ingredient": "Jasmine Rice",
+          "amount": "¾ cup",
+          "quantity_display": "¾",
+          "quantity": 0.75,
           "unit": "cup"
         },
         {
-          "ingredient": "Dijon Mustard",
-          "amount": "2 teaspoon",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "teaspoon"
+          "ingredient": "Sugar Snap Peas",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Ginger",
+          "amount": "1 thumb",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "thumb"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/creamy-zucchini-and-pork-sausage-penne-688fe317733506e6d59b237f?week=2026-W10",
-      "title": "Creamy Zucchini & Pork Sausage Penne",
-      "subtitle": "with Herb Garlic Bread",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/661c8bab3d20ae432f30ab58-893a5b2c-84a642ef.jpeg",
-      "pdf": "./pdfs/688fe317733506e6d59b237f-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/pork-chops-in-tomato-cream-sauce-68d64948d232ff05cfc455d3?week=2026-W11",
+      "title": "Pork Chops in Tomato Cream Sauce",
+      "subtitle": "with Zucchini Rounds & Lemon Couscous",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1592M_Hero_HerbyPorkChopsInTomatoCreamSauce_W47_100_2025_Web-9ece0cbd.jpg",
+      "pdf": "./pdfs/68d64948d232ff05cfc455d3-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Ciabatta",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Italian Pork Sausage",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
+          "ingredient": "Israeli Couscous",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
         },
         {
           "ingredient": "Zucchini",
@@ -175,166 +168,6 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Cream Sauce Base",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Penne Pasta",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Italian Seasoning",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Garlic Powder",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/sweet-thai-chili-burgers-68d64c37d232ff05cfc45e00?week=2026-W10",
-      "title": "Sweet Thai Chili Burgers",
-      "subtitle": "with Potato Wedges & Caramelized Onion",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6204A_Hero_SweetThaiChiliBurgers_W10_84_2026_Web-9613d313.jpg",
-      "pdf": "./pdfs/68d64c37d232ff05cfc45e00-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Sweet Thai Chili Sauce",
-          "amount": "2 ounce",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Onion",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Potato Buns",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Ground Beef",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/steak-and-linguine-alfredo-68d64a839ed4d6794189d15d?week=2026-W10",
-      "title": "Steak & Linguine Alfredo",
-      "subtitle": "with Parmesan & Parsley",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68b3c210a567f2a94ecb7310-3109c25b-1b96fee2.jpeg",
-      "pdf": "./pdfs/68d64a839ed4d6794189d15d-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Cream Sauce Base",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Ranch Steak",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Mozzarella Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Italian Seasoning",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Linguine Pasta",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Parmesan Cheese Block",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Parsley",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Garlic Powder",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/farmers-market-chicken-linguine-68d64734d232ff05cfc4523b?week=2026-W10",
-      "title": "Farmers Market Chicken Linguine",
-      "subtitle": "with Mushrooms, Zucchini, Lemon & Chives",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1264N_Hero_ChickenMushroomAndZucchiniLinguine_W06_112_2026_Web-c13e3247.jpg",
-      "pdf": "./pdfs/68d64734d232ff05cfc4523b-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Zucchini",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Cream Cheese",
-          "amount": "2 tablespoon",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "tablespoon"
-        },
-        {
           "ingredient": "Lemon",
           "amount": "1 unit",
           "quantity_display": "1",
@@ -349,25 +182,11 @@
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Linguine Pasta",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
+          "ingredient": "Pork Chops",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
           "unit": "ounce"
-        },
-        {
-          "ingredient": "Chives",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Parmesan Cheese Block",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
         },
         {
           "ingredient": "Tomato",
@@ -384,41 +203,27 @@
           "unit": "clove"
         },
         {
-          "ingredient": "Chicken Cutlets",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Button Mushrooms",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
+          "ingredient": "Scallions",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/pork-chops-in-dijon-pan-sauce-68d64959681e58ed6e5b0f37?week=2026-W10",
-      "title": "Seared Pork Chops in Creamy Dijon Pan Sauce",
-      "subtitle": "with Crispy Potatoes, Mushrooms & Green Beans",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68d09015a2beaf49ba8ee17c-15c763a3-c2db2890.jpeg",
-      "pdf": "./pdfs/68d64959681e58ed6e5b0f37-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/super-smashed-burgers-68d646a89ed4d6794189c9fb?week=2026-W11",
+      "title": "Jammy Onion & Chipotle Smashed Burgers",
+      "subtitle": "with Smoky-Hot Aioli & Crispy Potato Wedges",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP1171_SuperSmashedBurgers_W42-S82-2021_Web-dec432ee.jpg",
+      "pdf": "./pdfs/68d646a89ed4d6794189c9fb-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Sour Cream",
-          "amount": "1.5 tablespoon",
-          "quantity_display": "1.5",
-          "quantity": 1.5,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Green Beans",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
+          "ingredient": "Chipotle Powder",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
         },
         {
           "ingredient": "Potatoes",
@@ -429,24 +234,10 @@
         },
         {
           "ingredient": "Onion",
-          "amount": "½ unit",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Chicken Stock Concentrate",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "unit"
-        },
-        {
-          "ingredient": "Pork Chops",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
         },
         {
           "ingredient": "Garlic",
@@ -456,18 +247,69 @@
           "unit": "clove"
         },
         {
-          "ingredient": "Tuscan Heat Spice",
-          "amount": "⅔ tablespoon",
-          "quantity_display": "⅔",
-          "quantity": 0.6666666666666666,
+          "ingredient": "Potato Buns",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Ground Beef",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/creamy-mushroom-steak-6829b753ddaf24d721839c76?week=2026-W11",
+      "title": "Creamy Mushroom Steak",
+      "subtitle": "with Roasted Broccoli & Potato Rounds",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/65dc5320344daef4048865f0-3b3549bb-27be1eec.jpeg",
+      "pdf": "./pdfs/6829b753ddaf24d721839c76-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Sour Cream",
+          "amount": "1.5 tablespoon",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Dijon Mustard",
-          "amount": "2 teaspoon",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "teaspoon"
+          "ingredient": "Potatoes",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Onion",
+          "amount": "⅓ unit",
+          "quantity_display": "⅓",
+          "quantity": 0.3333333333333333,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Ranch Steak",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Beef Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Broccoli",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
         },
         {
           "ingredient": "Button Mushrooms",
@@ -479,42 +321,28 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/saucy-garlic-and-ponzu-banh-mi-beef-bowls-68d646cc681e58ed6e5b0a8a?week=2026-W10",
-      "title": "Saucy Garlic & Ponzu Banh Mi Beef Bowls",
-      "subtitle": "with Carrot, Pickled Cucumber & Sriracha Mayo",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/640622bcda780720d7074f44-fe555bc8-25145dac-d295940f.jpg",
-      "pdf": "./pdfs/68d646cc681e58ed6e5b0a8a-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/sweet-chili-chicken-6845b6e8e3fd4af871aedee4?week=2026-W11",
+      "title": "Sweet Chili Chicken",
+      "subtitle": "with Zesty Carrots & Scallion Rice",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/62b9d59ca037aa58de00e935-d3b3b28f-9fdf4268.jpg",
+      "pdf": "./pdfs/6845b6e8e3fd4af871aedee4-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Carrot",
-          "amount": "3 ounce",
-          "quantity_display": "3",
-          "quantity": 3.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Ponzu Sauce",
-          "amount": "12 milliliters",
+          "amount": "12 ounce",
           "quantity_display": "12",
           "quantity": 12.0,
-          "unit": "milliliter"
-        },
-        {
-          "ingredient": "Onion",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Ground Beef",
-          "amount": "8 ounce",
-          "quantity_display": "8",
-          "quantity": 8.0,
           "unit": "ounce"
         },
         {
-          "ingredient": "Mini Cucumber",
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "2 ounce",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Soy Sauce",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
@@ -535,14 +363,93 @@
           "unit": "clove"
         },
         {
+          "ingredient": "Chicken Cutlets",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Scallions",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
           "ingredient": "Jasmine Rice",
           "amount": "¾ cup",
           "quantity_display": "¾",
           "quantity": 0.75,
           "unit": "cup"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/southern-style-pork-chops-and-gravy-684f5b25600ad5b2e3ee74d7?week=2026-W11",
+      "title": "Southern-Style Pork Chops & Gravy",
+      "subtitle": "with Roasted Broccoli & Mashed Potatoes",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6515eef88df2f06fd0a944a9-d4a9174d-6a14898d.jpeg",
+      "pdf": "./pdfs/684f5b25600ad5b2e3ee74d7-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Sour Cream",
+          "amount": "1.5 tablespoon",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "tablespoon"
         },
         {
-          "ingredient": "Sriracha",
+          "ingredient": "Potatoes",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Onion",
+          "amount": "½ unit",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Dried Thyme",
+          "amount": "¼ teaspoon",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Beef Stock Concentrate",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Broccoli",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Pork Chops",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "1 clove",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Garlic Powder",
           "amount": "1 teaspoon",
           "quantity_display": "1",
           "quantity": 1.0,
@@ -551,11 +458,90 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/sweet-and-savory-caramelized-onion-burgers-688fdfa9733506e6d59b2375?week=2026-W10",
-      "title": "Sweet & Savory Caramelized Onion Burgers",
-      "subtitle": "with Crispy Potato Wedges & Tangy Garlic Aioli",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6515ebeeb6b74f3addadbd81-7856d8b3-8d5c9fd7.jpeg",
-      "pdf": "./pdfs/688fdfa9733506e6d59b2375-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/chicken-parm-and-bacon-burgers-68d64a9ad232ff05cfc45911?week=2026-W11",
+      "title": "Chicken Parm & Bacon Burgers",
+      "subtitle": "plus Roasted Potato Wedges & Garlic Parm Mayo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EveryPlateUSARC_EP3360B_Hero_ChickenParmAndBaconBurgers_W44_107_2025_Web-bdbad38e.jpg",
+      "pdf": "./pdfs/68d64a9ad232ff05cfc45911-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Ground Chicken",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Potatoes",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Mozzarella Cheese",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Italian Seasoning",
+          "amount": "⅔ tablespoon",
+          "quantity_display": "⅔",
+          "quantity": 0.6666666666666666,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Parmesan Cheese Block",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Potato Buns",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic Powder",
+          "amount": "¾ teaspoon",
+          "quantity_display": "¾",
+          "quantity": 0.75,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Bacon",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Marinara Sauce",
+          "amount": "2.5 ounce",
+          "quantity_display": "2.5",
+          "quantity": 2.5,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/griddled-onion-burgers-66f9f2c04c65e1fd73e1ec12?week=2026-W11",
+      "title": "Griddled Onion Burgers",
+      "subtitle": "with Creamy Dijon Aioli & Oven Fries",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/654a4a0acfbffe92530dde91-98495232-cda8f2ce.jpeg",
+      "pdf": "./pdfs/66f9f2c04c65e1fd73e1ec12-en-US.pdf",
       "ingredients": [
         {
           "ingredient": "Potatoes",
@@ -602,226 +588,31 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/loaded-baked-potato-chowder-6886baad276dc736295799fe?week=2026-W10",
-      "title": "Loaded Baked Potato Chowder",
-      "subtitle": "with Bacon, Cheddar & Jalapeño",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6536e0710937c3ed6b88f722-921e8e6a-47ee0688.jpeg",
-      "pdf": "./pdfs/6886baad276dc736295799fe-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/general-tsos-chicken-bowls-68d64a889ed4d6794189d175?week=2026-W11",
+      "title": "General Tso's Chicken Bowls",
+      "subtitle": "with Chicken Thighs, Sesame Carrots & Rice",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EveryPlateUSARC_EP2017A_Hero_GeneralTsoSChickenBowls_W44_91_2025_Web-34e59289.jpg",
+      "pdf": "./pdfs/68d64a889ed4d6794189d175-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Sour Cream",
-          "amount": "1.5 tablespoon",
-          "quantity_display": "1.5",
-          "quantity": 1.5,
+          "ingredient": "Cornstarch",
+          "amount": "3 tablespoon",
+          "quantity_display": "3",
+          "quantity": 3.0,
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Cheddar Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Onion",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Chicken Stock Concentrate",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Jalapeño",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "1 clove",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Bacon",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/speedy-banh-mi-style-chicken-tacos-68e7ff51a267a9c2fbff62d4?week=2026-W10",
-      "title": "Speedy Banh Mi-Style Chicken Tacos",
-      "subtitle": "with Pickled Veggies & Sriracha Mayo",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-EP1889A_Hero_BanhMiStyleChickenTacos_W20-102-2025_Web-8ca7a6e9.jpg",
-      "pdf": "./pdfs/68e7ff51a267a9c2fbff62d4-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Carrot",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Ground Chicken",
+          "ingredient": "Chicken Thighs",
           "amount": "10 ounce",
           "quantity_display": "10",
           "quantity": 10.0,
           "unit": "ounce"
-        },
-        {
-          "ingredient": "Rice Wine Vinegar",
-          "amount": "5 teaspoon",
-          "quantity_display": "5",
-          "quantity": 5.0,
-          "unit": "teaspoon"
         },
         {
           "ingredient": "Sweet Thai Chili Sauce",
           "amount": "2 ounce",
           "quantity_display": "2",
           "quantity": 2.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Mini Cucumber",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Flour Tortillas",
-          "amount": "6 unit",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sriracha",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Cilantro",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/roasted-sesame-broccoli-and-mushroom-bowls-68d64c4c681e58ed6e5b16d0?week=2026-W10",
-      "title": "Roasted Sesame Broccoli & Mushroom Bowls",
-      "subtitle": "with Fried Eggs & Creamy Chili Garlic Sauce",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67f299c8a741f53bf5cb7a9d-6f797ad1-3417607a.jpeg",
-      "pdf": "./pdfs/68d64c4c681e58ed6e5b16d0-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Sweet Thai Chili Sauce",
-          "amount": "1 ounce",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Broccoli",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sesame Seeds",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Mushroom Stock Concentrate",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "1 clove",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Jasmine Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
-          "quantity": 0.75,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Sriracha",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Button Mushrooms",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/sesame-orange-glazed-shrimp-67e0a04a7594446a7cdcb981?week=2026-W10",
-      "title": "Sesame Orange Glazed Shrimp",
-      "subtitle": "with Garlic-Scallion Rice & Smashed Cucumber Salad",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67e0a04a7594446a7cdcb981-53a680ad-5431fed5.jpeg",
-      "pdf": "./pdfs/67e0a04a7594446a7cdcb981-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Cornstarch",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Sesame Dressing",
-          "amount": "¾ ounce",
-          "quantity_display": "¾",
-          "quantity": 0.75,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Shrimp",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
           "unit": "ounce"
         },
         {
@@ -832,20 +623,6 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Mini Cucumber",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Orange Sauce",
-          "amount": "3 ounce",
-          "quantity_display": "3",
-          "quantity": 3.0,
-          "unit": "ounce"
-        },
-        {
           "ingredient": "Sesame Seeds",
           "amount": "1 tablespoon",
           "quantity_display": "1",
@@ -853,11 +630,11 @@
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Garlic",
-          "amount": "2 clove",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "clove"
+          "ingredient": "Carrot",
+          "amount": "9 ounce",
+          "quantity_display": "9",
+          "quantity": 9.0,
+          "unit": "ounce"
         },
         {
           "ingredient": "Scallions",
@@ -867,7 +644,7 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Jasmine Rice",
+          "ingredient": "White Rice",
           "amount": "¾ cup",
           "quantity_display": "¾",
           "quantity": 0.75,
@@ -876,97 +653,18 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/garlicky-white-sauce-flatbreads-6886ba79c2892140d719b0b0?week=2026-W10",
-      "title": "Garlicky White Sauce Flatbreads",
-      "subtitle": "with Tomato & Roasted Zucchini",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64501cb53c1fa3a1d40f0d59-ff2e4514-51378d03.jpg",
-      "pdf": "./pdfs/6886ba79c2892140d719b0b0-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/one-pan-paprika-chicken-and-couscous-68d64c76d232ff05cfc45ead?week=2026-W11",
+      "title": "One-Pan Paprika Chicken & Couscous",
+      "subtitle": "with Dark Meat Chicken & Scallions",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67440f92553aed654be47257-4ab4fd7f-74fd41d2.jpeg",
+      "pdf": "./pdfs/68d64c76d232ff05cfc45ead-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Flatbreads",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Zucchini",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Cream Cheese",
-          "amount": "4 tablespoon",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Mozzarella Cheese",
+          "ingredient": "Israeli Couscous",
           "amount": "½ cup",
           "quantity_display": "½",
           "quantity": 0.5,
           "unit": "cup"
-        },
-        {
-          "ingredient": "Italian Seasoning",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Tomato",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "4 clove",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Garlic Powder",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/herbed-white-bean-tomato-stew-68d64978d232ff05cfc4564e?week=2026-W10",
-      "title": "Herbed White Bean Tomato Stew",
-      "subtitle": "with Feta & Garlic Toasts",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/651da7b43c5da7b30f30d121-83267a9b-8de9c1e8.jpeg",
-      "pdf": "./pdfs/68d64978d232ff05cfc4564e-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Veggie Stock Concentrate",
-          "amount": "3 unit",
-          "quantity_display": "3",
-          "quantity": 3.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Feta Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Ciabatta",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
         },
         {
           "ingredient": "Tomato Paste",
@@ -983,257 +681,18 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Cannellini Beans",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Italian Seasoning",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Tomato",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "2 clove",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Scallions",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/creamy-penne-al-limone-with-broccoli-68d64ba6681e58ed6e5b153f?week=2026-W10",
-      "title": "Creamy Penne Al Limone with Broccoli",
-      "subtitle": "plus Monterey Jack",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP5852D_Hero_CreamyPenneAlLimoneWithBroccoli_W01_92_2026_Web-3fc55c39.jpg",
-      "pdf": "./pdfs/68d64ba6681e58ed6e5b153f-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Veggie Stock Concentrate",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
+          "ingredient": "Diced Skinless Dark Meat Chicken",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
         },
         {
           "ingredient": "Cream Cheese",
-          "amount": "4 tablespoon",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Cream Sauce Base",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Lemon",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Penne Pasta",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Broccoli",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Monterey Jack Cheese",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "2 clove",
+          "amount": "2 tablespoon",
           "quantity_display": "2",
           "quantity": 2.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Garlic Powder",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Shallot",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/bacon-and-gouda-smothered-chicken-68d648309ed4d6794189cd30?week=2026-W10",
-      "title": "Bacon & Gouda Smothered Chicken",
-      "subtitle": "with Asparagus & Crispy Potatoes",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68d092b9d74ec3d4b57aa7b7-a46d8d39-15f5e995.jpeg",
-      "pdf": "./pdfs/68d648309ed4d6794189cd30-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Asparagus",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Smoked Paprika",
-          "amount": "½ teaspoon",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Gouda Cheese",
-          "amount": "4 slice",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "slice"
-        },
-        {
-          "ingredient": "Chicken Cutlets",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Bacon",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/speedy-mango-soy-glazed-beef-tacos-674cfff78645a16b947c5515?week=2026-W10",
-      "title": "Speedy Mango-Soy Glazed Beef Tacos",
-      "subtitle": "with Mango-Cilantro Slaw",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/674cfff78645a16b947c5515-846b5f17-c151cd64.jpeg",
-      "pdf": "./pdfs/674cfff78645a16b947c5515-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Mango",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Sweet Soy Glaze",
-          "amount": "4 tablespoon",
-          "quantity_display": "4",
-          "quantity": 4.0,
           "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Shredded Red Cabbage",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Lime",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Flour Tortillas",
-          "amount": "6 unit",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sriracha",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Cilantro",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Ground Beef",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/sesame-garlic-chicken-68d64c3e681e58ed6e5b16b8?week=2026-W10",
-      "title": "Calorie-Smart Sesame-Garlic Chicken",
-      "subtitle": "with Roasted Zucchini & Broccoli",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68d08e8b4e46d3e38d0bf776-6202e9ac-4e5b1036.jpeg",
-      "pdf": "./pdfs/68d64c3e681e58ed6e5b16b8-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Zucchini",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sesame Dressing",
-          "amount": "1.5 ounce",
-          "quantity_display": "1.5",
-          "quantity": 1.5,
-          "unit": "ounce"
         },
         {
           "ingredient": "Chicken Stock Concentrate",
@@ -1243,32 +702,11 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Broccoli",
-          "amount": "1 unit",
+          "ingredient": "Paprika",
+          "amount": "1 teaspoon",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sesame Seeds",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "1 clove",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Chicken Cutlets",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
+          "unit": "teaspoon"
         },
         {
           "ingredient": "Scallions",
@@ -1280,156 +718,12 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/jammin-red-pepper-and-dijon-pork-chops-68d64bbf9ed4d6794189d54b?week=2026-W10",
-      "title": "Jammin’ Red Pepper & Dijon Pork Chops",
-      "subtitle": "with Roasted Green Beans & Carrots",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP5997H_Hero_JamminRedPepperAndDijonPorkChops_W10_100_2026_Web-5b99715c.jpg",
-      "pdf": "./pdfs/68d64bbf9ed4d6794189d54b-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/honey-dill-chickpea-bowls-6845b80d4b128cef4ed184e9?week=2026-W11",
+      "title": "Honey Dill Chickpea Bowls",
+      "subtitle": "with Tomato-Cucumber & Couscous Pilaf",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/61a942c679ca9c035048980f-79cd6a85-bd63a29f.jpg",
+      "pdf": "./pdfs/6845b80d4b128cef4ed184e9-en-US.pdf",
       "ingredients": [
-        {
-          "ingredient": "Green Beans",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Carrot",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Chicken Stock Concentrate",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Red Pepper Jam",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Pork Chops",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "2 clove",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Dijon Mustard",
-          "amount": "2 teaspoon",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Garlic Powder",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Sliced Almonds",
-          "amount": "½ ounce",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/charred-zucchini-and-tomato-melts-68d64778681e58ed6e5b0be6?week=2026-W10",
-      "title": "Charred Zucchini & Tomato Melts",
-      "subtitle": "with Fresh Mozzarella & Potato Wedges",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/642c42eaf51add52bb0c9c42-9995e319-7b7a8987.jpg",
-      "pdf": "./pdfs/68d64778681e58ed6e5b0be6-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Zucchini",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Italian Seasoning",
-          "amount": "1 tablespoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Sourdough Bread",
-          "amount": "4 slice",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "slice"
-        },
-        {
-          "ingredient": "Monterey Jack Cheese",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Tomato",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "1 clove",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Fresh Mozzarella",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/melty-mushroom-and-onion-quesadillas-6886b9d23947e0d99f170563?week=2026-W10",
-      "title": "Melty Mushroom & Onion Quesadillas",
-      "subtitle": "with Savory Crema & Pico de Gallo",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/melty-mushroom-onion-quesadillas-dfbba85c-52ac9928.jpg",
-      "pdf": "./pdfs/6886b9d23947e0d99f170563-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Flour Tortillas",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
         {
           "ingredient": "Veggie Stock Concentrate",
           "amount": "1 unit",
@@ -1445,10 +739,168 @@
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Fry Seasoning",
-          "amount": "1 tablespoon",
+          "ingredient": "Chickpeas",
+          "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Israeli Couscous",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Lemon",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Mini Cucumber",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Honey",
+          "amount": "2 teaspoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Tomato",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Dill",
+          "amount": "0.13 ounce",
+          "quantity_display": "0.13",
+          "quantity": 0.13,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Tunisian Spice Blend",
+          "amount": "⅔ tablespoon",
+          "quantity_display": "⅔",
+          "quantity": 0.6666666666666666,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Shallot",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/spicy-honey-chipotle-salmon-68a1a0f2b4feaabe0917a9a6?week=2026-W11",
+      "title": "Spicy Honey-Chipotle Salmon",
+      "subtitle": "with Pineapple Salsa, Rice & Crema",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68a1a0f2b4feaabe0917a9a6-510162b7-04dd227f.jpeg",
+      "pdf": "./pdfs/68a1a0f2b4feaabe0917a9a6-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Sour Cream",
+          "amount": "1.5 tablespoon",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Chipotle Powder",
+          "amount": "¾ teaspoon",
+          "quantity_display": "¾",
+          "quantity": 0.75,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Honey",
+          "amount": "2 teaspoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Lime",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Jasmine Rice",
+          "amount": "¾ cup",
+          "quantity_display": "¾",
+          "quantity": 0.75,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Cilantro",
+          "amount": "¼ ounce",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Pineapple",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Shallot",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Salmon",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/black-bean-and-pepper-jack-tostadas-6845b929e3fd4af871aedee8?week=2026-W11",
+      "title": "Black Bean & Pepper Jack Tostadas",
+      "subtitle": "with Southwest Lime Crema & Spicy Pico de Gallo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/652eb98c7a4f5b7a8c5ec7f8-eb907c90-e9ef2060.jpeg",
+      "pdf": "./pdfs/6845b929e3fd4af871aedee8-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Veggie Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sour Cream",
+          "amount": "3 tablespoon",
+          "quantity_display": "3",
+          "quantity": 3.0,
           "unit": "tablespoon"
         },
         {
@@ -1466,58 +918,14 @@
           "unit": "cup"
         },
         {
-          "ingredient": "Monterey Jack Cheese",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Tomato",
+          "ingredient": "Jalapeño",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "unit"
         },
         {
-          "ingredient": "Lime",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Button Mushrooms",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/southwest-pork-and-green-pepper-tacos-66e77f36883fe49b3965c837?week=2026-W10",
-      "title": "Southwest Pork & Green Pepper Tacos",
-      "subtitle": "with Pico de Gallo & Garlicky Sour Cream",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66a6eadbff70d218deffad75-c058fd86-064c9ac3.jpeg",
-      "pdf": "./pdfs/66e77f36883fe49b3965c837-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Sour Cream",
-          "amount": "3 tablespoon",
-          "quantity_display": "3",
-          "quantity": 3.0,
-          "unit": "tablespoon"
-        },
-        {
-          "ingredient": "Onion",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Long Green Pepper",
+          "ingredient": "Black Beans",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
@@ -1552,13 +960,6 @@
           "unit": "clove"
         },
         {
-          "ingredient": "Ground Pork",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
           "ingredient": "Southwest Spice Blend",
           "amount": "1 tablespoon",
           "quantity_display": "1",
@@ -1568,60 +969,46 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/creamy-chicken-curry-in-a-hurry-68d64b76d232ff05cfc45b98?week=2026-W10",
-      "title": "Creamy Chicken Curry in a Hurry",
-      "subtitle": "over Jasmine Rice",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e5ecc4653f7d23af28fe06-ad3785b1-fd1dcb68.jpeg",
-      "pdf": "./pdfs/68d64b76d232ff05cfc45b98-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/taverna-salad-with-creamy-feta-and-dill-68d64c51d232ff05cfc45e5c?week=2026-W11",
+      "title": "Taverna Salad with Creamy Feta & Dill",
+      "subtitle": "plus Cucumber, Scallions & Croutons",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68212dba41004c30bea67976-ab978ca8-e58fd167.jpeg",
+      "pdf": "./pdfs/68d64c51d232ff05cfc45e5c-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Green Beans",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Chopped Chicken Breast",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Tomato Paste",
+          "ingredient": "Baby Lettuce",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "unit"
         },
         {
-          "ingredient": "Chicken Stock Concentrate",
+          "ingredient": "Feta Cheese",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Ciabatta",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "unit"
         },
         {
-          "ingredient": "Cream Sauce Base",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Curry Powder",
-          "amount": "1 tablespoon",
+          "ingredient": "Lemon",
+          "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "tablespoon"
+          "unit": "unit"
         },
         {
-          "ingredient": "Garlic",
-          "amount": "2 clove",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "clove"
+          "ingredient": "Mini Cucumber",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
         },
         {
           "ingredient": "Scallions",
@@ -1631,41 +1018,62 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Jasmine Rice",
-          "amount": "¾ cup",
-          "quantity_display": "¾",
-          "quantity": 0.75,
-          "unit": "cup"
+          "ingredient": "Buttermilk Ranch Dressing",
+          "amount": "1.5 ounce",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Dill",
+          "amount": "¼ ounce",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "ounce"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/bacon-me-hungry-tortelloni-68744684249cc147aea8317d?week=2026-W10",
-      "title": "Bacon Me Hungry Tortelloni",
-      "subtitle": "with Garlic & Peas",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6423066491e4ecf5e604db72-01127998-f90eb952.jpg",
-      "pdf": "./pdfs/68744684249cc147aea8317d-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/melty-mozz-tomato-and-pesto-panini-688fe2f2263d52528b99ff84?week=2026-W11",
+      "title": "Melty Mozz, Tomato & Pesto Panini",
+      "subtitle": "with Roasted Red Pepper & Garlicky Potato Wedges",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/67a948fd4113630c74a32fa1-82c5614a-9a7ea1a3.jpeg",
+      "pdf": "./pdfs/688fe2f2263d52528b99ff84-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Tortelloni",
-          "amount": "9 ounce",
-          "quantity_display": "9",
-          "quantity": 9.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Peas",
-          "amount": "4 ounce",
+          "ingredient": "Pesto",
+          "amount": "4 tablespoon",
           "quantity_display": "4",
           "quantity": 4.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Potatoes",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
           "unit": "ounce"
         },
         {
-          "ingredient": "Cream Cheese",
-          "amount": "2 tablespoon",
+          "ingredient": "Ciabatta",
+          "amount": "2 unit",
           "quantity_display": "2",
           "quantity": 2.0,
-          "unit": "tablespoon"
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Mozzarella Cheese",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Tomato",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
         },
         {
           "ingredient": "Garlic",
@@ -1673,6 +1081,78 @@
           "quantity_display": "2",
           "quantity": 2.0,
           "unit": "clove"
+        },
+        {
+          "ingredient": "Bell Pepper",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic Powder",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/lemon-herb-risotto-with-chicken-68d64997d232ff05cfc456ac?week=2026-W11",
+      "title": "Lemon Herb Risotto with Chicken",
+      "subtitle": "& Tomato-Bacon Jam",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP1695A_LemonHerbRisottoWithChicken_W50-S97-2021_Web-e8226260.jpg",
+      "pdf": "./pdfs/68d64997d232ff05cfc456ac-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Chicken Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Lemon",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Arborio Rice",
+          "amount": "¾ cup",
+          "quantity_display": "¾",
+          "quantity": 0.75,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Parmesan Cheese Block",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Tomato",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Parsley",
+          "amount": "¼ ounce",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Chicken Cutlets",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
         },
         {
           "ingredient": "Bacon",
@@ -1684,18 +1164,18 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/oven-bake-crispy-parmesan-chicken-68f7b40da6799308f092c802?week=2026-W10",
-      "title": "Oven Bake Crispy Parmesan Chicken",
+      "url": "https://www.everyplate.com/recipes/oven-bake-marinara-tortelloni-676840629bfc6de73c8e2507?week=2026-W11",
+      "title": "Oven Bake Marinara Tortelloni",
       "subtitle": "Includes recyclable aluminum tray",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2026B_Hero_OvenBakeCrispyParmesanChicken_W10_106_2026_Web-1723e677.jpg",
-      "pdf": "./pdfs/68f7b40da6799308f092c802-en-US.pdf",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP6240A_TrayToTableMarinaraTortelloniBake_W43-S105-2024_Web-15ec230e.jpg",
+      "pdf": "./pdfs/676840629bfc6de73c8e2507-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Pesto",
-          "amount": "4 tablespoon",
-          "quantity_display": "4",
-          "quantity": 4.0,
-          "unit": "tablespoon"
+          "ingredient": "Panko Breadcrumbs",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
         },
         {
           "ingredient": "Tortelloni",
@@ -1705,25 +1185,25 @@
           "unit": "ounce"
         },
         {
-          "ingredient": "Spinach",
-          "amount": "5 ounce",
-          "quantity_display": "5",
-          "quantity": 5.0,
-          "unit": "ounce"
-        },
-        {
           "ingredient": "Oven-Ready Tray",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
           "unit": "unit"
         },
         {
           "ingredient": "Cream Sauce Base",
-          "amount": "8 ounce",
-          "quantity_display": "8",
-          "quantity": 8.0,
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
           "unit": "ounce"
+        },
+        {
+          "ingredient": "Mozzarella Cheese",
+          "amount": "1 cup",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "cup"
         },
         {
           "ingredient": "Italian Seasoning",
@@ -1733,112 +1213,61 @@
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Parmesan Cheese Block",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Panko Breadcrumbs",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Chicken Cutlets",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/garlic-rosemary-butter-basted-steak-686b63c48d751c3919190964?week=2026-W10",
-      "title": "Garlic-Rosemary Butter-Basted Steak",
-      "subtitle": "with Asparagus & Crispy Potato Wedges",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-HERO_EP6121A_GarlicRosemaryButterBasedSteak_W20-S85-2024_Web-7cc0736e.jpg",
-      "pdf": "./pdfs/686b63c48d751c3919190964-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Asparagus",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Rosemary",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Ranch Steak",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "2 clove",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "clove"
+          "ingredient": "Parmesan Cheese",
+          "amount": "3 tablespoon",
+          "quantity_display": "3",
+          "quantity": 3.0,
+          "unit": "tablespoon"
         },
         {
           "ingredient": "Garlic Powder",
-          "amount": "¾ teaspoon",
-          "quantity_display": "¾",
-          "quantity": 0.75,
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
           "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Marinara Sauce",
+          "amount": "2.5 ounce",
+          "quantity_display": "2.5",
+          "quantity": 2.5,
+          "unit": "ounce"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/soy-glazed-pork-meatloaves-6886bb5ee9098592173f3dd6?week=2026-W10",
-      "title": "Soy-Glazed Pork Meatloaves",
-      "subtitle": "with Broccoli & Garlic Mashed Potatoes",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64b5b0c4a1912726f332cbbd-2278bac7-36f54f75.jpeg",
-      "pdf": "./pdfs/6886bb5ee9098592173f3dd6-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/quick-sweet-soy-glazed-chicken-tacos-68d64bdc9ed4d6794189d5b3?week=2026-W11",
+      "title": "Quick Sweet Soy-Glazed Chicken Tacos",
+      "subtitle": "with Cabbage Slaw & Sesame Seeds",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6046D_Hero_SweetSoyGlazedChickenTacos_W50_107_2025_Web-a95132c1.jpg",
+      "pdf": "./pdfs/68d64bdc9ed4d6794189d5b3-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Panko Breadcrumbs",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "1 ounce",
+          "quantity_display": "1",
+          "quantity": 1.0,
           "unit": "ounce"
         },
         {
-          "ingredient": "Soy Sauce",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
+          "ingredient": "Sweet Soy Glaze",
+          "amount": "4 tablespoon",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "tablespoon"
         },
         {
-          "ingredient": "Broccoli",
-          "amount": "1 unit",
+          "ingredient": "Sesame Seeds",
+          "amount": "1 tablespoon",
           "quantity_display": "1",
           "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Flour Tortillas",
+          "amount": "6 unit",
+          "quantity_display": "6",
+          "quantity": 6.0,
           "unit": "unit"
         },
         {
@@ -1849,7 +1278,7 @@
           "unit": "clove"
         },
         {
-          "ingredient": "Ground Pork",
+          "ingredient": "Chicken Cutlets",
           "amount": "10 ounce",
           "quantity_display": "10",
           "quantity": 10.0,
@@ -1863,11 +1292,76 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Sriracha",
-          "amount": "1 teaspoon",
+          "ingredient": "Coleslaw Mix",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Bell Pepper",
+          "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
+          "unit": "unit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/honey-chipotle-pork-chops-67d76f4118d6e477003fc74e?week=2026-W11",
+      "title": "Honey Chipotle Pork Chops",
+      "subtitle": "with Roasted Carrots & Garlicky Broccoli",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/673155eaba08659748633684-4531bdf5-e9f4f354.jpeg",
+      "pdf": "./pdfs/67d76f4118d6e477003fc74e-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Chipotle Powder",
+          "amount": "0.13 teaspoon",
+          "quantity_display": "0.13",
+          "quantity": 0.13,
           "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Carrot",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Chicken Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Honey",
+          "amount": "2 teaspoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Broccoli",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Pork Chops",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "1 clove",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "clove"
         },
         {
           "ingredient": "Garlic Powder",
@@ -1879,17 +1373,96 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/one-pan-chicken-and-pepper-quesadillas-68d647f9d232ff05cfc453bb?week=2026-W10",
-      "title": "One-Pan Chicken & Pepper Quesadillas",
-      "subtitle": "with Monterey Jack, Mozz & Southwest Crema",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/6537cb8e07f58b7bf7098451-e6c5629f-9b6e68ff.jpeg",
-      "pdf": "./pdfs/68d647f9d232ff05cfc453bb-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/garlicky-roasted-pepper-penne-68a1a206b4feaabe0917a9a9?week=2026-W11",
+      "title": "Garlicky Roasted Pepper Penne",
+      "subtitle": "with Toasted Panko & Parmesan",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/66f0bd5e57f79a1b894e54f1-748e5fa2-d8022211.jpeg",
+      "pdf": "./pdfs/68a1a206b4feaabe0917a9a9-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Flour Tortillas",
+          "ingredient": "Panko Breadcrumbs",
+          "amount": "¼ cup",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Tomato Paste",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Cream Cheese",
+          "amount": "2 tablespoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Penne Pasta",
+          "amount": "6 ounce",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Italian Seasoning",
+          "amount": "1 tablespoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Parmesan Cheese",
+          "amount": "3 tablespoon",
+          "quantity_display": "3",
+          "quantity": 3.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Tomato",
           "amount": "2 unit",
           "quantity_display": "2",
           "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Bell Pepper",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic Powder",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/black-bean-stew-68582b6ed12c14cd4da5f1b4?week=2026-W11",
+      "title": "Black Bean Stew",
+      "subtitle": "with Mexican Cheese Blend & Sour Cream",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/64492818348ac68837015be6-81d5bcd7-9775c53b.jpg",
+      "pdf": "./pdfs/68582b6ed12c14cd4da5f1b4-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Veggie Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
           "unit": "unit"
         },
         {
@@ -1900,11 +1473,18 @@
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Chopped Chicken Breast",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
+          "ingredient": "Tomato Paste",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Onion",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
         },
         {
           "ingredient": "Long Green Pepper",
@@ -1914,18 +1494,39 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Mozzarella Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "cup"
+          "ingredient": "Black Beans",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
         },
         {
-          "ingredient": "Monterey Jack Cheese",
-          "amount": "¼ cup",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "cup"
+          "ingredient": "Tomato",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "1 clove",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Scallions",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Tex-Mex Paste",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
         },
         {
           "ingredient": "Southwest Spice Blend",
@@ -1933,29 +1534,43 @@
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Mexican Cheese Blend",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/spinach-and-artichoke-pizzas-68e80bc2a267a9c2fbff6375?week=2026-W10",
-      "title": "Spinach & Artichoke Pizzas",
-      "subtitle": "with Tomatoes & Buttermilk Ranch",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2140A_Hero_SpinachAndArtichokePizzas_W10_110_2026_Web-ba874138.jpg",
-      "pdf": "./pdfs/68e80bc2a267a9c2fbff6375-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/pork-sausage-and-roasted-pepper-penne-68dd7dde396adcc61a3eb7bc?week=2026-W11",
+      "title": "Pork Sausage & Roasted Pepper Penne",
+      "subtitle": "in a Creamy Pink Sauce",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1157E_Hero_PorkSausageAndRoastedPepperPenne_W51_84_2025_Web-8d3c5e8f.jpg",
+      "pdf": "./pdfs/68dd7dde396adcc61a3eb7bc-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Fry Seasoning",
-          "amount": "1 tablespoon",
+          "ingredient": "Tomato Paste",
+          "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "tablespoon"
+          "unit": "unit"
         },
         {
-          "ingredient": "Spinach",
-          "amount": "5 ounce",
-          "quantity_display": "5",
-          "quantity": 5.0,
+          "ingredient": "Italian Pork Sausage",
+          "amount": "6 ounce",
+          "quantity_display": "6",
+          "quantity": 6.0,
           "unit": "ounce"
+        },
+        {
+          "ingredient": "Onion",
+          "amount": "½ unit",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "unit"
         },
         {
           "ingredient": "Cream Sauce Base",
@@ -1965,7 +1580,504 @@
           "unit": "ounce"
         },
         {
-          "ingredient": "Marinated Artichoke Hearts",
+          "ingredient": "Penne Pasta",
+          "amount": "6 ounce",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Chives",
+          "amount": "½ ounce",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Parmesan Cheese Block",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Bell Pepper",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Marinara Sauce",
+          "amount": "2.5 ounce",
+          "quantity_display": "2.5",
+          "quantity": 2.5,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/southwest-spiced-chicken-tacos-68d64a8ed232ff05cfc4589e?week=2026-W11",
+      "title": "Southwest-Spiced Chicken Tacos",
+      "subtitle": "with Spicy Pineapple Salsa & Lime Crema",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2044A_Hero_SouthwestSpicedChickenTacos_W11_104_2026_Web-8b22edb6.jpg",
+      "pdf": "./pdfs/68d64a8ed232ff05cfc4589e-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Sour Cream",
+          "amount": "1.5 tablespoon",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Red Onion",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Chopped Chicken Breast",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Chicken Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Jalapeño",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Lime",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Flour Tortillas",
+          "amount": "6 unit",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Southwest Spice Blend",
+          "amount": "1 tablespoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Pineapple",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/quick-and-crunchy-bbq-chicken-sandos-67845f86f2efe8ce6099156a?week=2026-W11",
+      "title": "Quick & Crunchy BBQ Chicken Sandos",
+      "subtitle": "with Ranch Slaw & Crispy Onions",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/65eec41c27d3502814b425f9-1362a6ad-87f2f10d.jpeg",
+      "pdf": "./pdfs/67845f86f2efe8ce6099156a-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Chopped Chicken Breast",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "BBQ Sauce",
+          "amount": "4 unit",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sweet and Smoky BBQ Seasoning",
+          "amount": "1 tablespoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Crispy Fried Onions",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Coleslaw Mix",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Buttermilk Ranch Dressing",
+          "amount": "1.5 ounce",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Dijon Mustard",
+          "amount": "2 teaspoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Demi-Baguette",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/crispy-parm-chicken-68d6482dd232ff05cfc4540d?week=2026-W11",
+      "title": "Crispy Parm Chicken",
+      "subtitle": "with Roasted Broccoli & Bacon Mashed Potatoes",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1434F_Hero_CrispyParmChicken_W11_106_2026_Web-9eea67b4.jpg",
+      "pdf": "./pdfs/68d6482dd232ff05cfc4540d-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Sour Cream",
+          "amount": "1.5 tablespoon",
+          "quantity_display": "1.5",
+          "quantity": 1.5,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Panko Breadcrumbs",
+          "amount": "¼ cup",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Fry Seasoning",
+          "amount": "½ tablespoon",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Potatoes",
+          "amount": "12 ounce",
+          "quantity_display": "12",
+          "quantity": 12.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Broccoli",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Chives",
+          "amount": "¼ ounce",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Parmesan Cheese Block",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Chicken Cutlets",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Bacon",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/beef-bolognese-with-fresh-fettuccine-68f7c4f02ec5cbd71097f1a9?week=2026-W11",
+      "title": "Beef Bolognese With Fresh Fettuccine",
+      "subtitle": "plus Italian Herbs",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6215B_Hero_BeefBologneseWithFreshFettuccine_W11_107_2026_Web-8e67ef2a.jpg",
+      "pdf": "./pdfs/68f7c4f02ec5cbd71097f1a9-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Tomato Paste",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Fresh Fettuccine",
+          "amount": "7 ounce",
+          "quantity_display": "7",
+          "quantity": 7.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Italian Seasoning",
+          "amount": "1 tablespoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Beef Stock Concentrate",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Parmesan Cheese Block",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Tomato",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic Powder",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Ground Beef",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/banh-mi-style-chicken-tacos-68d64bf6681e58ed6e5b15fe?week=2026-W11",
+      "title": "Banh Mi-Style Chicken Tacos",
+      "subtitle": "with Pickled Veggies & Sweet Chili Mayo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6076D_Hero_BanhMiStyleChickenTacos_W02_100_2026_Web-b24ed3ad.jpg",
+      "pdf": "./pdfs/68d64bf6681e58ed6e5b15fe-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Carrot",
+          "amount": "3 ounce",
+          "quantity_display": "3",
+          "quantity": 3.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Ground Chicken",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "1 ounce",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Mini Cucumber",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sweet Soy Glaze",
+          "amount": "4 tablespoon",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Lime",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Flour Tortillas",
+          "amount": "6 unit",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Sriracha",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/crispy-bbq-chicken-tacos-68e80a10a267a9c2fbff6344?week=2026-W11",
+      "title": "Crispy BBQ Chicken Tacos",
+      "subtitle": "with Hot Honey Mayo & Corn Salsa",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2129A_Hero_QuickCrispyBbqChickenTacos_W11_109_2026_Web-8e9ae071.jpg",
+      "pdf": "./pdfs/68e80a10a267a9c2fbff6344-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Hot Honey",
+          "amount": "½ ounce",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Corn",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Jalapeño",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Honey",
+          "amount": "2 teaspoon",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Tomato",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sweet and Smoky BBQ Seasoning",
+          "amount": "1 tablespoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Lime",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Flour Tortillas",
+          "amount": "6 unit",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Chicken Cutlets",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/italian-pork-sausage-and-cheese-pizzas-68e80b47a267a9c2fbff636d?week=2026-W11",
+      "title": "Italian Pork Sausage & Cheese Pizzas",
+      "subtitle": "with Green Pepper & Hot Honey",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2136A_Hero_ItalianPorkSausageAndCheesePizza_W11_110_2026_Web-26bb1bcf.jpg",
+      "pdf": "./pdfs/68e80b47a267a9c2fbff636d-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Hot Honey",
+          "amount": "1 ounce",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Italian Pork Sausage",
+          "amount": "6 ounce",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Long Green Pepper",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
@@ -1986,33 +2098,54 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Tomato",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Buttermilk Ranch Dressing",
-          "amount": "3 ounce",
-          "quantity_display": "3",
-          "quantity": 3.0,
+          "ingredient": "Marinara Sauce",
+          "amount": "5 ounce",
+          "quantity_display": "5",
+          "quantity": 5.0,
           "unit": "ounce"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/fresh-mozzarella-and-tomato-pizzas-68e80a8a908d7cf716b819a3?week=2026-W10",
-      "title": "Fresh Mozzarella & Tomato Pizzas",
-      "subtitle": "with Basil Drizzle",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2131A_Hero_FreshMozzarellaAndTomatoPizza_W10_111_2026_Web-97324c96.jpg",
-      "pdf": "./pdfs/68e80a8a908d7cf716b819a3-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/caramelized-onion-and-mushroom-pizzas-68e80b84a267a9c2fbff636f?week=2026-W11",
+      "title": "Caramelized Onion & Mushroom Pizzas",
+      "subtitle": "with Feta Cheese & Thyme",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2137A_Hero_CaramelizedOnionAndMushroomPizzas_W11_111_2026_Web-40c6a862.jpg",
+      "pdf": "./pdfs/68e80b84a267a9c2fbff636f-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Grape Tomatoes",
-          "amount": "4 ounce",
-          "quantity_display": "4",
-          "quantity": 4.0,
+          "ingredient": "Feta Cheese",
+          "amount": "½ cup",
+          "quantity_display": "½",
+          "quantity": 0.5,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Onion",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Dried Thyme",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "Mozzarella Cheese",
+          "amount": "1 cup",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Roasted Onion & Garlic Spread",
+          "amount": "2 ounce",
+          "quantity_display": "2",
+          "quantity": 2.0,
           "unit": "ounce"
         },
         {
@@ -2030,230 +2163,51 @@
           "unit": "teaspoon"
         },
         {
-          "ingredient": "Fresh Mozzarella",
+          "ingredient": "Button Mushrooms",
           "amount": "8 ounce",
           "quantity_display": "8",
           "quantity": 8.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Marinara Sauce",
-          "amount": "5 ounce",
-          "quantity_display": "5",
-          "quantity": 5.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Basil Paste",
-          "amount": "2 ounce",
-          "quantity_display": "2",
-          "quantity": 2.0,
           "unit": "ounce"
         }
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/chicken-a-lorange-68d64a93d232ff05cfc458cd?week=2026-W10",
-      "title": "Chicken à L'Orange",
-      "subtitle": "with Mashed Potatoes & Green Beans Amandine",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2090A_Hero_ChickenALOrange_W10_112_2026_Web-b1edc12e.jpg",
-      "pdf": "./pdfs/68d64a93d232ff05cfc458cd-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/coconut-curry-noodles-with-chicken-68d64c69d232ff05cfc45e7b?week=2026-W11",
+      "title": "Coconut Curry Noodles with Chicken",
+      "subtitle": "plus Lime",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-EP6620A_Hero_CoconutCurryNoodlesWithChicken_W11-99-2025_Web-546e0fee.jpg",
+      "pdf": "./pdfs/68d64c69d232ff05cfc45e7b-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Green Beans",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Potatoes",
-          "amount": "12 ounce",
-          "quantity_display": "12",
-          "quantity": 12.0,
+          "ingredient": "Lo Mein Noodles",
+          "amount": "4.5 ounce",
+          "quantity_display": "4.5",
+          "quantity": 4.5,
           "unit": "ounce"
         },
         {
           "ingredient": "Chicken Stock Concentrate",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Dried Thyme",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Orange Sauce",
-          "amount": "3 ounce",
-          "quantity_display": "3",
-          "quantity": 3.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Garlic",
-          "amount": "0.1 clove",
-          "quantity_display": "0.1",
-          "quantity": 0.1,
-          "unit": "clove"
-        },
-        {
-          "ingredient": "Orange",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Chicken Cutlets",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Sliced Almonds",
-          "amount": "½ ounce",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "ounce"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/cheeseburger-flatbreads-68d64a95681e58ed6e5b11fa?week=2026-W10",
-      "title": "Cheeseburger Flatbreads",
-      "subtitle": "with Pickles, Tomato & Special Sauce",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP2097A_Hero_CheeseburgerFlatbreads_W10_113_2026_Web-b51929c1.jpg",
-      "pdf": "./pdfs/68d64a95681e58ed6e5b11fa-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Cheddar Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Flatbreads",
           "amount": "2 unit",
           "quantity_display": "2",
           "quantity": 2.0,
           "unit": "unit"
         },
         {
-          "ingredient": "Ground Beef",
-          "amount": "8 ounce",
-          "quantity_display": "8",
-          "quantity": 8.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "White Wine Vinegar",
-          "amount": "5 teaspoon",
-          "quantity_display": "5",
-          "quantity": 5.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Mini Cucumber",
-          "amount": "1 unit",
+          "ingredient": "Curry Powder",
+          "amount": "1 tablespoon",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Tomato",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Garlic Powder",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Shallot",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/spiced-chickpea-and-tofu-rice-bowls-68fa99396c0a84b7da29dc37?week=2026-W10",
-      "title": "Spiced Chickpea & Tofu Rice Bowls",
-      "subtitle": "with Tomato Cucumber Salad & Creamy Lemon Sauce",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1571G_Hero_SpicedChickpeaAndTofuRiceBowls_W02_114_2026_Web-716a6bba.jpg",
-      "pdf": "./pdfs/68fa99396c0a84b7da29dc37-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Veggie Stock Concentrate",
-          "amount": "2 unit",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sour Cream",
-          "amount": "4.5 tablespoon",
-          "quantity_display": "4.5",
-          "quantity": 4.5,
           "unit": "tablespoon"
         },
         {
-          "ingredient": "Feta Cheese",
-          "amount": "½ cup",
-          "quantity_display": "½",
-          "quantity": 0.5,
-          "unit": "cup"
-        },
-        {
-          "ingredient": "Red Onion",
+          "ingredient": "Coconut Milk",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "unit"
         },
         {
-          "ingredient": "Chickpeas",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Lemon",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Tofu",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Mini Cucumber",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Tomato",
+          "ingredient": "Lime",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
@@ -2267,6 +2221,71 @@
           "unit": "clove"
         },
         {
+          "ingredient": "Chicken Cutlets",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/cheesy-chicken-taco-bake-68f120eea267a9c2fb001fa2?week=2026-W11",
+      "title": "Cheesy Chicken Taco Bake",
+      "subtitle": "with Black Beans, Corn & Cilantro",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1962B_Hero_CheesyChickenTacoBake_W02_113_2026_Web-9818250e.jpg",
+      "pdf": "./pdfs/68f120eea267a9c2fb001fa2-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Corn",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sour Cream",
+          "amount": "3 tablespoon",
+          "quantity_display": "3",
+          "quantity": 3.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Chopped Chicken Breast",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Chicken Stock Concentrate",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Black Beans",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Flour Tortillas",
+          "amount": "6 unit",
+          "quantity_display": "6",
+          "quantity": 6.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Tex-Mex Paste",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
           "ingredient": "Garlic Powder",
           "amount": "1 teaspoon",
           "quantity_display": "1",
@@ -2274,14 +2293,14 @@
           "unit": "teaspoon"
         },
         {
-          "ingredient": "Tunisian Spice Blend",
-          "amount": "0.83 tablespoon",
-          "quantity_display": "0.83",
-          "quantity": 0.83,
-          "unit": "tablespoon"
+          "ingredient": "Cilantro",
+          "amount": "¼ ounce",
+          "quantity_display": "¼",
+          "quantity": 0.25,
+          "unit": "ounce"
         },
         {
-          "ingredient": "Basmati Rice",
+          "ingredient": "Mexican Cheese Blend",
           "amount": "½ cup",
           "quantity_display": "½",
           "quantity": 0.5,
@@ -2290,19 +2309,91 @@
       ]
     },
     {
-      "url": "https://www.everyplate.com/recipes/beef-banh-mi-salad-68d646ced232ff05cfc4515e?week=2026-W10",
-      "title": "Saucy Garlic & Ponzu Banh Mi Beef Salad",
-      "subtitle": "with Carrot, Pickled Cucumber & Sriracha Mayo",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68be4fe6f1b5d9b3fdc2043c-f84c7f3f-547de7f0.jpeg",
-      "pdf": "./pdfs/68d646ced232ff05cfc4515e-en-US.pdf",
+      "url": "https://www.everyplate.com/recipes/soy-glazed-tofu-and-mushroom-bowls-68d64836681e58ed6e5b0d53?week=2026-W11",
+      "title": "Soy-Glazed Tofu & Mushroom Bowls",
+      "subtitle": "with Sesame-Garlic Rice & Spicy Mayo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/68e5e7f3c757de283ce782c5-05adccb1-ed074e58.jpeg",
+      "pdf": "./pdfs/68d64836681e58ed6e5b0d53-en-US.pdf",
       "ingredients": [
         {
-          "ingredient": "Carrot",
-          "amount": "3 ounce",
-          "quantity_display": "3",
-          "quantity": 3.0,
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "2 ounce",
+          "quantity_display": "2",
+          "quantity": 2.0,
           "unit": "ounce"
         },
+        {
+          "ingredient": "Tofu",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sweet Soy Glaze",
+          "amount": "4 tablespoon",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Sesame Seeds",
+          "amount": "1 tablespoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "tablespoon"
+        },
+        {
+          "ingredient": "Garlic",
+          "amount": "2 clove",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Scallions",
+          "amount": "2 unit",
+          "quantity_display": "2",
+          "quantity": 2.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Bell Pepper",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Sriracha",
+          "amount": "1 teaspoon",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "teaspoon"
+        },
+        {
+          "ingredient": "White Rice",
+          "amount": "¾ cup",
+          "quantity_display": "¾",
+          "quantity": 0.75,
+          "unit": "cup"
+        },
+        {
+          "ingredient": "Button Mushrooms",
+          "amount": "8 ounce",
+          "quantity_display": "8",
+          "quantity": 8.0,
+          "unit": "ounce"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/ponzu-chili-beef-salad-6944607135efa043add8f057?week=2026-W11",
+      "title": "Ponzu Chili Beef Salad",
+      "subtitle": "with Snap Peas, Garlic Ginger Rice & Chili Mayo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP1568H_Hero_PonzuChiliBeefBowls_W11_115_2026_Web-781771ee.jpg",
+      "pdf": "./pdfs/6944607135efa043add8f057-en-US.pdf",
+      "ingredients": [
         {
           "ingredient": "Ponzu Sauce",
           "amount": "12 milliliters",
@@ -2318,11 +2409,11 @@
           "unit": "unit"
         },
         {
-          "ingredient": "Onion",
-          "amount": "1 unit",
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "1 ounce",
           "quantity_display": "1",
           "quantity": 1.0,
-          "unit": "unit"
+          "unit": "ounce"
         },
         {
           "ingredient": "Ground Beef",
@@ -2332,11 +2423,76 @@
           "unit": "ounce"
         },
         {
+          "ingredient": "Garlic",
+          "amount": "1 clove",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "clove"
+        },
+        {
+          "ingredient": "Sugar Snap Peas",
+          "amount": "4 ounce",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Ginger",
+          "amount": "1 thumb",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "thumb"
+        }
+      ]
+    },
+    {
+      "url": "https://www.everyplate.com/recipes/banh-mi-style-chicken-lettuce-wraps-694460eb35efa043add8f068?week=2026-W11",
+      "title": "Banh Mi-Style Chicken Lettuce Wraps",
+      "subtitle": "with Pickled Veggies & Sweet Chili Mayo",
+      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPUSRC_EP6076F_Hero_BanhMiStyleChickenTacos_W11_116_2026_Web-df0473f1.jpg",
+      "pdf": "./pdfs/694460eb35efa043add8f068-en-US.pdf",
+      "ingredients": [
+        {
+          "ingredient": "Carrot",
+          "amount": "3 ounce",
+          "quantity_display": "3",
+          "quantity": 3.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Baby Lettuce",
+          "amount": "1 unit",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "unit"
+        },
+        {
+          "ingredient": "Ground Chicken",
+          "amount": "10 ounce",
+          "quantity_display": "10",
+          "quantity": 10.0,
+          "unit": "ounce"
+        },
+        {
+          "ingredient": "Sweet Thai Chili Sauce",
+          "amount": "1 ounce",
+          "quantity_display": "1",
+          "quantity": 1.0,
+          "unit": "ounce"
+        },
+        {
           "ingredient": "Mini Cucumber",
           "amount": "1 unit",
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "unit"
+        },
+        {
+          "ingredient": "Sweet Soy Glaze",
+          "amount": "4 tablespoon",
+          "quantity_display": "4",
+          "quantity": 4.0,
+          "unit": "tablespoon"
         },
         {
           "ingredient": "Lime",
@@ -2358,71 +2514,6 @@
           "quantity_display": "1",
           "quantity": 1.0,
           "unit": "teaspoon"
-        }
-      ]
-    },
-    {
-      "url": "https://www.everyplate.com/recipes/banh-mi-style-chicken-lettuce-wraps-68e82eb5908d7cf716b81aea?week=2026-W10",
-      "title": "Speedy Banh Mi–Style Chicken Lettuce Wraps",
-      "subtitle": "with Pickled Veggies & Sriracha Mayo",
-      "image": "https://media.everyplate.com/f_auto,fl_lossy,q_auto,w_525/everyplate_s3/image/EPRC-EP1889B_Hero_BanhMiStyleChickenTacosSisterRecipe_W20-112-2025_Web-70c88786.jpg",
-      "pdf": "./pdfs/68e82eb5908d7cf716b81aea-en-US.pdf",
-      "ingredients": [
-        {
-          "ingredient": "Carrot",
-          "amount": "6 ounce",
-          "quantity_display": "6",
-          "quantity": 6.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Baby Lettuce",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Ground Chicken",
-          "amount": "10 ounce",
-          "quantity_display": "10",
-          "quantity": 10.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Rice Wine Vinegar",
-          "amount": "5 teaspoon",
-          "quantity_display": "5",
-          "quantity": 5.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Sweet Thai Chili Sauce",
-          "amount": "2 ounce",
-          "quantity_display": "2",
-          "quantity": 2.0,
-          "unit": "ounce"
-        },
-        {
-          "ingredient": "Mini Cucumber",
-          "amount": "1 unit",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "unit"
-        },
-        {
-          "ingredient": "Sriracha",
-          "amount": "1 teaspoon",
-          "quantity_display": "1",
-          "quantity": 1.0,
-          "unit": "teaspoon"
-        },
-        {
-          "ingredient": "Cilantro",
-          "amount": "¼ ounce",
-          "quantity_display": "¼",
-          "quantity": 0.25,
-          "unit": "ounce"
         }
       ]
     }
